@@ -5,7 +5,6 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 
-
 const float FPS = 100;
 
 const int SCREEN_W = 960;
@@ -58,12 +57,6 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	//instala o mouse
-	if(!al_install_mouse()) {
-		fprintf(stderr, "failed to initialize mouse!\n");
-		return -1;
-	}
-
 	//inicializa o modulo allegro que carrega as fontes
 	al_init_font_addon();
 
@@ -95,8 +88,6 @@ int main(int argc, char **argv){
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	//registra na fila os eventos de teclado (ex: pressionar uma tecla)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
-	//registra na fila os eventos de mouse (ex: clicar em um botao do mouse)
-	al_register_event_source(event_queue, al_get_mouse_event_source());
 
 	//inicializações do jogo
 	al_draw_text(size_32, al_map_rgb(255, 255, 255), 0.0, 0.0, 0, "Hello World!");
@@ -122,10 +113,6 @@ int main(int argc, char **argv){
 		//se o tipo de evento for o fechamento da tela (clique no x da janela)
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			playing = 0;
-		}
-		//se o tipo de evento for um clique de mouse
-		else if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-			printf("\nmouse clicado em: %d, %d", ev.mouse.x, ev.mouse.y);
 		}
 		//se o tipo de evento for um pressionar de uma tecla
 		else if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
