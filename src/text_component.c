@@ -1,6 +1,5 @@
 #include "text_component.h"
 #include "game.h"
-#include <stdio.h>
 
 void text_draw(Game* game) {
 	for (int i = 0; i < game->numEntities; i++) {
