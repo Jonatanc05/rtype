@@ -6,9 +6,9 @@
 typedef struct Game Game;
 
 typedef enum FONT_SIZE {
-	SMALL_FONT = 0,
-	REGULAR_FONT,
-	BIG_FONT
+	SMALL_FONTSIZE = 0,
+	REGULAR_FONTSIZE,
+	BIG_FONTSIZE
 } FONT_SIZE;
 
 typedef struct TextComponent {

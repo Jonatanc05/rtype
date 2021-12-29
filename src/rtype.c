@@ -19,9 +19,9 @@ void on_game_init(Game* game) {
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
 
 	// Criando a entidade "hello world"
-	Entity* e = create_entity(game);
+	Entity* e = entity_create(game);
 	entity_add_position(e, 0, 0);
-	entity_add_text(e, 0, 0, "Hello World!", REGULAR_FONT);
+	entity_add_text(e, 0, 0, "Hello World!", REGULAR_FONTSIZE);
 }
 
 void on_update(Game* game) {
