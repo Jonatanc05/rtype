@@ -17,6 +17,6 @@ typedef struct TextComponent {
 	int x, y;
 } TextComponent;
 
-void text_draw(Game* game);
+void system_draw_text(Game* game);
 
 #endif

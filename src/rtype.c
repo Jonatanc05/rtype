@@ -22,10 +22,11 @@ void on_game_init(Game* game) {
 	Entity* e = entity_create(game);
 	entity_add_position(e, 0, 0);
 	entity_add_text(e, 0, 0, "Hello World!", REGULAR_FONTSIZE);
+	entity_add_player(e, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE);
 }
 
 void on_update(Game* game) {
-	text_draw(game);
+	system_draw_text(game);
 }
 
 void on_game_exit(Game* game) {

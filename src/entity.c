@@ -28,6 +28,11 @@ Entity* entity_create(Game *game) {
 	return &game->entities[game->numEntities++];
 }
 
+void entity_kill(Entity* e) {
+	e->dead = 1;
+	e->component_mask = 0;
+}
+
 void entity_add_position(Entity* e, int x, int y) {
 	e->component_mask |= POSITION_COMP_MASK;
 	e->positionComponent.x = 0;
@@ -42,7 +47,21 @@ void entity_add_text(Entity* e, int x, int y, char* t, FONT_SIZE fs) {
 	e->textComponent.fontSize = REGULAR_FONTSIZE;
 }
 
-void entity_kill(Entity* e) {
-	e->dead = 1;
-	e->component_mask = 0;
+void entity_add_velocity(Entity* e, int x, int y) {
+	if (!(e->component_mask & POSITION_COMP_MASK))
+		entity_add_position(e, 0, 0);
+	e->component_mask |= VELOCITY_COMP_MASK;
+	e->velocityComponent.x = 0;
+	e->velocityComponent.y = 0;
+}
+
+void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s) {
+	if (!(e->component_mask & VELOCITY_COMP_MASK))
+		entity_add_velocity(e, 0, 0);
+	e->component_mask |= VELOCITY_COMP_MASK;
+	e->playerComponent.up = u;
+	e->playerComponent.left = l;
+	e->playerComponent.down = d;
+	e->playerComponent.right = r;
+	e->playerComponent.shoot = s;
 }

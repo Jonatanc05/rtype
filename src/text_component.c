@@ -1,7 +1,7 @@
 #include "text_component.h"
 #include "game.h"
 
-void text_draw(Game* game) {
+void system_draw_text(Game* game) {
 	unsigned mask = POSITION_COMP_MASK | TEXT_COMP_MASK;
 	for (int i = 0; i < game->numEntities; i++) {
 		if ((game->entities[i].component_mask & mask) != mask)
