@@ -13,6 +13,9 @@ const float FPS = 100;
 const int SCREEN_W = 960;
 const int SCREEN_H = 540;
 
+const int SHIP_W = 100;
+const int SHIP_H = 50;
+
 void on_game_init(Game* game) {
 	for (int i = 0; i <= ALLEGRO_KEY_MAX; i++)
 		game->keyboard[i] = 0;
@@ -22,18 +25,21 @@ void on_game_init(Game* game) {
 
 	// Criando a entidade "hello world"
 	Entity* e = entity_create(game);
-	entity_add_position(e, 0, 0);
-	entity_add_text(e, 0, 0, "Hello World!", REGULAR_FONTSIZE);
+	entity_add_position(e, 10, SCREEN_H/2 - SHIP_H/2);
 	entity_add_player(e, ALLEGRO_KEY_W,
 			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
 						ALLEGRO_KEY_SPACE
 	);
+	ALLEGRO_BITMAP* bm = al_load_bitmap("rsc\\sprite\\ship-idle.png");
+	if (!bm) printf("Erro ao carregar bitmap");
+	entity_add_sprite(e, bm, 0, 0, SHIP_W, SHIP_H);
 }
 
 void on_update(Game* game) {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	system_play(game);
 	system_move(game);
+	system_draw_sprites(game);
 	system_draw_text(game);
 }
 

@@ -5,11 +5,13 @@
 #include "text_component.h"
 #include "velocity_component.h"
 #include "player_component.h"
+#include "sprite_component.h"
 
 #define POSITION_COMP_MASK	0b00000001
 #define TEXT_COMP_MASK		0b00000010
 #define VELOCITY_COMP_MASK	0b00000100
 #define PLAYER_COMP_MASK	0b00001000
+#define SPRITE_COMP_MASK	0b00010000
 
 #define MAX_ENTITIES 500
 
@@ -21,6 +23,7 @@ typedef struct Entity {
 	PositionComponent positionComponent;
 	VelocityComponent velocityComponent;
 	PlayerComponent playerComponent;
+	SpriteComponent spriteComponent;
 } Entity;
 
 void entity_kill(Entity* e);
@@ -34,5 +37,7 @@ void entity_add_text(Entity* e, int x, int y, char* t, FONT_SIZE fs);
 void entity_add_velocity(Entity* e, int x, int y);
 
 void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s);
+
+void entity_add_sprite(Entity* e, ALLEGRO_BITMAP* b, int x, int y, int w, int h);
 
 #endif

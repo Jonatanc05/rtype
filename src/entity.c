@@ -35,8 +35,8 @@ void entity_kill(Entity* e) {
 
 void entity_add_position(Entity* e, int x, int y) {
 	e->component_mask |= POSITION_COMP_MASK;
-	e->positionComponent.x = 0;
-	e->positionComponent.y = 0;
+	e->positionComponent.x = x;
+	e->positionComponent.y = y;
 }
 
 void entity_add_text(Entity* e, int x, int y, char* t, FONT_SIZE fs) {
@@ -64,4 +64,15 @@ void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, A
 	e->playerComponent.down = d;
 	e->playerComponent.right = r;
 	e->playerComponent.shoot = s;
+}
+
+void entity_add_sprite(Entity* e, ALLEGRO_BITMAP* b, int x, int y, int w, int h) {
+	if (!(e->component_mask & POSITION_COMP_MASK))
+		entity_add_position(e, 0, 0);
+	e->component_mask |= SPRITE_COMP_MASK;
+	e->spriteComponent.bitmap = b;
+	e->spriteComponent.x = x;
+	e->spriteComponent.y = y;
+	e->spriteComponent.w = w;
+	e->spriteComponent.h = h;
 }
