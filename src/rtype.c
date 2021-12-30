@@ -31,6 +31,7 @@ void on_game_init(Game* game) {
 }
 
 void on_update(Game* game) {
+	al_clear_to_color(al_map_rgb(0, 0, 0));
 	system_play(game);
 	system_move(game);
 	system_draw_text(game);
@@ -120,6 +121,7 @@ int main(int argc, char **argv){
 	al_register_event_source(game->event_queue, al_get_timer_event_source(game->timer));
 	//registra na fila os eventos de teclado (ex: pressionar uma tecla)
 	al_register_event_source(game->event_queue, al_get_keyboard_event_source());
+
 
 	//inicializações do jogo
 	on_game_init(game);
