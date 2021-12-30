@@ -41,10 +41,10 @@ void entity_add_position(Entity* e, int x, int y) {
 
 void entity_add_text(Entity* e, int x, int y, char* t, FONT_SIZE fs) {
 	e->component_mask |= TEXT_COMP_MASK;
-	e->textComponent.x = 0;
-	e->textComponent.y = 0;
-	e->textComponent.text = "Hello World!";
-	e->textComponent.fontSize = REGULAR_FONTSIZE;
+	e->textComponent.x = x;
+	e->textComponent.y = y;
+	e->textComponent.text = t;
+	e->textComponent.fontSize = fs;
 }
 
 void entity_add_velocity(Entity* e, int x, int y) {
