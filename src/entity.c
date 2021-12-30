@@ -51,8 +51,8 @@ void entity_add_velocity(Entity* e, int x, int y) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
 		entity_add_position(e, 0, 0);
 	e->component_mask |= VELOCITY_COMP_MASK;
-	e->velocityComponent.x = 0;
-	e->velocityComponent.y = 0;
+	e->velocityComponent.x = x;
+	e->velocityComponent.y = y;
 }
 
 void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s) {
@@ -64,6 +64,7 @@ void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, A
 	e->playerComponent.down = d;
 	e->playerComponent.right = r;
 	e->playerComponent.shoot = s;
+	e->playerComponent.beamCharge = 0;
 }
 
 void entity_add_sprite(Entity* e, ALLEGRO_BITMAP* b, int x, int y, int w, int h) {
