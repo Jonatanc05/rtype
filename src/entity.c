@@ -58,7 +58,7 @@ void entity_add_velocity(Entity* e, int x, int y) {
 void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s) {
 	if (!(e->component_mask & VELOCITY_COMP_MASK))
 		entity_add_velocity(e, 0, 0);
-	e->component_mask |= VELOCITY_COMP_MASK;
+	e->component_mask |= PLAYER_COMP_MASK;
 	e->playerComponent.up = u;
 	e->playerComponent.left = l;
 	e->playerComponent.down = d;

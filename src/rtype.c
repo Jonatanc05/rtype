@@ -14,6 +14,8 @@ const int SCREEN_W = 960;
 const int SCREEN_H = 540;
 
 void on_game_init(Game* game) {
+	for (int i = 0; i <= ALLEGRO_KEY_MAX; i++)
+		game->keyboard[i] = 0;
 	game->numEntities = 0;
 	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
@@ -22,10 +24,15 @@ void on_game_init(Game* game) {
 	Entity* e = entity_create(game);
 	entity_add_position(e, 0, 0);
 	entity_add_text(e, 0, 0, "Hello World!", REGULAR_FONTSIZE);
-	entity_add_player(e, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE);
+	entity_add_player(e, ALLEGRO_KEY_W,
+			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
+						ALLEGRO_KEY_SPACE
+	);
 }
 
 void on_update(Game* game) {
+	system_play(game);
+	system_move(game);
 	system_draw_text(game);
 }
 
@@ -123,33 +130,36 @@ int main(int argc, char **argv){
 	int playing = 1;
 	while(playing) {
 		ALLEGRO_EVENT ev;
-		//espera por um evento e o armazena na variavel de evento ev
 		al_wait_for_event(game->event_queue, &ev);
 
-		//se o tipo de evento for um evento do temporizador, ou seja, se o tempo passou de t para t+1
 		if(ev.type == ALLEGRO_EVENT_TIMER) {
+
 			on_update(game);
+			for (int i = 0; i < ALLEGRO_KEY_MAX; i++) {
+				if (game->keyboard[i] == KEY_STATE_DOWN)
+					game->keyboard[i] = KEY_STATE_HOLD;
+				if (game->keyboard[i] == KEY_STATE_UP)
+					game->keyboard[i] = KEY_STATE_NULL;
+			}
 
-			//atualiza a tela (quando houver algo para mostrar)
 			al_flip_display();
-
 			if(al_get_timer_count(game->timer)%(int)FPS == 0)
 				printf("\n%d segundos se passaram...", (int)(al_get_timer_count(game->timer)/FPS));
 		}
-		//se o tipo de evento for o fechamento da tela (clique no x da janela)
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			playing = 0;
 		}
-		//se o tipo de evento for um pressionar de uma tecla
+		else if(ev.type == ALLEGRO_EVENT_KEY_UP) {
+			game->keyboard[ev.keyboard.keycode] = KEY_STATE_UP;
+		}
 		else if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+			game->keyboard[ev.keyboard.keycode] = KEY_STATE_DOWN;
 
-			//imprime qual tecla foi
 			printf("\ncodigo tecla: %d", ev.keyboard.keycode);
 		}
 
-	} //fim do while
+	}
 
-	//procedimentos de fim de jogo (fecha a tela, limpa a memoria, etc)
 	on_game_exit(game);
 
 	al_destroy_timer(game->timer);
