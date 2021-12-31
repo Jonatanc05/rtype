@@ -22,4 +22,9 @@ typedef struct Game {
 	Entity* entities;
 } Game;
 
+int uniform(int max, int expected);
+int poisson(int max, int expected);
+
+void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_distribution)(int, int));
+
 #endif

@@ -17,13 +17,14 @@ const int SHIP_W = 100;
 const int SHIP_H = 50;
 
 void on_game_init(Game* game) {
+	srand(time(NULL));
+
 	for (int i = 0; i <= ALLEGRO_KEY_MAX; i++)
 		game->keyboard[i] = 0;
 	game->numEntities = 0;
 	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
 
-	// Criando a entidade "hello world"
 	Entity* e = entity_create(game);
 	entity_add_position(e, 10, SCREEN_H/2 - SHIP_H/2);
 	entity_add_player(e, ALLEGRO_KEY_W,
@@ -41,6 +42,8 @@ void on_update(Game* game) {
 	system_move(game);
 	system_draw_sprites(game);
 	system_draw_text(game);
+	if(al_get_timer_count(game->timer)%(int)FPS == 0)
+		system_enemy_spawner(game, uniform, uniform);
 }
 
 void on_game_exit(Game* game) {
