@@ -17,16 +17,23 @@ int uniform(int max, int expected) {
 	return rand()%max;
 }
 
-// Based on https://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables
-// (not working tho)
-int poisson(int max, int expected) {
-	int limit = (int)exp(-expected), k = 0;
-	double p = 1.0;
+int linear(int max, int expected) {
+	int s = rand()%max;
+	double multiplier = expected / (double)s;
+	multiplier *= rand()/(double)RAND_MAX;
+	return multiplier * s;
+}
+
+// Baseado em https://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables
+// (mas nao funciona)
+/*int poisson(int max, int expected) {
+	int k = 0;
+	double limit = exp(-expected), p = 1.0;
 	do {
 		k++;
-		p *= rand()/(double)INT_MAX;
-	} while (p < limit);
+		p *= rand()/(double)RAND_MAX;
+	} while (p > limit);
 	if (k > max)
 		return 2*max - k;
 	return k;
-}
+}*/

@@ -13,7 +13,7 @@ typedef char KEY_STATE;
 
 #define ENEMY_MAX_XVEL 4.0
 #define ENEMY_MAX_YVEL 3.0
-#define ENEMY_SPAWN_SIEGE 30
+#define ENEMY_SPAWN_SIEGE 80
 #define ENEMY_MAX_WIDTH 10
 #define ENEMY_MAX_HEIGHT 10
 

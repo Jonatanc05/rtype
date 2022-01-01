@@ -16,14 +16,10 @@ void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_dis
 
 	int screen_h = al_get_display_height(game->display);
 	int y;
-	if (x >= -ENEMY_MAX_WIDTH && x < screen_w) {
-		do {
-			y = y_distribution(screen_h + 2*ENEMY_SPAWN_SIEGE, screen_h/2+ENEMY_SPAWN_SIEGE) - ENEMY_SPAWN_SIEGE;
-		} while (y >= -ENEMY_MAX_HEIGHT && y < screen_h);
-	}
-	else {
+	if (x >= -ENEMY_MAX_WIDTH && x < screen_w)
+		y = rand()%2 ? -ENEMY_MAX_HEIGHT : screen_h;
+	else
 		y = y_distribution(screen_h + 2*ENEMY_SPAWN_SIEGE, screen_h/2+ENEMY_SPAWN_SIEGE) - ENEMY_SPAWN_SIEGE;
-	}
 
 	Entity* e = entity_create(game);
 	entity_add_position(e, x, y);
