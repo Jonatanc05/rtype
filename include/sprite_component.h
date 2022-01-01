@@ -5,7 +5,7 @@ typedef struct Game Game;
 typedef struct {
 	MySprite* sprite;
 	int x, y;
-	float scale;
+	float scale, w, h;
 } SpriteComponent;
 
 void system_draw_sprites(Game* game);

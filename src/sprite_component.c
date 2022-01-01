@@ -17,8 +17,8 @@ void system_draw_sprites(Game* game) {
 				spr->h, // source height
 				p_comp->x + s_comp->x, // final x
 				p_comp->y + s_comp->y, // final y
-				spr->w * s_comp->scale, // final width
-				spr->h * s_comp->scale, // final height
+				s_comp->w, // final width
+				s_comp->h, // final height
 				0
 		);
 	}

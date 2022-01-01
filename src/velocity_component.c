@@ -11,10 +11,10 @@ void system_move(Game* game) {
 		e->positionComponent.y += e->velocityComponent.y;
 
 		if ((e->component_mask & PLAYER_COMP_MASK) &&
-				(e->positionComponent.x < 0 || e->positionComponent.x + e->spriteComponent.sprite->w > al_get_display_width(game->display)))
+				(e->positionComponent.x < 0 || e->positionComponent.x + e->spriteComponent.w > al_get_display_width(game->display)))
 			e->positionComponent.x -= e->velocityComponent.x;
 		if ((e->component_mask & PLAYER_COMP_MASK) &&
-				(e->positionComponent.y < 0 || e->positionComponent.y + e->spriteComponent.sprite->h > al_get_display_height(game->display)))
+				(e->positionComponent.y < 0 || e->positionComponent.y + e->spriteComponent.h > al_get_display_height(game->display)))
 			e->positionComponent.y -= e->velocityComponent.y;
 	}
 }

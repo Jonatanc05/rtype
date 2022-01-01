@@ -13,7 +13,7 @@ const float FPS = 100;
 const int SCREEN_W = 960;
 const int SCREEN_H = 540;
 
-const double SHIP_SCALE = 2;
+const float SHIP_SCALE = 2.5;
 
 void on_game_init(Game* game) {
 	srand(time(NULL));
@@ -31,7 +31,6 @@ void on_game_init(Game* game) {
 			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
 						ALLEGRO_KEY_SPACE
 	);
-	if (!ship_spr) printf("Erro ao carregar bitmap");
 	entity_add_sprite(e, ship_spr, 0, 0, SHIP_SCALE);
 }
 

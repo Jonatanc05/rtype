@@ -10,14 +10,20 @@ int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
 	return (int)c_vel;
 }
 
-#define ENEMY_MAX_XVEL 4.0
-#define ENEMY_MAX_YVEL 3.0
 void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_distribution)(int, int)) {
 	int screen_w = al_get_display_width(game->display);
-	int x = x_distribution(screen_w + 20, screen_w);
+	int x = x_distribution(screen_w + 2*ENEMY_SPAWN_SIEGE, screen_w) - ENEMY_SPAWN_SIEGE;
 
 	int screen_h = al_get_display_height(game->display);
-	int y = y_distribution(screen_h, screen_h/2);
+	int y;
+	if (x >= -ENEMY_MAX_WIDTH && x < screen_w) {
+		do {
+			y = y_distribution(screen_h + 2*ENEMY_SPAWN_SIEGE, screen_h/2+ENEMY_SPAWN_SIEGE) - ENEMY_SPAWN_SIEGE;
+		} while (y >= -ENEMY_MAX_HEIGHT && y < screen_h);
+	}
+	else {
+		y = y_distribution(screen_h + 2*ENEMY_SPAWN_SIEGE, screen_h/2+ENEMY_SPAWN_SIEGE) - ENEMY_SPAWN_SIEGE;
+	}
 
 	Entity* e = entity_create(game);
 	entity_add_position(e, x, y);
@@ -28,5 +34,5 @@ void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_dis
 	entity_add_velocity(e, x_vel, y_vel);
 
 	MySprite* spr = load_sprite("rsc\\sprite\\enemy.png");
-	entity_add_sprite(e, spr, 0, 0, 2 + (rand()%8)/2.0);
+	entity_add_sprite(e, spr, 0, 0, 2 + (rand()%6)/2.0);
 }

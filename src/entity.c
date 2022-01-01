@@ -78,5 +78,7 @@ void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
 	e->spriteComponent.sprite = s;
 	e->spriteComponent.x = x;
 	e->spriteComponent.y = y;
+	e->spriteComponent.w = s->w * scale;
+	e->spriteComponent.h = s->h * scale;
 	e->spriteComponent.scale = scale;
 }

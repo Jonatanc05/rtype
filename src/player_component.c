@@ -4,9 +4,11 @@ void shoot(Game* game, Entity* player, char isCharged) {
 	Entity *beam = entity_create(game);
 	MySprite *spr = load_sprite(isCharged ? CHARGED_BEAM_SPRITE_P : BEAM_SPRITE_P);
 
+	SpriteComponent* s_comp = &player->spriteComponent;
+
 	entity_add_position(beam,
-			player->positionComponent.x + player->spriteComponent.sprite->w,
-			player->positionComponent.y + (player->spriteComponent.sprite->h/2) - (spr->h/2)
+			player->positionComponent.x + s_comp->w,
+			player->positionComponent.y + (s_comp->h/2) - ((spr->h * SHOT_SCALE)/2)
 		);
 	entity_add_velocity(beam, BEAM_VELOCITY, 0);
 	entity_add_sprite(beam, spr, 0, 0, SHOT_SCALE);

@@ -11,6 +11,12 @@ typedef char KEY_STATE;
 #define KEY_STATE_HOLD 2
 #define KEY_STATE_UP 3
 
+#define ENEMY_MAX_XVEL 4.0
+#define ENEMY_MAX_YVEL 3.0
+#define ENEMY_SPAWN_SIEGE 30
+#define ENEMY_MAX_WIDTH 10
+#define ENEMY_MAX_HEIGHT 10
+
 typedef struct Game {
 	ALLEGRO_DISPLAY *display;
 	ALLEGRO_EVENT_QUEUE *event_queue;

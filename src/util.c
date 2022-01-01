@@ -18,6 +18,7 @@ int uniform(int max, int expected) {
 }
 
 // Based on https://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables
+// (not working tho)
 int poisson(int max, int expected) {
 	int limit = (int)exp(-expected), k = 0;
 	double p = 1.0;
