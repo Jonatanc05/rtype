@@ -1,6 +1,10 @@
 #include <allegro5/allegro.h>
 
 #define VELOCITY 3
+#define SHIP_SCALE (2.5)
+#define SHIP_IDLE_SPRITE_P "rsc\\sprite\\ship-idle.png"
+#define   SHIP_UP_SPRITE_P "rsc\\sprite\\ship-up.png"
+#define SHIP_DOWN_SPRITE_P "rsc\\sprite\\ship-down.png"
 
 #define SHOT_SCALE 2
 #define MAX_BEAM_CHARGE 50

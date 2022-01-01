@@ -11,6 +11,7 @@ typedef char KEY_STATE;
 #define KEY_STATE_HOLD 2
 #define KEY_STATE_UP 3
 
+#define ENEMY_SPRITE_P  "rsc\\sprite\\enemy.png"
 #define ENEMY_MAX_XVEL 4.0
 #define ENEMY_MAX_YVEL 3.0
 #define ENEMY_SPAWN_SIEGE 80

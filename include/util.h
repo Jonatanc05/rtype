@@ -1,3 +1,6 @@
+#ifndef included_util_h
+#define included_util_h
+
 #include <allegro5/allegro.h>
 #include <stdio.h>
 
@@ -13,3 +16,4 @@ int uniform(int max, int expected);
 int linear(int max, int expected);
 int quadratic(int max, int expected);
 
+#endif

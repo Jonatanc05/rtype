@@ -9,3 +9,5 @@ typedef struct {
 } SpriteComponent;
 
 void system_draw_sprites(Game* game);
+
+void sprite_component_set(SpriteComponent* s_comp, MySprite* s, float scale);

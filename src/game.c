@@ -29,6 +29,5 @@ void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_dis
 	int y_vel = velocity_towards(rand()%screen_h, y, screen_h, ENEMY_MAX_YVEL);
 	entity_add_velocity(e, x_vel, y_vel);
 
-	MySprite* spr = load_sprite("rsc\\sprite\\enemy.png");
-	entity_add_sprite(e, spr, 0, 0, 2 + (rand()%6)/2.0);
+	entity_add_sprite(e, load_sprite(ENEMY_SPRITE_P), 0, 0, 2 + (rand()%6)/2.0);
 }

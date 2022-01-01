@@ -24,6 +24,7 @@ void system_play(Game* game) {
 		KEY_STATE *kb = game->keyboard;
 		PlayerComponent *p_comp = &e->playerComponent;
 		VelocityComponent *v_comp = &e->velocityComponent;
+		SpriteComponent *s_comp = &e->spriteComponent;
 
 		// Movement
 		if (kb[p_comp->up] == KEY_STATE_DOWN)
@@ -51,5 +52,13 @@ void system_play(Game* game) {
 			shoot(game, e, isCharged);
 			p_comp->beamCharge = 0;
 		}
+
+		// Animation
+		if (v_comp->y > 0)
+			sprite_component_set(s_comp, load_sprite(SHIP_DOWN_SPRITE_P), SHIP_SCALE);
+		else if (v_comp->y < 0)
+			sprite_component_set(s_comp, load_sprite(SHIP_UP_SPRITE_P), SHIP_SCALE);
+		else
+			sprite_component_set(s_comp, load_sprite(SHIP_IDLE_SPRITE_P), SHIP_SCALE);
 	}
 }
