@@ -11,4 +11,5 @@ MySprite* load_sprite(const char* path);
 // Funções de distribuição estatística
 int uniform(int max, int expected);
 int linear(int max, int expected);
+int quadratic(int max, int expected);
 

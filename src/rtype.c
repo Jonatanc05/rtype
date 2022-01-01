@@ -40,8 +40,8 @@ void on_update(Game* game) {
 	system_move(game);
 	system_draw_sprites(game);
 	system_draw_text(game);
-	if(al_get_timer_count(game->timer)%(int)FPS == 0)
-		system_enemy_spawner(game, linear, linear);
+	if(al_get_timer_count(game->timer)%(int)(FPS/3) == 0)
+		system_enemy_spawner(game, quadratic, linear);
 }
 
 void on_game_exit(Game* game) {

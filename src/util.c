@@ -24,6 +24,16 @@ int linear(int max, int expected) {
 	return multiplier * s;
 }
 
+int quadratic(int max, int expected) {
+	int s = rand()%max;
+	double multiplier = expected / (double)s;
+	multiplier *= rand()/(double)RAND_MAX;
+	s *= multiplier;
+	multiplier = expected / (double)s;
+	multiplier *= rand()/(double)RAND_MAX;
+	return s * multiplier;
+}
+
 // Baseado em https://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables
 // (mas nao funciona)
 /*int poisson(int max, int expected) {
