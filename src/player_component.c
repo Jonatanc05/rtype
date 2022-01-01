@@ -1,19 +1,15 @@
 #include "game.h"
 
-void shoot(Game* game, Entity* e, char isCharged) {
+void shoot(Game* game, Entity* player, char isCharged) {
 	Entity *beam = entity_create(game);
-	ALLEGRO_BITMAP *b = al_load_bitmap(isCharged ? CHARGED_BEAM_SPRITE_P : BEAM_SPRITE_P);
-	if (!b)
-		printf("Erro ao carregar bitmap '%s'", isCharged ? CHARGED_BEAM_SPRITE_P : BEAM_SPRITE_P);
-	int bh = al_get_bitmap_height(b);
-	int bw = al_get_bitmap_width(b);
+	MySprite *spr = load_sprite(isCharged ? CHARGED_BEAM_SPRITE_P : BEAM_SPRITE_P);
 
 	entity_add_position(beam,
-			e->positionComponent.x + e->spriteComponent.w,
-			e->positionComponent.y + (e->spriteComponent.h/2) - (bh/2)
+			player->positionComponent.x + player->spriteComponent.sprite->w,
+			player->positionComponent.y + (player->spriteComponent.sprite->h/2) - (spr->h/2)
 		);
 	entity_add_velocity(beam, BEAM_VELOCITY, 0);
-	entity_add_sprite(beam, b, 0, 0, bw*SHOT_SCALE, bh*SHOT_SCALE);
+	entity_add_sprite(beam, spr, 0, 0, SHOT_SCALE);
 }
 
 void system_play(Game* game) {

@@ -13,8 +13,7 @@ const float FPS = 100;
 const int SCREEN_W = 960;
 const int SCREEN_H = 540;
 
-const int SHIP_W = 100;
-const int SHIP_H = 50;
+const double SHIP_SCALE = 2;
 
 void on_game_init(Game* game) {
 	srand(time(NULL));
@@ -26,14 +25,14 @@ void on_game_init(Game* game) {
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
 
 	Entity* e = entity_create(game);
-	entity_add_position(e, 10, SCREEN_H/2 - SHIP_H/2);
+	MySprite* ship_spr = load_sprite("rsc\\sprite\\ship-idle.png");
+	entity_add_position(e, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
 	entity_add_player(e, ALLEGRO_KEY_W,
 			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
 						ALLEGRO_KEY_SPACE
 	);
-	ALLEGRO_BITMAP* bm = al_load_bitmap("rsc\\sprite\\ship-idle.png");
-	if (!bm) printf("Erro ao carregar bitmap");
-	entity_add_sprite(e, bm, 0, 0, SHIP_W, SHIP_H);
+	if (!ship_spr) printf("Erro ao carregar bitmap");
+	entity_add_sprite(e, ship_spr, 0, 0, SHIP_SCALE);
 }
 
 void on_update(Game* game) {

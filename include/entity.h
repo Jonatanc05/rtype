@@ -1,6 +1,7 @@
 #ifndef included_entity_h
 #define included_entity_h
 
+#include "util.h"
 #include "position_component.h"
 #include "text_component.h"
 #include "velocity_component.h"
@@ -38,6 +39,6 @@ void entity_add_velocity(Entity* e, int x, int y);
 
 void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s);
 
-void entity_add_sprite(Entity* e, ALLEGRO_BITMAP* b, int x, int y, int w, int h);
+void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale);
 
 #endif

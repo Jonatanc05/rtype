@@ -9,14 +9,16 @@ void system_draw_sprites(Game* game) {
 
 		PositionComponent* p_comp = &e->positionComponent;
 		SpriteComponent* s_comp = &e->spriteComponent;
+		MySprite* spr = s_comp->sprite;
 		// improvable
-		int w =  al_get_bitmap_width(s_comp->bitmap);
-		int h = al_get_bitmap_height(s_comp->bitmap);
-		al_draw_scaled_bitmap(s_comp->bitmap,
+		al_draw_scaled_bitmap(s_comp->sprite->bm,
 				.0, .0, // source x y
-				w, h,   // source w h
-				p_comp->x + s_comp->x, p_comp->y + s_comp->y,
-				s_comp->w, s_comp->h,
+				spr->w, // source width
+				spr->h, // source height
+				p_comp->x + s_comp->x, // final x
+				p_comp->y + s_comp->y, // final y
+				spr->w * s_comp->scale, // final width
+				spr->h * s_comp->scale, // final height
 				0
 		);
 	}

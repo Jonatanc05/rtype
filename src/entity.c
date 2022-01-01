@@ -67,13 +67,16 @@ void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, A
 	e->playerComponent.beamCharge = 0;
 }
 
-void entity_add_sprite(Entity* e, ALLEGRO_BITMAP* b, int x, int y, int w, int h) {
+void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
 		entity_add_position(e, 0, 0);
+	if (e->component_mask & SPRITE_COMP_MASK) {
+		al_destroy_bitmap(e->spriteComponent.sprite->bm);
+		free(e->spriteComponent.sprite);
+	}
 	e->component_mask |= SPRITE_COMP_MASK;
-	e->spriteComponent.bitmap = b;
+	e->spriteComponent.sprite = s;
 	e->spriteComponent.x = x;
 	e->spriteComponent.y = y;
-	e->spriteComponent.w = w;
-	e->spriteComponent.h = h;
+	e->spriteComponent.scale = scale;
 }
