@@ -12,7 +12,7 @@ const float FPS = 100;
 
 const int SCREEN_W = 960;
 const int SCREEN_H = 540;
-const int ENEMIES_P_SECOND = 2;
+const int ENEMIES_P_SECOND = 6;
 
 void on_game_init(Game* game) {
 	srand(time(NULL));
@@ -39,6 +39,8 @@ void on_update(Game* game) {
 	system_move(game);
 	system_draw_sprites(game);
 	system_draw_text(game);
+	system_detect_collision(game);
+	system_clean_dead_entities(game);
 	if(al_get_timer_count(game->timer)%(int)(FPS/ENEMIES_P_SECOND) == 0)
 		system_enemy_spawner(game, quadratic, linear);
 }

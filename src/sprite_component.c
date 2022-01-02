@@ -1,7 +1,7 @@
 #include "game.h"
 
 void sprite_component_set(SpriteComponent* s_comp, MySprite* s, float scale) {
-	if (s_comp->sprite)
+	if (s_comp->sprite && s_comp->sprite->bm)
 		al_destroy_bitmap(s_comp->sprite->bm);
 	free(s_comp->sprite);
 	s_comp->sprite = s;

@@ -1,7 +1,6 @@
 #include <allegro5/allegro.h>
 
 typedef struct Game Game;
-struct MySprite;
 
 typedef struct {
 	MySprite* sprite;

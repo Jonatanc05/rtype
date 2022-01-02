@@ -30,4 +30,18 @@ void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_dis
 	entity_add_velocity(e, x_vel, y_vel);
 
 	entity_add_sprite(e, load_sprite(ENEMY_SPRITE_P), 0, 0, 2 + (rand()%6)/2.0);
+	entity_add_circle_coll(e,
+			e->spriteComponent.w/2,
+			e->spriteComponent.h/2,
+			e->spriteComponent.h < e->spriteComponent.w/2 ? e->spriteComponent.h : e->spriteComponent.w/2,
+			on_collide_die
+	);
+}
+
+void system_clean_dead_entities(Game* game) {
+	for (int i = 0; i < game->numEntities; i++) {
+		Entity* e = &game->entities[i];
+		if (e->dead)
+			zerar_entity(e);
+	}
 }

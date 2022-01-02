@@ -2,22 +2,18 @@
 #include <stdio.h>
 
 void zerar_entity(Entity* e) {
+	if (e->spriteComponent.sprite)
+		al_destroy_bitmap(e->spriteComponent.sprite->bm);
+	free(e->spriteComponent.sprite);
+	e->spriteComponent.sprite = NULL;
 	e->dead = 0;
 	e->component_mask = 0;
 }
 
 Entity* entity_create(Game *game) {
-	int pos = -1;
 	for (int i = 0; i < game->numEntities; i++) {
-		if (game->entities[i].dead) {
-			pos = i;
-			break;
-		}
-	}
-
-	if (pos != -1) {
-		zerar_entity(&game->entities[pos]);
-		return &game->entities[pos];
+		if (0 == game->entities[i].component_mask)
+			return &game->entities[i];
 	}
 
 	if (game->numEntities == MAX_ENTITIES) {
@@ -74,4 +70,14 @@ void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
 	e->spriteComponent.x = x;
 	e->spriteComponent.y = y;
 	sprite_component_set(&e->spriteComponent, s, scale);
+}
+
+void entity_add_circle_coll(Entity* e, int x, int y, float r, void(*on_collide)(Entity* a, Entity* b)) {
+	if (!(e->component_mask & POSITION_COMP_MASK))
+		entity_add_position(e, 0, 0);
+	e->component_mask |= CIRCLE_COMP_MASK;
+	e->circleCollComponent.x = x;
+	e->circleCollComponent.y = y;
+	e->circleCollComponent.r = r;
+	e->circleCollComponent.on_collide = on_collide;
 }

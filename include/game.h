@@ -31,4 +31,6 @@ typedef struct Game {
 
 void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_distribution)(int, int));
 
+void system_clean_dead_entities(Game* game);
+
 #endif
