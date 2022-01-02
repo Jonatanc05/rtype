@@ -4,17 +4,17 @@ void shoot(Game* game, Entity* player, char isCharged) {
 	Entity *beam = entity_create(game);
 	MySprite *spr = load_sprite(isCharged ? CHARGED_BEAM_SPRITE_P : BEAM_SPRITE_P);
 
-	SpriteComponent* s_comp = &player->spriteComponent;
+	SpriteComponent* s_comp = &player->sprite_component;
 
 	entity_add_position(beam,
-			player->positionComponent.x + s_comp->w,
-			player->positionComponent.y + (s_comp->h/2) - ((spr->h * SHOT_SCALE)/2)
+			player->position_component.x + s_comp->w,
+			player->position_component.y + (s_comp->h/2) - ((spr->h * SHOT_SCALE)/2)
 		);
 	entity_add_velocity(beam, BEAM_VELOCITY, 0);
 	entity_add_sprite(beam, spr, 0, 0, SHOT_SCALE);
-	float r = beam->spriteComponent.h/2.0;
+	float r = beam->sprite_component.h/2.0;
 	entity_add_circle_coll(beam,
-			beam->spriteComponent.w - r, // x
+			beam->sprite_component.w - r, // x
 			r, // y
 			r, // radius
 			isCharged ? on_collide_nop : on_collide_die); // on_collide callback
@@ -28,9 +28,9 @@ void system_play(Game* game) {
 			continue;
 
 		KEY_STATE *kb = game->keyboard;
-		PlayerComponent *p_comp = &e->playerComponent;
-		VelocityComponent *v_comp = &e->velocityComponent;
-		SpriteComponent *s_comp = &e->spriteComponent;
+		PlayerComponent *p_comp = &e->player_component;
+		VelocityComponent *v_comp = &e->velocity_component;
+		SpriteComponent *s_comp = &e->sprite_component;
 
 		// Movement
 		if (kb[p_comp->up] == KEY_STATE_DOWN)

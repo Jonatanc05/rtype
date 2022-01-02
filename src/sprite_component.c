@@ -17,8 +17,8 @@ void system_draw_sprites(Game* game) {
 		if ((e->component_mask & mask) != mask)
 			continue;
 
-		PositionComponent* p_comp = &e->positionComponent;
-		SpriteComponent* s_comp = &e->spriteComponent;
+		PositionComponent* p_comp = &e->position_component;
+		SpriteComponent* s_comp = &e->sprite_component;
 		MySprite* spr = s_comp->sprite;
 		// improvable
 		al_draw_scaled_bitmap(s_comp->sprite->bm,

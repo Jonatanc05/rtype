@@ -22,12 +22,12 @@ typedef struct Entity {
 	short dead;
 	unsigned component_mask;
 
-	TextComponent textComponent;
-	PositionComponent positionComponent;
-	VelocityComponent velocityComponent;
-	PlayerComponent playerComponent;
-	SpriteComponent spriteComponent;
-	CircleCollComponent circleCollComponent;
+	TextComponent text_component;
+	PositionComponent position_component;
+	VelocityComponent velocity_component;
+	PlayerComponent player_component;
+	SpriteComponent sprite_component;
+	CircleCollComponent circle_coll_component;
 } Entity;
 
 void zerar_entity(Entity* e);

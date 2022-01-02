@@ -31,9 +31,9 @@ void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_dis
 
 	entity_add_sprite(e, load_sprite(ENEMY_SPRITE_P), 0, 0, 2 + (rand()%6)/2.0);
 	entity_add_circle_coll(e,
-			e->spriteComponent.w/2,
-			e->spriteComponent.h/2,
-			e->spriteComponent.h < e->spriteComponent.w/2 ? e->spriteComponent.h : e->spriteComponent.w/2,
+			e->sprite_component.w/2,
+			e->sprite_component.h/2,
+			e->sprite_component.h < e->sprite_component.w/2 ? e->sprite_component.h : e->sprite_component.w/2,
 			on_collide_die
 	);
 }
@@ -43,10 +43,10 @@ void system_clean_dead_entities(Game* game) {
 		Entity* e = &game->entities[i];
 		if (e->component_mask & POSITION_COMP_MASK
 			 && (
-				 e->positionComponent.x > al_get_display_width(game->display) + ENEMY_SPAWN_SIEGE
-			  || e->positionComponent.x < -ENEMY_SPAWN_SIEGE
-			  || e->positionComponent.y > al_get_display_height(game->display) + ENEMY_SPAWN_SIEGE
-			  || e->positionComponent.y < -ENEMY_SPAWN_SIEGE
+				 e->position_component.x > al_get_display_width(game->display) + ENEMY_SPAWN_SIEGE
+			  || e->position_component.x < -ENEMY_SPAWN_SIEGE
+			  || e->position_component.y > al_get_display_height(game->display) + ENEMY_SPAWN_SIEGE
+			  || e->position_component.y < -ENEMY_SPAWN_SIEGE
 			 )
 		) {
 			e->dead = 1;

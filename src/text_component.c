@@ -7,8 +7,8 @@ void system_draw_text(Game* game) {
 		if ((game->entities[i].component_mask & mask) != mask)
 			continue;
 
-		TextComponent *t_comp = &game->entities[i].textComponent;
-		PositionComponent *p_comp = &game->entities[i].positionComponent;
+		TextComponent *t_comp = &game->entities[i].text_component;
+		PositionComponent *p_comp = &game->entities[i].position_component;
 		ALLEGRO_FONT* font = NULL;
 		if (t_comp->fontSize == REGULAR_FONTSIZE)
 			font = game->regular_font;
