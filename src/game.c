@@ -41,7 +41,18 @@ void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_dis
 void system_clean_dead_entities(Game* game) {
 	for (int i = 0; i < game->numEntities; i++) {
 		Entity* e = &game->entities[i];
+		if (e->component_mask & POSITION_COMP_MASK
+			 && (
+				 e->positionComponent.x > al_get_display_width(game->display) + ENEMY_SPAWN_SIEGE
+			  || e->positionComponent.x < -ENEMY_SPAWN_SIEGE
+			  || e->positionComponent.y > al_get_display_height(game->display) + ENEMY_SPAWN_SIEGE
+			  || e->positionComponent.y < -ENEMY_SPAWN_SIEGE
+			 )
+		) {
+			e->dead = 1;
+		}
 		if (e->dead)
 			zerar_entity(e);
+
 	}
 }
