@@ -15,4 +15,6 @@ void on_collide_nop(Entity* self, Entity* other);
 
 void system_detect_collision(Game* game);
 
+void system_debug_draw_colliders(Game* game);
+
 #endif

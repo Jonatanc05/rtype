@@ -1,6 +1,7 @@
 #include "circle_collider_component.h"
 #include "game.h"
 #include <math.h>
+#include <allegro5/allegro_primitives.h>
 
 void on_collide_die(Entity* self, Entity* other) {
 	self->dead = 1;
@@ -37,5 +38,20 @@ void system_detect_collision(Game* game) {
 				coll2->on_collide(e2, e1);
 			}
 		}
+	}
+}
+
+void system_debug_draw_colliders(Game* game) {
+	for (int i = 0; i < game->numEntities; i++) {
+		Entity* e = &game->entities[i];
+		if (!(e->component_mask & CIRCLE_COMP_MASK))
+			continue;
+		al_draw_circle(
+				e->positionComponent.x + e->circleCollComponent.x,
+				e->positionComponent.y + e->circleCollComponent.y,
+				e->circleCollComponent.r,
+				al_map_rgb(255, 55, 55),
+				2
+		);
 	}
 }

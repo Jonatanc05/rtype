@@ -43,6 +43,9 @@ void on_update(Game* game) {
 	system_clean_dead_entities(game);
 	if(al_get_timer_count(game->timer)%(int)(FPS/ENEMIES_P_SECOND) == 0)
 		system_enemy_spawner(game, quadratic, linear);
+#ifdef _DEBUG
+	system_debug_draw_colliders(game);
+#endif
 }
 
 void on_game_exit(Game* game) {
