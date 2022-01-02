@@ -10,7 +10,7 @@
 
 const float FPS = 100;
 
-const int SCREEN_W = 960;
+const int SCREEN_W = 1160;
 const int SCREEN_H = 540;
 const int ENEMIES_P_SECOND = 6;
 
@@ -24,7 +24,7 @@ void on_game_init(Game* game) {
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
 
 	Entity* e = entity_create(game);
-	MySprite* ship_spr = load_sprite("rsc\\sprite\\ship-idle.png");
+	MySprite* ship_spr = load_sprite(SHIP_IDLE_SPRITE_P);
 	entity_add_position(e, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
 	entity_add_player(e, ALLEGRO_KEY_W,
 			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
@@ -167,8 +167,6 @@ int main(int argc, char **argv){
 		}
 		else if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 			game->keyboard[ev.keyboard.keycode] = KEY_STATE_DOWN;
-
-			printf("\ncodigo tecla: %d", ev.keyboard.keycode);
 		}
 
 	}
