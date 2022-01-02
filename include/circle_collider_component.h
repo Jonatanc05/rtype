@@ -11,6 +11,7 @@ typedef struct {
 } CircleCollComponent;
 
 void on_collide_die(Entity* self, Entity* other);
+void on_collide_nop(Entity* self, Entity* other);
 
 void system_detect_collision(Game* game);
 

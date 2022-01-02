@@ -12,6 +12,12 @@ void shoot(Game* game, Entity* player, char isCharged) {
 		);
 	entity_add_velocity(beam, BEAM_VELOCITY, 0);
 	entity_add_sprite(beam, spr, 0, 0, SHOT_SCALE);
+	float r = beam->spriteComponent.h/2.0;
+	entity_add_circle_coll(beam,
+			beam->spriteComponent.w - r, // x
+			r, // y
+			r, // radius
+			isCharged ? on_collide_nop : on_collide_die); // on_collide callback
 }
 
 void system_play(Game* game) {

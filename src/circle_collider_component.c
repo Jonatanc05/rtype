@@ -6,6 +6,8 @@ void on_collide_die(Entity* self, Entity* other) {
 	self->dead = 1;
 }
 
+void on_collide_nop(Entity* self, Entity* other) {}
+
 float dist(Entity* e1, Entity* e2) {
 	int posx1 = e1->positionComponent.x,
 		posy1 = e1->positionComponent.y,
