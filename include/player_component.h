@@ -8,7 +8,7 @@
 
 #define SHOT_SCALE 2
 #define MAX_BEAM_CHARGE 50
-#define BEAM_VELOCITY 6
+#define BEAM_VELOCITY 10
 #define BEAM_SPRITE_P "rsc\\sprite\\beam.png"
 #define CHARGED_BEAM_SPRITE_P "rsc\\sprite\\charged-beam.png"
 
