@@ -34,15 +34,18 @@ void on_game_init(Game* game) {
 }
 
 void on_update(Game* game) {
-	al_clear_to_color(al_map_rgb(0, 0, 0));
 	system_play(game);
 	system_move(game);
-	system_draw_sprites(game);
-	system_draw_text(game);
+	system_stars(game);
 	system_detect_collision(game);
 	system_clean_dead_entities(game);
 	if(al_get_timer_count(game->timer)%(int)(FPS/ENEMIES_P_SECOND) == 0)
 		system_enemy_spawner(game, quadratic, linear);
+
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	system_draw_rectangles(game);
+	system_draw_sprites(game);
+	system_draw_text(game);
 #ifdef _DEBUG
 	system_debug_draw_colliders(game);
 #endif

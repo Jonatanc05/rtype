@@ -56,3 +56,17 @@ void system_clean_dead_entities(Game* game) {
 
 	}
 }
+
+void system_stars(Game* game) {
+	if (rand()%100 < STAR_SPAWN_CHANCE) {
+		float mul = (rand()/(float)RAND_MAX);
+		float size = STAR_MIN_SIZE + ((STAR_MAX_SIZE - STAR_MIN_SIZE) * mul);
+		int velocity = (int)(STAR_MIN_VEL + ((STAR_MAX_VEL - STAR_MIN_VEL) * (1.0-mul)));
+		Entity* e = entity_create(game);
+		entity_add_position(e,
+				al_get_display_width(game->display),
+				(int)rand()%(int)(al_get_display_height(game->display)-size));
+		entity_add_velocity(e, -velocity, 0);
+		entity_add_rectangle(e, size, size);
+	}
+}

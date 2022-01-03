@@ -18,6 +18,12 @@ typedef char KEY_STATE;
 #define ENEMY_MAX_WIDTH 10
 #define ENEMY_MAX_HEIGHT 10
 
+#define STAR_SPAWN_CHANCE 10
+#define STAR_MIN_SIZE 0.6
+#define STAR_MAX_SIZE 2.4
+#define STAR_MIN_VEL 4
+#define STAR_MAX_VEL 8
+
 typedef struct Game {
 	ALLEGRO_DISPLAY *display;
 	ALLEGRO_EVENT_QUEUE *event_queue;
@@ -32,5 +38,7 @@ typedef struct Game {
 void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_distribution)(int, int));
 
 void system_clean_dead_entities(Game* game);
+
+void system_stars(Game* game);
 
 #endif

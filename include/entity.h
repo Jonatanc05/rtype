@@ -8,6 +8,7 @@
 #include "player_component.h"
 #include "sprite_component.h"
 #include "circle_collider_component.h"
+#include "rectangle_component.h"
 
 #define POSITION_COMP_MASK	0b00000001
 #define TEXT_COMP_MASK		0b00000010
@@ -15,8 +16,9 @@
 #define PLAYER_COMP_MASK	0b00001000
 #define SPRITE_COMP_MASK	0b00010000
 #define CIRCLE_COMP_MASK	0b00100000
+#define RECTANGLE_COMP_MASK	0b01000000
 
-#define MAX_ENTITIES 50
+#define MAX_ENTITIES 100
 
 typedef struct Entity {
 	short dead;
@@ -28,6 +30,7 @@ typedef struct Entity {
 	PlayerComponent player_component;
 	SpriteComponent sprite_component;
 	CircleCollComponent circle_coll_component;
+	RectangleComponent rectangle_component;
 } Entity;
 
 void zerar_entity(Entity* e);
@@ -47,5 +50,7 @@ void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, A
 void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale);
 
 void entity_add_circle_coll(Entity* e, int x, int y, float r, void(*on_collide)(Entity* a, Entity* b));
+
+void entity_add_rectangle(Entity* e, float w, float h);
 
 #endif

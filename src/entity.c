@@ -81,3 +81,11 @@ void entity_add_circle_coll(Entity* e, int x, int y, float r, void(*on_collide)(
 	e->circle_coll_component.r = r;
 	e->circle_coll_component.on_collide = on_collide;
 }
+
+void entity_add_rectangle(Entity* e, float w, float h) {
+	if (!(e->component_mask & POSITION_COMP_MASK))
+		entity_add_position(e, 0, 0);
+	e->component_mask |= RECTANGLE_COMP_MASK;
+	e->rectangle_component.w = w;
+	e->rectangle_component.h = h;
+}
