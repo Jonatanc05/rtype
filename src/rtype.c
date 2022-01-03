@@ -42,6 +42,7 @@ int main(int argc, char **argv){
 	}
 
 	//cria uma tela com dimensoes de SCREEN_W, SCREEN_H pixels
+	al_set_new_window_position(1, 25);
 	game->display = al_create_display(SCREEN_W, SCREEN_H);
 	if(!game->display) {
 		fprintf(stderr, "failed to create display!\n");
