@@ -10,6 +10,12 @@
 #include "circle_collider_component.h"
 #include "rectangle_component.h"
 
+typedef unsigned LAYER;
+#define LAYER_STAR		0b00000001
+#define LAYER_ENEMY		0b00000010
+#define LAYER_PLAYER	0b00000100
+#define LAYER_UI		0b00001000
+
 #define POSITION_COMP_MASK	0b00000001
 #define TEXT_COMP_MASK		0b00000010
 #define VELOCITY_COMP_MASK	0b00000100
@@ -23,6 +29,7 @@
 typedef struct Entity {
 	short dead;
 	unsigned component_mask;
+	LAYER layer;
 
 	TextComponent text_component;
 	PositionComponent position_component;
@@ -33,11 +40,11 @@ typedef struct Entity {
 	RectangleComponent rectangle_component;
 } Entity;
 
-void zerar_entity(Entity* e);
+Entity* entity_create(Game* game);
 
 void entity_kill(Entity* e);
 
-Entity* entity_create(Game* game);
+void zerar_entity(Entity* e);
 
 void entity_add_position(Entity* e, int x, int y);
 

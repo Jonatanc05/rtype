@@ -10,10 +10,6 @@ int main(int argc, char **argv){
 
 	Game* game = (Game*) malloc(sizeof(Game));
 
-	game->display = NULL;
-	game->event_queue = NULL;
-	game->timer = NULL;
-
 	//----------------------- rotinas de inicializacao ---------------------------------------
 
 	//inicializa o Allegro

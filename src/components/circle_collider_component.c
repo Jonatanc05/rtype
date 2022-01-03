@@ -4,7 +4,7 @@
 #include <allegro5/allegro_primitives.h>
 
 void on_collide_die(Game* game, Entity* self, Entity* other) {
-	self->dead = 1;
+	entity_kill(self);
 }
 void on_collide_die_score(Game* game, Entity* self, Entity* other) {
 	on_collide_die(game, self, other);

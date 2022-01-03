@@ -6,7 +6,6 @@
 #include "entity.h"
 
 #define FPS 100
-
 #define SCREEN_W 1160
 #define SCREEN_H 540
 

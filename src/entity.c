@@ -1,15 +1,6 @@
 #include "game.h"
 #include <stdio.h>
 
-void zerar_entity(Entity* e) {
-	if (e->sprite_component.sprite)
-		al_destroy_bitmap(e->sprite_component.sprite->bm);
-	free(e->sprite_component.sprite);
-	e->sprite_component.sprite = NULL;
-	e->dead = 0;
-	e->component_mask = 0;
-}
-
 Entity* entity_create(Game *game) {
 	for (int i = 0; i < game->numEntities; i++) {
 		if (0 == game->entities[i].component_mask)
@@ -26,6 +17,15 @@ Entity* entity_create(Game *game) {
 
 void entity_kill(Entity* e) {
 	e->dead = 1;
+	e->component_mask = 0;
+}
+
+void zerar_entity(Entity* e) {
+	if (e->sprite_component.sprite)
+		al_destroy_bitmap(e->sprite_component.sprite->bm);
+	free(e->sprite_component.sprite);
+	e->sprite_component.sprite = NULL;
+	e->dead = 0;
 	e->component_mask = 0;
 }
 

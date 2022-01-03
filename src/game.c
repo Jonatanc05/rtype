@@ -11,6 +11,7 @@ void on_game_init(Game* game) {
 	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
 
+	// Criar jogador
 	Entity* p = entity_create(game);
 	MySprite* ship_spr = load_sprite(SHIP_IDLE_SPRITE_P);
 	entity_add_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
@@ -20,6 +21,7 @@ void on_game_init(Game* game) {
 	);
 	entity_add_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
 
+	// Criar pontuação
 	Entity* t = entity_create(game);
 	game->score = 0;
 	game->score_str = (char*)malloc(sizeof(char)*10);
@@ -34,8 +36,7 @@ void on_update(Game* game) {
 	system_detect_collision(game);
 	system_clean_dead_entities(game);
 	system_score(game);
-	if(al_get_timer_count(game->timer)%(int)(FPS/ENEMIES_P_SECOND) == 0)
-		system_enemy_spawner(game, quadratic, linear);
+	system_enemy_spawner(game, quadratic, linear);
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	system_draw_rectangles(game);
@@ -61,6 +62,9 @@ int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
 }
 
 void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_distribution)(int, int)) {
+	if (al_get_timer_count(game->timer)%(int)(FPS/ENEMIES_P_SECOND) != 0)
+		return;
+
 	int screen_w = al_get_display_width(game->display);
 	int x = x_distribution(screen_w + 2*ENEMY_SPAWN_SIEGE, screen_w) - ENEMY_SPAWN_SIEGE;
 
@@ -99,7 +103,7 @@ void system_clean_dead_entities(Game* game) {
 			  || e->position_component.y < -ENEMY_SPAWN_SIEGE
 			 )
 		) {
-			e->dead = 1;
+			entity_kill(e);
 		}
 		if (e->dead)
 			zerar_entity(e);
