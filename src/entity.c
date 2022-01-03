@@ -74,7 +74,7 @@ void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
 	sprite_component_set(&e->sprite_component, s, scale);
 }
 
-void entity_add_circle_coll(Entity* e, int x, int y, float r, void(*on_collide)(Entity* a, Entity* b)) {
+void entity_add_circle_coll(Entity* e, int x, int y, float r, void(*on_collide)(Game* game, Entity* a, Entity* b)) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
 		entity_add_position(e, 0, 0);
 	e->component_mask |= CIRCLE_COMP_MASK;

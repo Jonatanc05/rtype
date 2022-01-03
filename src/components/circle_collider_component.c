@@ -3,11 +3,21 @@
 #include <math.h>
 #include <allegro5/allegro_primitives.h>
 
-void on_collide_die(Entity* self, Entity* other) {
+void on_collide_die(Game* game, Entity* self, Entity* other) {
 	self->dead = 1;
 }
+void on_collide_die_score(Game* game, Entity* self, Entity* other) {
+	on_collide_die(game, self, other);
+	if (other->component_mask & SPRITE_COMP_MASK)
+		game->score += 10 * (int)other->sprite_component.scale;
+}
 
-void on_collide_nop(Entity* self, Entity* other) {}
+void on_collide_nop(Game* game, Entity* self, Entity* other) {}
+void on_collide_nop_score(Game* game, Entity* self, Entity* other) {
+	on_collide_nop(game, self, other);
+	if (other->component_mask & SPRITE_COMP_MASK)
+		game->score += 10 * (int)other->sprite_component.scale;
+}
 
 float dist(Entity* e1, Entity* e2) {
 	int posx1 = e1->position_component.x,
@@ -34,8 +44,8 @@ void system_detect_collision(Game* game) {
 			CircleCollComponent *coll1 = &e1->circle_coll_component,
 								*coll2 = &e2->circle_coll_component;
 			if (dist(e1, e2) < coll1->r + coll2->r) {
-				coll1->on_collide(e1, e2);
-				coll2->on_collide(e2, e1);
+				coll1->on_collide(game, e1, e2);
+				coll2->on_collide(game, e2, e1);
 			}
 		}
 	}

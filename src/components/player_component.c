@@ -17,7 +17,7 @@ void shoot(Game* game, Entity* player, char isCharged) {
 			beam->sprite_component.w - r, // x
 			r, // y
 			r, // radius
-			isCharged ? on_collide_nop : on_collide_die); // on_collide callback
+			isCharged ? on_collide_nop_score : on_collide_die_score); // on_collide callback
 }
 
 void system_play(Game* game) {

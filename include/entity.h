@@ -49,7 +49,7 @@ void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, A
 
 void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale);
 
-void entity_add_circle_coll(Entity* e, int x, int y, float r, void(*on_collide)(Entity* a, Entity* b));
+void entity_add_circle_coll(Entity* e, int x, int y, float r, void(*on_collide)(Game* game, Entity* a, Entity* b));
 
 void entity_add_rectangle(Entity* e, float w, float h);
 
