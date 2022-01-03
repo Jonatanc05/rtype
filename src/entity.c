@@ -36,6 +36,8 @@ void entity_add_position(Entity* e, int x, int y) {
 }
 
 void entity_add_text(Entity* e, int x, int y, char* t, FONT_SIZE fs) {
+	if (!(e->component_mask & POSITION_COMP_MASK))
+		entity_add_position(e, 0, 0);
 	e->component_mask |= TEXT_COMP_MASK;
 	e->text_component.x = x;
 	e->text_component.y = y;

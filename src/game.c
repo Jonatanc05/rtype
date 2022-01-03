@@ -11,14 +11,20 @@ void on_game_init(Game* game) {
 	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
 
-	Entity* e = entity_create(game);
+	Entity* p = entity_create(game);
 	MySprite* ship_spr = load_sprite(SHIP_IDLE_SPRITE_P);
-	entity_add_position(e, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
-	entity_add_player(e, ALLEGRO_KEY_W,
+	entity_add_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
+	entity_add_player(p, ALLEGRO_KEY_W,
 			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
 						ALLEGRO_KEY_SPACE
 	);
-	entity_add_sprite(e, ship_spr, 0, 0, SHIP_SCALE);
+	entity_add_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
+
+	Entity* t = entity_create(game);
+	game->score = 0;
+	game->score_str = (char*)malloc(sizeof(char)*10);
+	*game->score_str = '\0';
+	entity_add_text(t, 0, 0, game->score_str, REGULAR_FONTSIZE);
 }
 
 void on_update(Game* game) {
@@ -27,6 +33,7 @@ void on_update(Game* game) {
 	system_stars(game);
 	system_detect_collision(game);
 	system_clean_dead_entities(game);
+	system_score(game);
 	if(al_get_timer_count(game->timer)%(int)(FPS/ENEMIES_P_SECOND) == 0)
 		system_enemy_spawner(game, quadratic, linear);
 
@@ -41,6 +48,7 @@ void on_update(Game* game) {
 
 void on_game_exit(Game* game) {
 	free(game->entities);
+	free(game->score_str);
 }
 
 int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
@@ -111,4 +119,10 @@ void system_stars(Game* game) {
 		entity_add_velocity(e, -velocity, 0);
 		entity_add_rectangle(e, size, size);
 	}
+}
+
+void system_score(Game* game) {
+	if(al_get_timer_count(game->timer)%FPS == 0)
+		game->score += 50;
+	sprintf(game->score_str, "%09d", game->score);
 }

@@ -36,6 +36,8 @@ typedef struct Game {
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_FONT *regular_font;
 
+	int score;
+	char* score_str;
 	KEY_STATE keyboard[ALLEGRO_KEY_MAX];
 	unsigned numEntities;
 	Entity* entities;
@@ -50,5 +52,7 @@ void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_dis
 void system_clean_dead_entities(Game* game);
 
 void system_stars(Game* game);
+
+void system_score(Game* game);
 
 #endif
