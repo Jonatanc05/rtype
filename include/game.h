@@ -5,6 +5,11 @@
 #include "allegro5/allegro_font.h"
 #include "entity.h"
 
+#define FPS 100
+
+#define SCREEN_W 1160
+#define SCREEN_H 540
+
 typedef char KEY_STATE;
 #define KEY_STATE_NULL 0
 #define KEY_STATE_DOWN 1
@@ -17,6 +22,7 @@ typedef char KEY_STATE;
 #define ENEMY_SPAWN_SIEGE 80
 #define ENEMY_MAX_WIDTH 10
 #define ENEMY_MAX_HEIGHT 10
+#define ENEMIES_P_SECOND 6
 
 #define STAR_SPAWN_CHANCE 10
 #define STAR_MIN_SIZE 0.6
@@ -34,6 +40,10 @@ typedef struct Game {
 	unsigned numEntities;
 	Entity* entities;
 } Game;
+
+void on_game_init(Game* game);
+void on_update(Game* game);
+void on_game_exit(Game* game);
 
 void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_distribution)(int, int));
 

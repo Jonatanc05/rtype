@@ -1,5 +1,47 @@
 #include "game.h"
 #include <math.h>
+#include <stdio.h>
+
+void on_game_init(Game* game) {
+	srand(time(NULL));
+
+	for (int i = 0; i <= ALLEGRO_KEY_MAX; i++)
+		game->keyboard[i] = 0;
+	game->numEntities = 0;
+	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
+	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
+
+	Entity* e = entity_create(game);
+	MySprite* ship_spr = load_sprite(SHIP_IDLE_SPRITE_P);
+	entity_add_position(e, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
+	entity_add_player(e, ALLEGRO_KEY_W,
+			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
+						ALLEGRO_KEY_SPACE
+	);
+	entity_add_sprite(e, ship_spr, 0, 0, SHIP_SCALE);
+}
+
+void on_update(Game* game) {
+	system_play(game);
+	system_move(game);
+	system_stars(game);
+	system_detect_collision(game);
+	system_clean_dead_entities(game);
+	if(al_get_timer_count(game->timer)%(int)(FPS/ENEMIES_P_SECOND) == 0)
+		system_enemy_spawner(game, quadratic, linear);
+
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	system_draw_rectangles(game);
+	system_draw_sprites(game);
+	system_draw_text(game);
+#ifdef _DEBUG
+	system_debug_draw_colliders(game);
+#endif
+}
+
+void on_game_exit(Game* game) {
+	free(game->entities);
+}
 
 int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
 	double c_vel = ((dc - sc)/max_dist)*max_vel;
