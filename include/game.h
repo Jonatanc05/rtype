@@ -5,7 +5,7 @@
 #include "allegro5/allegro_font.h"
 #include "entity.h"
 
-#define FPS 100
+#define FPS 60
 #define SCREEN_W 1160
 #define SCREEN_H 540
 
@@ -21,7 +21,7 @@ typedef char KEY_STATE;
 #define ENEMY_SPAWN_SIEGE 80
 #define ENEMY_MAX_WIDTH 10
 #define ENEMY_MAX_HEIGHT 10
-#define ENEMIES_P_SECOND 6
+#define ENEMIES_P_SECOND 1
 
 #define STAR_SPAWN_CHANCE 10
 #define STAR_MIN_SIZE 0.6

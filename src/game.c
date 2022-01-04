@@ -20,6 +20,7 @@ void on_game_init(Game* game) {
 						ALLEGRO_KEY_SPACE
 	);
 	entity_add_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
+	entity_add_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_die);
 
 	// Criar pontuação
 	Entity* t = entity_create(game);

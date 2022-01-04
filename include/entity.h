@@ -9,12 +9,14 @@
 #include "sprite_component.h"
 #include "circle_collider_component.h"
 #include "rectangle_component.h"
+#include "box_collider_component.h"
 
 typedef unsigned LAYER;
-#define LAYER_STAR		0b00000001
-#define LAYER_ENEMY		0b00000010
-#define LAYER_PLAYER	0b00000100
-#define LAYER_UI		0b00001000
+#define LAYER_STAR			0b00000001
+#define LAYER_ENEMY			0b00000010
+#define LAYER_PLAYER		0b00000100
+#define LAYER_UI			0b00001000
+#define LAYER_PROJECTILE	0b00010000
 
 #define POSITION_COMP_MASK	0b00000001
 #define TEXT_COMP_MASK		0b00000010
@@ -23,6 +25,7 @@ typedef unsigned LAYER;
 #define SPRITE_COMP_MASK	0b00010000
 #define CIRCLE_COMP_MASK	0b00100000
 #define RECTANGLE_COMP_MASK	0b01000000
+#define BOX_COMP_MASK		0b10000000
 
 #define MAX_ENTITIES 100
 
@@ -37,6 +40,7 @@ typedef struct Entity {
 	PlayerComponent player_component;
 	SpriteComponent sprite_component;
 	CircleCollComponent circle_coll_component;
+	BoxCollComponent box_coll_component;
 	RectangleComponent rectangle_component;
 } Entity;
 
@@ -56,8 +60,10 @@ void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, A
 
 void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale);
 
-void entity_add_circle_coll(Entity* e, int x, int y, float r, void(*on_collide)(Game* game, Entity* a, Entity* b));
+void entity_add_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK on_collide);
 
 void entity_add_rectangle(Entity* e, float w, float h);
+
+void entity_add_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide);
 
 #endif
