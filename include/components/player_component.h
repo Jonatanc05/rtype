@@ -1,3 +1,6 @@
+#ifndef _included_player_component_h
+#define _included_player_component_h
+
 #include <allegro5/allegro.h>
 
 #define VELOCITY 3
@@ -21,3 +24,7 @@ typedef struct {
 } PlayerComponent;
 
 void system_play(Game* game);
+
+int any_player_left(Game* game);
+
+#endif

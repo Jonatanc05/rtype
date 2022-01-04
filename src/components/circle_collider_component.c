@@ -2,9 +2,12 @@
 #include "game.h"
 #include <math.h>
 #include <allegro5/allegro_primitives.h>
+#include "player_component.h"
 
 void on_collide_die(Game* game, Entity* self, Entity* other) {
 	entity_kill(self);
+	if (!any_player_left(game))
+		game->over = 1;
 }
 void on_collide_die_score(Game* game, Entity* self, Entity* other) {
 	on_collide_die(game, self, other);

@@ -68,3 +68,11 @@ void system_play(Game* game) {
 			sprite_component_set(s_comp, load_sprite(SHIP_IDLE_SPRITE_P), SHIP_SCALE);
 	}
 }
+
+int any_player_left(Game* game) {
+	for (int i = 0; i < game->numEntities; i++) {
+		if (game->entities[i].component_mask & PLAYER_COMP_MASK)
+			return 1;
+	}
+	return 0;
+}

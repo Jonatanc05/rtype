@@ -7,6 +7,7 @@ void on_game_init(Game* game) {
 
 	for (int i = 0; i <= ALLEGRO_KEY_MAX; i++)
 		game->keyboard[i] = 0;
+	game->over = 0;
 	game->numEntities = 0;
 	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
@@ -30,13 +31,34 @@ void on_game_init(Game* game) {
 	entity_add_text(t, 0, 0, game->score_str, REGULAR_FONTSIZE);
 }
 
+int test = 0;
 void on_update(Game* game) {
+	if (game->over && !test) {
+		test = 1;
+
+		Entity* go = entity_create(game);
+		entity_add_position(go, SCREEN_W/2 - 140, SCREEN_H/2 - 50);
+		entity_add_text(go, 0, 0, "Game Over", REGULAR_FONTSIZE);
+
+		Entity* sc = entity_create(game);
+		entity_add_position(sc, SCREEN_W/2 - 220, SCREEN_H/2 + 10);
+		char* str = (char*) malloc(sizeof(char)*30); *str = '\0'; sprintf(str, "Your score: %d", game->score);
+		entity_add_text(sc, 0, 0, str, REGULAR_FONTSIZE);
+
+		if (0) { // Read record.dat
+			Entity* nr = entity_create(game);
+			entity_add_position(nr, SCREEN_W/2 - 160, SCREEN_H/2 + 70);
+			entity_add_text(nr, 0, 0, "New record!", REGULAR_FONTSIZE);
+		}
+	}
+	else if (!game->over)
+		system_score(game);
+
 	system_play(game);
 	system_move(game);
 	system_stars(game);
 	system_detect_collision(game);
 	system_clean_dead_entities(game);
-	system_score(game);
 	system_enemy_spawner(game, quadratic, linear);
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
