@@ -9,6 +9,8 @@ typedef struct {
 	int w, h;
 } MySprite;
 
+int record(int score);
+
 MySprite* load_sprite(const char* path);
 
 // Funções de distribuição estatística

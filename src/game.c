@@ -31,10 +31,10 @@ void on_game_init(Game* game) {
 	entity_add_text(t, 0, 0, game->score_str, REGULAR_FONTSIZE);
 }
 
-int test = 0;
+int _record = 0;
 void on_update(Game* game) {
-	if (game->over && !test) {
-		test = 1;
+	if (game->over && !_record) {
+		_record = 1;
 
 		Entity* go = entity_create(game);
 		entity_add_position(go, SCREEN_W/2 - 140, SCREEN_H/2 - 50);
@@ -45,7 +45,7 @@ void on_update(Game* game) {
 		char* str = (char*) malloc(sizeof(char)*30); *str = '\0'; sprintf(str, "Your score: %d", game->score);
 		entity_add_text(sc, 0, 0, str, REGULAR_FONTSIZE);
 
-		if (0) { // Read record.dat
+		if (record(game->score)) { // Read record.dat
 			Entity* nr = entity_create(game);
 			entity_add_position(nr, SCREEN_W/2 - 160, SCREEN_H/2 + 70);
 			entity_add_text(nr, 0, 0, "New record!", REGULAR_FONTSIZE);
