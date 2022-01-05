@@ -36,6 +36,7 @@ typedef struct Game {
 	ALLEGRO_FONT *regular_font;
 
 	int score, over;
+	long unsigned tick;
 	char* score_str;
 	KEY_STATE keyboard[ALLEGRO_KEY_MAX];
 	unsigned numEntities;

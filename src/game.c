@@ -33,6 +33,7 @@ void on_game_init(Game* game) {
 
 int _game_finished = 0;
 void on_update(Game* game) {
+	game->tick = al_get_timer_count(game->timer);
 	if (game->over && !_game_finished) {
 		_game_finished = 1;
 
@@ -85,7 +86,7 @@ int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
 }
 
 void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_distribution)(int, int)) {
-	if (al_get_timer_count(game->timer)%(int)(FPS/ENEMIES_P_SECOND) != 0)
+	if (game->tick%(int)(FPS/ENEMIES_P_SECOND) != 0)
 		return;
 
 	int screen_w = al_get_display_width(game->display);
@@ -149,7 +150,7 @@ void system_stars(Game* game) {
 }
 
 void system_score(Game* game) {
-	if(al_get_timer_count(game->timer)%FPS == 0)
+	if(game->tick%FPS == 0)
 		game->score += 50;
 	sprintf(game->score_str, "%09d", game->score);
 }

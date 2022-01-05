@@ -107,8 +107,8 @@ int main(int argc, char **argv){
 			}
 
 			al_flip_display();
-			if(al_get_timer_count(game->timer)%(int)FPS == 0)
-				printf("\n%d segundos se passaram...", (int)(al_get_timer_count(game->timer)/FPS));
+			if(game->tick%(int)FPS == 0)
+				printf("\n%d segundos se passaram...", game->tick/FPS);
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			playing = 0;
