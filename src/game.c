@@ -60,7 +60,7 @@ void on_update(Game* game) {
 	system_stars(game);
 	system_detect_collision(game);
 	system_clean_dead_entities(game);
-	system_enemy_spawner(game, quadratic, linear);
+	system_airmine_spawner(game);
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	system_draw_rectangles(game);
@@ -85,35 +85,32 @@ int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
 	return (int)c_vel;
 }
 
-void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_distribution)(int, int)) {
-	if (game->tick%(int)(FPS/ENEMIES_P_SECOND) != 0)
+void system_airmine_spawner(Game* game) {
+	if (game->tick%(int)(FPS/AIRMINES_P_SECOND) != 0)
 		return;
 
+	MySprite* spr = load_sprite(AIRMINE_SPRITE_P);
+	float spr_scale = AIRMINE_MIN_SCALE + (rand()/(float)RAND_MAX)*(AIRMINE_MAX_SCALE-AIRMINE_MIN_SCALE);
+	float radius = spr->w*spr_scale/2.0;
+	int w = spr->w*spr_scale, h = spr->h*spr_scale;
+
 	int screen_w = al_get_display_width(game->display);
-	int x = x_distribution(screen_w + 2*ENEMY_SPAWN_SIEGE, screen_w) - ENEMY_SPAWN_SIEGE;
+	int x = rand()%(screen_w + w) - w;
 
 	int screen_h = al_get_display_height(game->display);
-	int y;
-	if (x >= -ENEMY_MAX_WIDTH && x < screen_w)
-		y = rand()%2 ? -ENEMY_MAX_HEIGHT : screen_h;
-	else
-		y = y_distribution(screen_h + 2*ENEMY_SPAWN_SIEGE, screen_h/2+ENEMY_SPAWN_SIEGE) - ENEMY_SPAWN_SIEGE;
+	int y = rand()%2 ? -h : screen_h;
 
 	Entity* e = entity_create(game);
 	entity_add_position(e, x, y);
 
+	// Set enemy velocity towards a random point in screen within a margin
 	int x_margin = screen_w / 5;
-	int x_vel = velocity_towards(x_margin + rand()%(screen_w - 2*x_margin), x, screen_w, ENEMY_MAX_XVEL);
-	int y_vel = velocity_towards(rand()%screen_h, y, screen_h, ENEMY_MAX_YVEL);
+	int x_vel = velocity_towards(x_margin + rand()%(screen_w - 2*x_margin), x, screen_w, AIRMINE_MAX_XVEL);
+	int y_vel = velocity_towards(rand()%screen_h, y, screen_h, AIRMINE_MAX_YVEL);
 	entity_add_velocity(e, x_vel, y_vel);
 
-	entity_add_sprite(e, load_sprite(ENEMY_SPRITE_P), 0, 0, 2 + (rand()%6)/2.0);
-	entity_add_circle_coll(e,
-			e->sprite_component.w/2,
-			e->sprite_component.h/2,
-			e->sprite_component.h < e->sprite_component.w/2 ? e->sprite_component.h : e->sprite_component.w/2,
-			on_collide_die
-	);
+	entity_add_sprite(e, spr, 0, 0, spr_scale);
+	entity_add_circle_coll(e, radius, radius, radius, on_collide_die);
 }
 
 void system_clean_dead_entities(Game* game) {
@@ -121,10 +118,10 @@ void system_clean_dead_entities(Game* game) {
 		Entity* e = &game->entities[i];
 		if (e->component_mask & POSITION_COMP_MASK
 			 && (
-				 e->position_component.x > al_get_display_width(game->display) + ENEMY_SPAWN_SIEGE
-			  || e->position_component.x < -ENEMY_SPAWN_SIEGE
-			  || e->position_component.y > al_get_display_height(game->display) + ENEMY_SPAWN_SIEGE
-			  || e->position_component.y < -ENEMY_SPAWN_SIEGE
+				 e->position_component.x > al_get_display_width(game->display) + AIRMINE_SPAWN_SIEGE*2
+			  || e->position_component.x < -AIRMINE_SPAWN_SIEGE*2
+			  || e->position_component.y > al_get_display_height(game->display) + AIRMINE_SPAWN_SIEGE*2
+			  || e->position_component.y < -AIRMINE_SPAWN_SIEGE*2
 			 )
 		) {
 			entity_kill(e);
