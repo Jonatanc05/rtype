@@ -28,3 +28,9 @@ MySprite* load_sprite(const char* path) {
 	s->h = al_get_bitmap_height(s->bm);
 	return s;
 }
+
+void unload_sprite(MySprite* s) {
+	if (!s) return;
+	al_destroy_bitmap(s->bm);
+	free(s);
+}

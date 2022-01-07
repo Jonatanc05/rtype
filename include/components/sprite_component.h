@@ -1,3 +1,6 @@
+#ifndef _included_sprite_component_h
+#define _included_sprite_component_h
+
 #include <allegro5/allegro.h>
 
 typedef struct Game Game;
@@ -10,4 +13,4 @@ typedef struct {
 
 void system_draw_sprites(Game* game);
 
-void sprite_component_set(SpriteComponent* s_comp, MySprite* s, float scale);
+#endif

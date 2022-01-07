@@ -2,7 +2,7 @@
 
 void shoot(Game* game, Entity* player, char isCharged) {
 	Entity *beam = entity_create(game);
-	MySprite *spr = load_sprite(isCharged ? CHARGED_BEAM_SPRITE_P : BEAM_SPRITE_P);
+	MySprite *spr = isCharged ? game->ch_beam_spr : game->beam_spr;
 
 	SpriteComponent* s_comp = &player->sprite_component;
 
@@ -60,12 +60,16 @@ void system_play(Game* game) {
 		}
 
 		// Animation
+		MySprite *correct_spr = NULL;
 		if (v_comp->y > 0)
-			sprite_component_set(s_comp, load_sprite(SHIP_DOWN_SPRITE_P), SHIP_SCALE);
+			correct_spr = game->p_down_spr;
 		else if (v_comp->y < 0)
-			sprite_component_set(s_comp, load_sprite(SHIP_UP_SPRITE_P), SHIP_SCALE);
+			correct_spr = game->p_up_spr;
 		else
-			sprite_component_set(s_comp, load_sprite(SHIP_IDLE_SPRITE_P), SHIP_SCALE);
+			correct_spr = game->p_idle_spr;
+
+		if (s_comp->sprite != correct_spr)
+			s_comp->sprite = correct_spr;
 	}
 }
 

@@ -1,15 +1,5 @@
 #include "game.h"
 
-void sprite_component_set(SpriteComponent* s_comp, MySprite* s, float scale) {
-	if (s_comp->sprite)
-		al_destroy_bitmap(s_comp->sprite->bm);
-	free(s_comp->sprite);
-	s_comp->sprite = s;
-	s_comp->w = s->w * scale;
-	s_comp->h = s->h * scale;
-	s_comp->scale = scale;
-}
-
 void system_draw_sprites(Game* game) {
 	unsigned mask = POSITION_COMP_MASK | SPRITE_COMP_MASK;
 	for (int i = 0; i < game->numEntities; i++) {

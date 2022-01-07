@@ -5,16 +5,24 @@
 void on_game_init(Game* game) {
 	srand(time(NULL));
 
+	game->over = 0;
 	for (int i = 0; i <= ALLEGRO_KEY_MAX; i++)
 		game->keyboard[i] = 0;
-	game->over = 0;
 	game->numEntities = 0;
 	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
 
+	// Inicializa sprites
+	game->airmine_spr = load_sprite(AIRMINE_SPRITE_P);
+	game->p_idle_spr =  load_sprite(SHIP_IDLE_SPRITE_P);
+	game->p_up_spr =    load_sprite(SHIP_UP_SPRITE_P);
+	game->p_down_spr =  load_sprite(SHIP_DOWN_SPRITE_P);
+	game->beam_spr =    load_sprite(BEAM_SPRITE_P);
+	game->ch_beam_spr = load_sprite(CHARGED_BEAM_SPRITE_P);
+
 	// Criar jogador
 	Entity* p = entity_create(game);
-	MySprite* ship_spr = load_sprite(SHIP_IDLE_SPRITE_P);
+	MySprite* ship_spr = game->p_idle_spr;
 	entity_add_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
 	entity_add_player(p, ALLEGRO_KEY_W,
 			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
@@ -74,6 +82,12 @@ void on_update(Game* game) {
 void on_game_exit(Game* game) {
 	free(game->entities);
 	free(game->score_str);
+	unload_sprite(game->airmine_spr);
+	unload_sprite(game->p_idle_spr);
+	unload_sprite(game->p_up_spr);
+	unload_sprite(game->p_down_spr);
+	unload_sprite(game->beam_spr);
+	unload_sprite(game->ch_beam_spr);
 }
 
 int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
@@ -89,7 +103,7 @@ void system_airmine_spawner(Game* game) {
 	if (game->tick%(int)(FPS/AIRMINES_P_SECOND) != 0)
 		return;
 
-	MySprite* spr = load_sprite(AIRMINE_SPRITE_P);
+	MySprite* spr = game->airmine_spr;
 	float spr_scale = AIRMINE_MIN_SCALE + (rand()/(float)RAND_MAX)*(AIRMINE_MAX_SCALE-AIRMINE_MIN_SCALE);
 	float radius = spr->w*spr_scale/2.0;
 	int w = spr->w*spr_scale, h = spr->h*spr_scale;
@@ -103,7 +117,7 @@ void system_airmine_spawner(Game* game) {
 	Entity* e = entity_create(game);
 	entity_add_position(e, x, y);
 
-	// Set enemy velocity towards a random point in screen within a margin
+	// Set airmine velocity towards a random point in screen within a margin
 	int x_margin = screen_w / 5;
 	int x_vel = velocity_towards(x_margin + rand()%(screen_w - 2*x_margin), x, screen_w, AIRMINE_MAX_XVEL);
 	int y_vel = velocity_towards(rand()%screen_h, y, screen_h, AIRMINE_MAX_YVEL);

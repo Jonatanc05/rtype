@@ -15,15 +15,15 @@ typedef char KEY_STATE;
 #define KEY_STATE_HOLD 2
 #define KEY_STATE_UP 3
 
-#define ENEMY_SPRITE_P  "rsc\\sprite\\enemy.png"
-#define ENEMY_MAX_XVEL 4.0
-#define ENEMY_MAX_YVEL 3.0
-#define ENEMY_SPAWN_SIEGE 80
-#define ENEMY_MAX_WIDTH 10
-#define ENEMY_MAX_HEIGHT 10
-#define ENEMIES_P_SECOND 1
+#define AIRMINE_SPRITE_P  "rsc\\sprite\\airmine.png"
+#define AIRMINE_MAX_XVEL 4.0
+#define AIRMINE_MAX_YVEL 3.0
+#define AIRMINE_SPAWN_SIEGE 80
+#define AIRMINE_MIN_SCALE 5.0
+#define AIRMINE_MAX_SCALE 2.0
+#define AIRMINES_P_SECOND 1
 
-#define STAR_SPAWN_CHANCE 10
+#define STAR_SPAWN_CHANCE 20
 #define STAR_MIN_SIZE 0.6
 #define STAR_MAX_SIZE 2.4
 #define STAR_MIN_VEL 4
@@ -41,13 +41,17 @@ typedef struct Game {
 	KEY_STATE keyboard[ALLEGRO_KEY_MAX];
 	unsigned numEntities;
 	Entity* entities;
+
+	MySprite *p_idle_spr, *p_up_spr, *p_down_spr,
+			 *airmine_spr,
+			 *beam_spr, *ch_beam_spr;
 } Game;
 
 void on_game_init(Game* game);
 void on_update(Game* game);
 void on_game_exit(Game* game);
 
-void system_enemy_spawner(Game* game, int(*x_distribution)(int, int), int(*y_distribution)(int, int));
+void system_airmine_spawner(Game* game);
 
 void system_clean_dead_entities(Game* game);
 

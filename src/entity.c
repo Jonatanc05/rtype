@@ -21,10 +21,6 @@ void entity_kill(Entity* e) {
 }
 
 void zerar_entity(Entity* e) {
-	if (e->sprite_component.sprite)
-		al_destroy_bitmap(e->sprite_component.sprite->bm);
-	free(e->sprite_component.sprite);
-	e->sprite_component.sprite = NULL;
 	e->dead = 0;
 	e->component_mask = 0;
 }
@@ -54,6 +50,8 @@ void entity_add_velocity(Entity* e, int x, int y) {
 }
 
 void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s) {
+	if (!(e->component_mask & SPRITE_COMP_MASK))
+		entity_add_sprite(e, NULL, 0, 0, 0.0);
 	if (!(e->component_mask & VELOCITY_COMP_MASK))
 		entity_add_velocity(e, 0, 0);
 	e->component_mask |= PLAYER_COMP_MASK;
@@ -69,9 +67,12 @@ void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
 		entity_add_position(e, 0, 0);
 	e->component_mask |= SPRITE_COMP_MASK;
+	e->sprite_component.sprite = s;
+	e->sprite_component.w = s->w * scale;
+	e->sprite_component.h = s->h * scale;
+	e->sprite_component.scale = scale;
 	e->sprite_component.x = x;
 	e->sprite_component.y = y;
-	sprite_component_set(&e->sprite_component, s, scale);
 }
 
 void entity_add_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK on_collide) {

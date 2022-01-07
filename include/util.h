@@ -12,5 +12,6 @@ typedef struct {
 int record(int score);
 
 MySprite* load_sprite(const char* path);
+void unload_sprite(MySprite* s);
 
 #endif
