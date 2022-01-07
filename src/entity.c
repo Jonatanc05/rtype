@@ -68,11 +68,13 @@ void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
 		entity_add_position(e, 0, 0);
 	e->component_mask |= SPRITE_COMP_MASK;
 	e->sprite_component.sprite = s;
-	e->sprite_component.w = s->w * scale;
-	e->sprite_component.h = s->h * scale;
 	e->sprite_component.scale = scale;
 	e->sprite_component.x = x;
 	e->sprite_component.y = y;
+	if (s) {
+		e->sprite_component.w = s->w * scale;
+		e->sprite_component.h = s->h * scale;
+	}
 }
 
 void entity_add_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK on_collide) {
