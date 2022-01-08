@@ -6,11 +6,11 @@ gcc -o rtype.exe ^
 	src\game.c ^
 	src\entity.c ^
 	src\util.c ^
+	src\collision.c ^
 	src\components\text_component.c ^
 	src\components\velocity_component.c ^
 	src\components\player_component.c ^
 	src\components\sprite_component.c ^
-	src\components\circle_collider_component.c ^
 	src\components\rectangle_component.c ^
 	lib\liballegro-5.0.10-monolith-mt.a
 pause

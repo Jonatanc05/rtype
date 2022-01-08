@@ -10,6 +10,7 @@
 #include "components/circle_collider_component.h"
 #include "components/rectangle_component.h"
 #include "components/box_collider_component.h"
+#include "collision_callbacks.h"
 
 typedef unsigned LAYER;
 #define LAYER_STAR			0b00000001

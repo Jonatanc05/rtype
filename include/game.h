@@ -4,6 +4,7 @@
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_font.h"
 #include "entity.h"
+#include "collision.h"
 
 #define FPS 60
 #define SCREEN_W 1160
