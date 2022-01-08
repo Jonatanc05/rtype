@@ -1,7 +1,7 @@
 #ifndef included_text_component_h
 #define included_text_component_h
 
-#include "allegro5/allegro_font.h"
+#include <allegro5/allegro_font.h>
 
 typedef struct Game Game;
 
