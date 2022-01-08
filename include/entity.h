@@ -32,7 +32,6 @@ typedef unsigned LAYER;
 typedef struct Entity {
 	short dead;
 	unsigned component_mask;
-	LAYER layer;
 
 	TextComponent text_component;
 	PositionComponent position_component;
@@ -50,20 +49,20 @@ void entity_kill(Entity* e);
 
 void zerar_entity(Entity* e);
 
-void entity_add_position(Entity* e, int x, int y);
+void entity_set_position(Entity* e, int x, int y);
 
-void entity_add_text(Entity* e, int x, int y, char* t, FONT_SIZE fs);
+void entity_set_text(Entity* e, int x, int y, char* t, FONT_SIZE fs);
 
-void entity_add_velocity(Entity* e, int x, int y);
+void entity_set_velocity(Entity* e, int x, int y);
 
-void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s);
+void entity_set_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s);
 
-void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale);
+void entity_set_sprite(Entity* e, MySprite* s, int x, int y, float scale);
 
-void entity_add_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK on_collide);
+void entity_set_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK on_collide);
 
-void entity_add_rectangle(Entity* e, float w, float h);
+void entity_set_rectangle(Entity* e, float w, float h);
 
-void entity_add_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide);
+void entity_set_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide);
 
 #endif

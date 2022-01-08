@@ -25,15 +25,15 @@ void zerar_entity(Entity* e) {
 	e->component_mask = 0;
 }
 
-void entity_add_position(Entity* e, int x, int y) {
+void entity_set_position(Entity* e, int x, int y) {
 	e->component_mask |= POSITION_COMP_MASK;
 	e->position_component.x = x;
 	e->position_component.y = y;
 }
 
-void entity_add_text(Entity* e, int x, int y, char* t, FONT_SIZE fs) {
+void entity_set_text(Entity* e, int x, int y, char* t, FONT_SIZE fs) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
-		entity_add_position(e, 0, 0);
+		entity_set_position(e, 0, 0);
 	e->component_mask |= TEXT_COMP_MASK;
 	e->text_component.x = x;
 	e->text_component.y = y;
@@ -41,19 +41,19 @@ void entity_add_text(Entity* e, int x, int y, char* t, FONT_SIZE fs) {
 	e->text_component.fontSize = fs;
 }
 
-void entity_add_velocity(Entity* e, int x, int y) {
+void entity_set_velocity(Entity* e, int x, int y) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
-		entity_add_position(e, 0, 0);
+		entity_set_position(e, 0, 0);
 	e->component_mask |= VELOCITY_COMP_MASK;
 	e->velocity_component.x = x;
 	e->velocity_component.y = y;
 }
 
-void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s) {
+void entity_set_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s) {
 	if (!(e->component_mask & SPRITE_COMP_MASK))
-		entity_add_sprite(e, NULL, 0, 0, 0.0);
+		entity_set_sprite(e, NULL, 0, 0, 0.0);
 	if (!(e->component_mask & VELOCITY_COMP_MASK))
-		entity_add_velocity(e, 0, 0);
+		entity_set_velocity(e, 0, 0);
 	e->component_mask |= PLAYER_COMP_MASK;
 	e->player_component.up = u;
 	e->player_component.left = l;
@@ -63,9 +63,9 @@ void entity_add_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, A
 	e->player_component.beamCharge = 0;
 }
 
-void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
+void entity_set_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
-		entity_add_position(e, 0, 0);
+		entity_set_position(e, 0, 0);
 	e->component_mask |= SPRITE_COMP_MASK;
 	e->sprite_component.sprite = s;
 	e->sprite_component.scale = scale;
@@ -77,9 +77,9 @@ void entity_add_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
 	}
 }
 
-void entity_add_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK on_collide) {
+void entity_set_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK on_collide) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
-		entity_add_position(e, 0, 0);
+		entity_set_position(e, 0, 0);
 	e->component_mask |= CIRCLE_COMP_MASK;
 	e->circle_coll_component.x = x;
 	e->circle_coll_component.y = y;
@@ -87,17 +87,17 @@ void entity_add_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK
 	e->circle_coll_component.on_collide = on_collide;
 }
 
-void entity_add_rectangle(Entity* e, float w, float h) {
+void entity_set_rectangle(Entity* e, float w, float h) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
-		entity_add_position(e, 0, 0);
+		entity_set_position(e, 0, 0);
 	e->component_mask |= RECTANGLE_COMP_MASK;
 	e->rectangle_component.w = w;
 	e->rectangle_component.h = h;
 }
 
-void entity_add_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide) {
+void entity_set_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide) {
 	if (!(e->component_mask & (RECTANGLE_COMP_MASK | SPRITE_COMP_MASK)))
-		entity_add_rectangle(e, w, h);
+		entity_set_rectangle(e, w, h);
 	e->component_mask |= BOX_COMP_MASK;
 	e->box_coll_component.on_collide = on_collide;
 	e->box_coll_component.w = w;

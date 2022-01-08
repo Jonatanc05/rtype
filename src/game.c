@@ -23,20 +23,20 @@ void on_game_init(Game* game) {
 	// Criar jogador
 	Entity* p = entity_create(game);
 	MySprite* ship_spr = game->p_idle_spr;
-	entity_add_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
-	entity_add_player(p, ALLEGRO_KEY_W,
+	entity_set_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
+	entity_set_player(p, ALLEGRO_KEY_W,
 			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
 						ALLEGRO_KEY_SPACE
 	);
-	entity_add_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
-	entity_add_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_die);
+	entity_set_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
+	entity_set_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_die);
 
 	// Criar pontuação
 	Entity* t = entity_create(game);
 	game->score = 0;
 	game->score_str = (char*)malloc(sizeof(char)*10);
 	*game->score_str = '\0';
-	entity_add_text(t, 0, 0, game->score_str, REGULAR_FONTSIZE);
+	entity_set_text(t, 0, 0, game->score_str, REGULAR_FONTSIZE);
 }
 
 int _game_finished = 0;
@@ -46,18 +46,18 @@ void on_update(Game* game) {
 		_game_finished = 1;
 
 		Entity* go = entity_create(game);
-		entity_add_position(go, SCREEN_W/2 - 140, SCREEN_H/2 - 50);
-		entity_add_text(go, 0, 0, "Game Over", REGULAR_FONTSIZE);
+		entity_set_position(go, SCREEN_W/2 - 140, SCREEN_H/2 - 50);
+		entity_set_text(go, 0, 0, "Game Over", REGULAR_FONTSIZE);
 
 		Entity* sc = entity_create(game);
-		entity_add_position(sc, SCREEN_W/2 - 220, SCREEN_H/2 + 10);
+		entity_set_position(sc, SCREEN_W/2 - 220, SCREEN_H/2 + 10);
 		char* str = (char*) malloc(sizeof(char)*30); *str = '\0'; sprintf(str, "Your score: %d", game->score);
-		entity_add_text(sc, 0, 0, str, REGULAR_FONTSIZE);
+		entity_set_text(sc, 0, 0, str, REGULAR_FONTSIZE);
 
 		if (record(game->score)) {
 			Entity* nr = entity_create(game);
-			entity_add_position(nr, SCREEN_W/2 - 160, SCREEN_H/2 + 70);
-			entity_add_text(nr, 0, 0, "New record!", REGULAR_FONTSIZE);
+			entity_set_position(nr, SCREEN_W/2 - 160, SCREEN_H/2 + 70);
+			entity_set_text(nr, 0, 0, "New record!", REGULAR_FONTSIZE);
 		}
 	}
 	else if (!game->over)
@@ -115,16 +115,16 @@ void system_airmine_spawner(Game* game) {
 	int y = rand()%2 ? -h : screen_h;
 
 	Entity* e = entity_create(game);
-	entity_add_position(e, x, y);
+	entity_set_position(e, x, y);
 
 	// Set airmine velocity towards a random point in screen within a margin
 	int x_margin = screen_w / 5;
 	int x_vel = velocity_towards(x_margin + rand()%(screen_w - 2*x_margin), x, screen_w, AIRMINE_MAX_XVEL);
 	int y_vel = velocity_towards(rand()%screen_h, y, screen_h, AIRMINE_MAX_YVEL);
-	entity_add_velocity(e, x_vel, y_vel);
+	entity_set_velocity(e, x_vel, y_vel);
 
-	entity_add_sprite(e, spr, 0, 0, spr_scale);
-	entity_add_circle_coll(e, radius, radius, radius, on_collide_die);
+	entity_set_sprite(e, spr, 0, 0, spr_scale);
+	entity_set_circle_coll(e, radius, radius, radius, on_collide_die);
 }
 
 void system_clean_dead_entities(Game* game) {
@@ -152,11 +152,11 @@ void system_stars(Game* game) {
 		float size = STAR_MIN_SIZE + ((STAR_MAX_SIZE - STAR_MIN_SIZE) * mul);
 		int velocity = (int)(STAR_MIN_VEL + ((STAR_MAX_VEL - STAR_MIN_VEL) * (1.0-mul)));
 		Entity* e = entity_create(game);
-		entity_add_position(e,
+		entity_set_position(e,
 				al_get_display_width(game->display),
 				(int)rand()%(int)(al_get_display_height(game->display)-size));
-		entity_add_velocity(e, -velocity, 0);
-		entity_add_rectangle(e, size, size);
+		entity_set_velocity(e, -velocity, 0);
+		entity_set_rectangle(e, size, size);
 	}
 }
 

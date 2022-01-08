@@ -6,14 +6,14 @@ void shoot(Game* game, Entity* player, char isCharged) {
 
 	SpriteComponent* s_comp = &player->sprite_component;
 
-	entity_add_position(beam,
+	entity_set_position(beam,
 			player->position_component.x + s_comp->w,
 			player->position_component.y + (s_comp->h/2) - ((spr->h * SHOT_SCALE)/2)
 		);
-	entity_add_velocity(beam, BEAM_VELOCITY, 0);
-	entity_add_sprite(beam, spr, 0, 0, SHOT_SCALE);
+	entity_set_velocity(beam, BEAM_VELOCITY, 0);
+	entity_set_sprite(beam, spr, 0, 0, SHOT_SCALE);
 	float r = beam->sprite_component.h/2.0;
-	entity_add_circle_coll(beam,
+	entity_set_circle_coll(beam,
 			beam->sprite_component.w - r, // x
 			r, // y
 			r, // radius
