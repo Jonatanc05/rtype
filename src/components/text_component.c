@@ -1,4 +1,4 @@
-#include "text_component.h"
+#include "components/text_component.h"
 #include "game.h"
 
 void system_draw_text(Game* game) {

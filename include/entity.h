@@ -2,14 +2,14 @@
 #define included_entity_h
 
 #include "util.h"
-#include "position_component.h"
-#include "text_component.h"
-#include "velocity_component.h"
-#include "player_component.h"
-#include "sprite_component.h"
-#include "circle_collider_component.h"
-#include "rectangle_component.h"
-#include "box_collider_component.h"
+#include "components/position_component.h"
+#include "components/text_component.h"
+#include "components/velocity_component.h"
+#include "components/player_component.h"
+#include "components/sprite_component.h"
+#include "components/circle_collider_component.h"
+#include "components/rectangle_component.h"
+#include "components/box_collider_component.h"
 
 typedef unsigned LAYER;
 #define LAYER_STAR			0b00000001

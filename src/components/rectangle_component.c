@@ -1,4 +1,4 @@
-#include "rectangle_component.h"
+#include "components/rectangle_component.h"
 #include "game.h"
 #include <allegro5/allegro_primitives.h>
 

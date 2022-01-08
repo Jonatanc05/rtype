@@ -1,8 +1,6 @@
-#include "circle_collider_component.h"
 #include "game.h"
 #include <math.h>
 #include <allegro5/allegro_primitives.h>
-#include "player_component.h"
 
 void on_collide_die(Game* game, Entity* self, Entity* other) {
 	entity_kill(self);

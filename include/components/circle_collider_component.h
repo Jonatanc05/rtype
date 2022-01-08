@@ -6,8 +6,8 @@ typedef struct Entity Entity;
 
 typedef void(*COLLISION_CALLBACK)(Game* game, Entity* self, Entity* other);
 
-#include "position_component.h"
-#include "box_collider_component.h"
+#include "components/position_component.h"
+#include "components/box_collider_component.h"
 
 typedef struct {
 	int x, y;
