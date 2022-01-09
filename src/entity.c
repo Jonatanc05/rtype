@@ -23,6 +23,7 @@ void entity_kill(Entity* e) {
 void zerar_entity(Entity* e) {
 	e->dead = 0;
 	e->component_mask = 0;
+	e->layer = LAYER_NULL;
 }
 
 void entity_set_position(Entity* e, int x, int y) {

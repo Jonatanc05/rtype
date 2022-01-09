@@ -12,13 +12,6 @@
 #include "components/box_collider_component.h"
 #include "collision_callbacks.h"
 
-typedef unsigned LAYER;
-#define LAYER_STAR			0b00000001
-#define LAYER_ENEMY			0b00000010
-#define LAYER_PLAYER		0b00000100
-#define LAYER_UI			0b00001000
-#define LAYER_PROJECTILE	0b00010000
-
 #define POSITION_COMP_MASK	0b00000001
 #define TEXT_COMP_MASK		0b00000010
 #define VELOCITY_COMP_MASK	0b00000100
@@ -28,11 +21,22 @@ typedef unsigned LAYER;
 #define RECTANGLE_COMP_MASK	0b01000000
 #define BOX_COMP_MASK		0b10000000
 
+typedef enum LAYER {
+	LAYER_NULL = 0,
+	LAYER_STAR,
+	LAYER_ENEMY,
+	LAYER_BLOCK,
+	LAYER_PROJECTILE,
+	LAYER_PLAYER,
+	LAYER_UI
+} LAYER;
+
 #define MAX_ENTITIES 100
 
 typedef struct Entity {
 	short dead;
 	unsigned component_mask;
+	LAYER layer;
 
 	TextComponent text_component;
 	PositionComponent position_component;

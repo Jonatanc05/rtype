@@ -69,6 +69,7 @@ void on_update(Game* game) {
 	system_detect_collision(game);
 	system_clean_dead_entities(game);
 	system_airmine_spawner(game);
+	system_block_spawner(game);
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	system_draw_rectangles(game);
@@ -127,17 +128,53 @@ void system_airmine_spawner(Game* game) {
 	entity_set_circle_coll(e, radius, radius, radius, on_collide_die);
 }
 
+double _timestamp_of_last_block_spawn = 0.0; // in seconds
+int _there_is_block = 0;
+void system_block_spawner(Game* game) {
+	if (_there_is_block) return;
+	double last = _timestamp_of_last_block_spawn,
+		   current = game->tick/(double)FPS;
+	if (current - last < BLOCK_SPAWN_TEST_INTERVAL)
+		return;
+	if ((rand()/(float)RAND_MAX)*100 > BLOCK_SPAWN_TEST_CHANCE)
+		return;
+
+	_timestamp_of_last_block_spawn = current;
+
+	// Determine position and dimensions
+	int s_w = al_get_display_width(game->display),
+		s_h = al_get_display_height(game->display),
+		sy  = rand()%(4*s_h/5);
+	if (sy < game->p_idle_spr->h*SHIP_SCALE) sy = 0;
+	int  w = s_w * (1 + ((rand()/(float)RAND_MAX)*BLOCK_MAX_WIDTH)),
+		 h = s_h/5 + rand()%(s_h - sy - s_h/5);
+
+	Entity* e = entity_create(game);
+	entity_set_position(e, s_w, sy);
+	entity_set_velocity(e, -BLOCK_VELOCITY, 0);
+	entity_set_rectangle(e, w, h);
+	entity_set_box_coll(e, w, h, on_collide_nop);
+	e->layer = LAYER_BLOCK;
+	_there_is_block = 1;
+}
+
 void system_clean_dead_entities(Game* game) {
 	for (int i = 0; i < game->numEntities; i++) {
 		Entity* e = &game->entities[i];
+		int s_w = al_get_display_width(game->display), s_h = al_get_display_height(game->display);
 		if (e->component_mask & POSITION_COMP_MASK
+			 && e->layer != LAYER_BLOCK
 			 && (
-				 e->position_component.x > al_get_display_width(game->display) + AIRMINE_SPAWN_SIEGE*2
+				 e->position_component.x > s_w + AIRMINE_SPAWN_SIEGE*2
 			  || e->position_component.x < -AIRMINE_SPAWN_SIEGE*2
-			  || e->position_component.y > al_get_display_height(game->display) + AIRMINE_SPAWN_SIEGE*2
+			  || e->position_component.y > s_h + AIRMINE_SPAWN_SIEGE*2
 			  || e->position_component.y < -AIRMINE_SPAWN_SIEGE*2
 			 )
 		) {
+			entity_kill(e);
+		} else if (e->layer == LAYER_BLOCK
+				&& e->position_component.x + e->box_coll_component.w < 0) {
+			_there_is_block = 0;
 			entity_kill(e);
 		}
 		if (e->dead)
