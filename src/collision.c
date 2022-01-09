@@ -106,7 +106,7 @@ int check_coll_circles(PositionComponent* pos1, CircleCollComponent* coll1, Posi
 
 int check_coll_rects(PositionComponent* pos1, BoxCollComponent* coll1, PositionComponent* pos2, BoxCollComponent* coll2) {
 	return shadow_intersect(pos1->x, pos1->x + coll1->w, pos2->x, pos2->x + coll2->w)
-		&& shadow_intersect(pos1->y, pos1->y + coll1->h, pos2->y, pos2->x + coll2->h);
+		&& shadow_intersect(pos1->y, pos1->y + coll1->h, pos2->y, pos2->y + coll2->h);
 }
 
 int check_coll_circle_rect(PositionComponent* c_pos, CircleCollComponent* c_coll, PositionComponent* b_pos, BoxCollComponent* b_coll) {
