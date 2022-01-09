@@ -97,8 +97,6 @@ void entity_set_rectangle(Entity* e, float w, float h) {
 }
 
 void entity_set_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide) {
-	if (!(e->component_mask & (RECTANGLE_COMP_MASK | SPRITE_COMP_MASK)))
-		entity_set_rectangle(e, w, h);
 	e->component_mask |= BOX_COMP_MASK;
 	e->box_coll_component.on_collide = on_collide;
 	e->box_coll_component.w = w;

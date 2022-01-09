@@ -10,12 +10,6 @@
 #define SCREEN_W 1160
 #define SCREEN_H 540
 
-typedef char KEY_STATE;
-#define KEY_STATE_NULL 0
-#define KEY_STATE_DOWN 1
-#define KEY_STATE_HOLD 2
-#define KEY_STATE_UP 3
-
 #define AIRMINE_SPRITE_P  "rsc\\sprite\\airmine.png"
 #define AIRMINE_MAX_XVEL 4.0
 #define AIRMINE_MAX_YVEL 3.0
@@ -35,6 +29,13 @@ typedef char KEY_STATE;
 //#define BLOCK_MIN_WIDTH // will be screen width
 #define BLOCK_MAX_WIDTH 2 // measured in "screens"
 #define BLOCK_VELOCITY 2
+
+typedef enum KEY_STATE {
+	KEY_STATE_NULL = 0,
+	KEY_STATE_DOWN = 1,
+	KEY_STATE_HOLD = 2,
+	KEY_STATE_UP = 3
+} KEY_STATE;
 
 typedef struct Game {
 	ALLEGRO_DISPLAY *display;
