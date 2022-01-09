@@ -125,7 +125,7 @@ void system_airmine_spawner(Game* game) {
 	entity_set_velocity(e, x_vel, y_vel);
 
 	entity_set_sprite(e, spr, 0, 0, spr_scale);
-	entity_set_circle_coll(e, radius, radius, radius, on_collide_die);
+	entity_set_circle_coll(e, w/2, h/2, radius, on_collide_die);
 }
 
 double _timestamp_of_last_block_spawn = 0.0; // in seconds
