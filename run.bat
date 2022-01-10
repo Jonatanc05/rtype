@@ -9,6 +9,7 @@ gcc -o rtype.exe ^
 	src\entity.c ^
 	src\util.c ^
 	src\collision.c ^
+	src\collision_callbacks.c ^
 	src\components\text_component.c ^
 	src\components\velocity_component.c ^
 	src\components\player_component.c ^

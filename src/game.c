@@ -33,9 +33,8 @@ void on_game_init(Game* game) {
 	MySprite* ship_spr = game->p_idle_spr;
 	entity_set_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
 	entity_set_player(p, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE, bcb);
-	//entity_set_player(p, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE, NULL);
 	entity_set_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
-	entity_set_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_die);
+	entity_set_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_player);
 
 	// Criar pontuação
 	Entity* t = entity_create(game, LAYER_UI);
@@ -158,7 +157,7 @@ void system_block_spawner(Game* game) {
 	entity_set_color(e, 120, rand()%80, rand()%80, 255);
 	entity_set_velocity(e, -BLOCK_VELOCITY, 0);
 	entity_set_rectangle(e, w, h);
-	entity_set_box_coll(e, w, h, on_collide_nop);
+	entity_set_box_coll(e, w, h, on_collide_block);
 	e->layer = LAYER_BLOCK;
 	_there_is_block = 1;
 }

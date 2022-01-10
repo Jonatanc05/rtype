@@ -2,27 +2,6 @@
 #include <math.h>
 #include <allegro5/allegro_primitives.h>
 
-void on_collide_die(Game* game, Entity* self, Entity* other) {
-	entity_kill(self);
-	if (!any_player_left(game))
-		game->over = 1;
-}
-
-void on_collide_die_score(Game* game, Entity* self, Entity* other) {
-	on_collide_die(game, self, other);
-	if (other->layer == LAYER_ENEMY)
-		game->score += 10 * (int)other->sprite_component.scale;
-}
-
-void on_collide_nop(Game* game, Entity* self, Entity* other)
-{}
-
-void on_collide_nop_score(Game* game, Entity* self, Entity* other) {
-	on_collide_nop(game, self, other);
-	if (other->layer == LAYER_ENEMY)
-		game->score += 10 * (int)other->sprite_component.scale;
-}
-
 void system_detect_collision(Game* game) {
 	unsigned mask = BOX_COMP_MASK | CIRCLE_COMP_MASK;
 	for (int i = 0; i < game->numEntities; i++) {
