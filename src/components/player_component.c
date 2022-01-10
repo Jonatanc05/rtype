@@ -58,6 +58,10 @@ void system_play(Game* game) {
 			shoot(game, e, isCharged);
 			p_comp->beamCharge = 0;
 		}
+		p_comp->charge_bar->position_component.x = e->position_component.x;
+		p_comp->charge_bar->position_component.y = e->position_component.y - 15;
+		p_comp->charge_bar->rectangle_component.w = ((p_comp->beamCharge/(float)MAX_BEAM_CHARGE)*s_comp->w);
+		printf("%d %d\n", p_comp->charge_bar->position_component.x, p_comp->charge_bar->position_component.y);
 
 		// Animation
 		MySprite *correct_spr = NULL;

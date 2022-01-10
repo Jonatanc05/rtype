@@ -27,4 +27,5 @@ void draw_layer(Game* game, LAYER layer) {
 void system_draw_rectangles(Game* game) {
 	draw_layer(game, LAYER_STAR);
 	draw_layer(game, LAYER_BLOCK);
+	draw_layer(game, LAYER_UI);
 }

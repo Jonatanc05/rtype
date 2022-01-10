@@ -16,11 +16,13 @@
 #define CHARGED_BEAM_SPRITE_P "rsc\\sprite\\charged-beam.png"
 
 typedef struct Game Game;
+typedef struct Entity Entity;
 typedef unsigned ALLEGRO_KEY;
 
 typedef struct {
 	int beamCharge;
 	ALLEGRO_KEY up, left, down, right, shoot;
+	Entity* charge_bar;
 } PlayerComponent;
 
 void system_play(Game* game);

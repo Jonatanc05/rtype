@@ -63,7 +63,7 @@ void entity_set_text(Entity* e, int x, int y, char* t, FONT_SIZE fs);
 
 void entity_set_velocity(Entity* e, int x, int y);
 
-void entity_set_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s);
+void entity_set_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s, Entity* cb);
 
 void entity_set_sprite(Entity* e, MySprite* s, int x, int y, float scale);
 

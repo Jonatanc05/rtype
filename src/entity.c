@@ -1,10 +1,12 @@
 #include "game.h"
 #include <stdio.h>
 
-Entity* get_entity_slot(Game* game) {
+Entity* pop_entity_slot(Game* game) {
 	for (int i = 0; i < game->numEntities; i++) {
-		if (0 == game->entities[i].component_mask)
+		if (game->entities[i].dead) {
+			zerar_entity(&game->entities[i]);
 			return &game->entities[i];
+		}
 	}
 
 	if (game->numEntities == MAX_ENTITIES) {
@@ -15,7 +17,7 @@ Entity* get_entity_slot(Game* game) {
 	return &game->entities[game->numEntities++];
 }
 Entity* entity_create(Game *game, LAYER layer) {
-	Entity* e = get_entity_slot(game);
+	Entity* e = pop_entity_slot(game);
 	e->layer = layer;
 	return e;
 }
@@ -55,7 +57,7 @@ void entity_set_velocity(Entity* e, int x, int y) {
 	e->velocity_component.y = y;
 }
 
-void entity_set_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s) {
+void entity_set_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s, Entity* cb) {
 	if (!(e->component_mask & SPRITE_COMP_MASK))
 		entity_set_sprite(e, NULL, 0, 0, 0.0);
 	if (!(e->component_mask & VELOCITY_COMP_MASK))
@@ -67,6 +69,7 @@ void entity_set_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, A
 	e->player_component.right = r;
 	e->player_component.shoot = s;
 	e->player_component.beamCharge = 0;
+	e->player_component.charge_bar = cb;
 }
 
 void entity_set_sprite(Entity* e, MySprite* s, int x, int y, float scale) {

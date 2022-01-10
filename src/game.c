@@ -20,14 +20,20 @@ void on_game_init(Game* game) {
 	game->beam_spr =    load_sprite(BEAM_SPRITE_P);
 	game->ch_beam_spr = load_sprite(CHARGED_BEAM_SPRITE_P);
 
-	// Criar jogador
+	// @FIX: Jogador tem q ser primeira entidade criada n lembro pq
 	Entity* p = entity_create(game, LAYER_PLAYER);
+
+	// Criar barra do BeamCharge
+	Entity* bcb = entity_create(game, LAYER_UI);
+	entity_set_position(bcb, 0, 0);
+	entity_set_rectangle(bcb, 0, 5);
+	entity_set_color(bcb, 31, 93, 197, 255);
+
+	// Criar jogador
 	MySprite* ship_spr = game->p_idle_spr;
 	entity_set_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
-	entity_set_player(p, ALLEGRO_KEY_W,
-			ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D,
-						ALLEGRO_KEY_SPACE
-	);
+	entity_set_player(p, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE, bcb);
+	//entity_set_player(p, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE, NULL);
 	entity_set_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
 	entity_set_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_die);
 
@@ -178,7 +184,7 @@ void system_clean_dead_entities(Game* game) {
 			entity_kill(e);
 		}
 		if (e->dead)
-			zerar_entity(e);
+			e->component_mask = 0;
 
 	}
 }
