@@ -61,7 +61,6 @@ void system_detect_collision(Game* game) {
 				} else
 					e2->box_coll_component.on_collide(game, e2, e1);
 				e1->circle_coll_component.on_collide(game, e1, e2);
-				printf("%d %d\n", i, j);
 			}
 
 		}
