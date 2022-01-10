@@ -17,6 +17,7 @@ void on_collide_block(Game* game, Entity* self, Entity* other)
 void on_collide_beam(Game* game, Entity* self, Entity* other) {
 	switch (other->layer) {
 		case LAYER_PLAYER:
+		case LAYER_BEAM:
 			break;
 		case LAYER_ENEMY:
 			game->score += 10 * (int)other->sprite_component.scale;

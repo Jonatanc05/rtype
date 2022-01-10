@@ -147,13 +147,13 @@ void system_block_spawner(Game* game) {
 	// Determine position and dimensions
 	int s_w = al_get_display_width(game->display),
 		s_h = al_get_display_height(game->display),
-		sy  = rand()%(4*s_h/5);
-	if (sy < game->p_idle_spr->h*SHIP_SCALE) sy = 0;
+		y  = rand()%(4*s_h/5);
+	if (y < game->p_idle_spr->h*SHIP_SCALE) y = 0;
 	int  w = s_w * (1 + ((rand()/(float)RAND_MAX)*BLOCK_MAX_WIDTH)),
-		 h = s_h/5 + rand()%(s_h - sy - s_h/5);
+		 h = s_h/5 + rand()%(s_h/5);
 
 	Entity* e = entity_create(game, LAYER_BLOCK);
-	entity_set_position(e, s_w, sy);
+	entity_set_position(e, s_w, y);
 	entity_set_color(e, 120, rand()%80, rand()%80, 255);
 	entity_set_velocity(e, -BLOCK_VELOCITY, 0);
 	entity_set_rectangle(e, w, h);
