@@ -128,18 +128,16 @@ void system_airmine_spawner(Game* game) {
 	entity_set_circle_coll(e, w/2, h/2, radius, on_collide_die);
 }
 
-double _timestamp_of_last_block_spawn = 0.0; // in seconds
+double _timestamp_of_last_block_death = 0.0; // in seconds
 int _there_is_block = 0;
 void system_block_spawner(Game* game) {
 	if (_there_is_block) return;
-	double last = _timestamp_of_last_block_spawn,
+	double last = _timestamp_of_last_block_death,
 		   current = game->tick/(double)FPS;
 	if (current - last < BLOCK_SPAWN_TEST_INTERVAL)
 		return;
 	if ((rand()/(float)RAND_MAX)*100 > BLOCK_SPAWN_TEST_CHANCE)
 		return;
-
-	_timestamp_of_last_block_spawn = current;
 
 	// Determine position and dimensions
 	int s_w = al_get_display_width(game->display),
@@ -151,6 +149,7 @@ void system_block_spawner(Game* game) {
 
 	Entity* e = entity_create(game, LAYER_BLOCK);
 	entity_set_position(e, s_w, sy);
+	entity_set_color(e, 120, rand()%80, rand()%80, 255);
 	entity_set_velocity(e, -BLOCK_VELOCITY, 0);
 	entity_set_rectangle(e, w, h);
 	entity_set_box_coll(e, w, h, on_collide_nop);
@@ -175,6 +174,7 @@ void system_clean_dead_entities(Game* game) {
 		} else if (e->layer == LAYER_BLOCK
 				&& e->position_component.x + e->box_coll_component.w < 0) {
 			_there_is_block = 0;
+			_timestamp_of_last_block_death = game->tick/(float)FPS;
 			entity_kill(e);
 		}
 		if (e->dead)

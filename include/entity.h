@@ -10,16 +10,18 @@
 #include "components/circle_collider_component.h"
 #include "components/rectangle_component.h"
 #include "components/box_collider_component.h"
+#include "components/color_component.h"
 #include "collision_callbacks.h"
 
-#define POSITION_COMP_MASK	0b00000001
-#define TEXT_COMP_MASK		0b00000010
-#define VELOCITY_COMP_MASK	0b00000100
-#define PLAYER_COMP_MASK	0b00001000
-#define SPRITE_COMP_MASK	0b00010000
-#define CIRCLE_COMP_MASK	0b00100000
-#define RECTANGLE_COMP_MASK	0b01000000
-#define BOX_COMP_MASK		0b10000000
+#define POSITION_COMP_MASK	0b0000000000000001
+#define TEXT_COMP_MASK		0b0000000000000010
+#define VELOCITY_COMP_MASK	0b0000000000000100
+#define PLAYER_COMP_MASK	0b0000000000001000
+#define SPRITE_COMP_MASK	0b0000000000010000
+#define CIRCLE_COMP_MASK	0b0000000000100000
+#define RECTANGLE_COMP_MASK	0b0000000001000000
+#define BOX_COMP_MASK		0b0000000010000000
+#define COLOR_COMP_MASK 	0b0000000100000000
 
 typedef enum LAYER {
 	LAYER_NULL = 0,
@@ -46,6 +48,7 @@ typedef struct Entity {
 	CircleCollComponent circle_coll_component;
 	BoxCollComponent box_coll_component;
 	RectangleComponent rectangle_component;
+	ColorComponent color_component;
 } Entity;
 
 Entity* entity_create(Game* game, LAYER layer);
@@ -69,5 +72,7 @@ void entity_set_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK
 void entity_set_rectangle(Entity* e, float w, float h);
 
 void entity_set_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide);
+
+void entity_set_color(Entity* e, int r, int g, int b, int a);
 
 #endif

@@ -107,3 +107,11 @@ void entity_set_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide)
 	e->box_coll_component.w = w;
 	e->box_coll_component.h = h;
 }
+
+void entity_set_color(Entity* e, int r, int g, int b, int a) {
+	e->component_mask |= COLOR_COMP_MASK;
+	e->color_component.r = r;
+	e->color_component.g = g;
+	e->color_component.b = b;
+	e->color_component.a = a;
+}
