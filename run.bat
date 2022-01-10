@@ -2,6 +2,8 @@
 gcc -o rtype.exe ^
 	-Iinclude ^
 	-Llib ^
+	-lallegro-5.0.10-monolith-mt ^
+	-l:allegro-5.0.10-monolith-mt.dll ^
 	src\rtype.c ^
 	src\game.c ^
 	src\entity.c ^
@@ -11,8 +13,7 @@ gcc -o rtype.exe ^
 	src\components\velocity_component.c ^
 	src\components\player_component.c ^
 	src\components\sprite_component.c ^
-	src\components\rectangle_component.c ^
-	lib\liballegro-5.0.10-monolith-mt.a
+	src\components\rectangle_component.c
 pause
 
 copy lib\allegro-5.0.10-monolith-mt.dll
