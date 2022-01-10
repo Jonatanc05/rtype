@@ -1,7 +1,7 @@
 #include "game.h"
 #include <stdio.h>
 
-Entity* entity_create(Game *game) {
+Entity* get_entity_slot(Game* game) {
 	for (int i = 0; i < game->numEntities; i++) {
 		if (0 == game->entities[i].component_mask)
 			return &game->entities[i];
@@ -13,6 +13,11 @@ Entity* entity_create(Game *game) {
 	}
 
 	return &game->entities[game->numEntities++];
+}
+Entity* entity_create(Game *game, LAYER layer) {
+	Entity* e = get_entity_slot(game);
+	e->layer = layer;
+	return e;
 }
 
 void entity_kill(Entity* e) {

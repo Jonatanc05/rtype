@@ -1,7 +1,7 @@
 #include "game.h"
 
 void shoot(Game* game, Entity* player, char isCharged) {
-	Entity *beam = entity_create(game);
+	Entity *beam = entity_create(game, LAYER_BEAM);
 	MySprite *spr = isCharged ? game->ch_beam_spr : game->beam_spr;
 
 	SpriteComponent* s_comp = &player->sprite_component;

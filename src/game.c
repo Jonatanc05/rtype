@@ -21,7 +21,7 @@ void on_game_init(Game* game) {
 	game->ch_beam_spr = load_sprite(CHARGED_BEAM_SPRITE_P);
 
 	// Criar jogador
-	Entity* p = entity_create(game);
+	Entity* p = entity_create(game, LAYER_PLAYER);
 	MySprite* ship_spr = game->p_idle_spr;
 	entity_set_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
 	entity_set_player(p, ALLEGRO_KEY_W,
@@ -32,7 +32,7 @@ void on_game_init(Game* game) {
 	entity_set_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_die);
 
 	// Criar pontuação
-	Entity* t = entity_create(game);
+	Entity* t = entity_create(game, LAYER_UI);
 	game->score = 0;
 	game->score_str = (char*)malloc(sizeof(char)*10);
 	*game->score_str = '\0';
@@ -45,17 +45,17 @@ void on_update(Game* game) {
 	if (game->over && !_game_finished) {
 		_game_finished = 1;
 
-		Entity* go = entity_create(game);
+		Entity* go = entity_create(game, LAYER_UI);
 		entity_set_position(go, SCREEN_W/2 - 140, SCREEN_H/2 - 50);
 		entity_set_text(go, 0, 0, "Game Over", REGULAR_FONTSIZE);
 
-		Entity* sc = entity_create(game);
+		Entity* sc = entity_create(game, LAYER_UI);
 		entity_set_position(sc, SCREEN_W/2 - 220, SCREEN_H/2 + 10);
 		char* str = (char*) malloc(sizeof(char)*30); *str = '\0'; sprintf(str, "Your score: %d", game->score);
 		entity_set_text(sc, 0, 0, str, REGULAR_FONTSIZE);
 
 		if (record(game->score)) {
-			Entity* nr = entity_create(game);
+			Entity* nr = entity_create(game, LAYER_UI);
 			entity_set_position(nr, SCREEN_W/2 - 160, SCREEN_H/2 + 70);
 			entity_set_text(nr, 0, 0, "New record!", REGULAR_FONTSIZE);
 		}
@@ -115,7 +115,7 @@ void system_airmine_spawner(Game* game) {
 	int screen_h = al_get_display_height(game->display);
 	int y = rand()%2 ? -h : screen_h;
 
-	Entity* e = entity_create(game);
+	Entity* e = entity_create(game, LAYER_ENEMY);
 	entity_set_position(e, x, y);
 
 	// Set airmine velocity towards a random point in screen within a margin
@@ -149,7 +149,7 @@ void system_block_spawner(Game* game) {
 	int  w = s_w * (1 + ((rand()/(float)RAND_MAX)*BLOCK_MAX_WIDTH)),
 		 h = s_h/5 + rand()%(s_h - sy - s_h/5);
 
-	Entity* e = entity_create(game);
+	Entity* e = entity_create(game, LAYER_BLOCK);
 	entity_set_position(e, s_w, sy);
 	entity_set_velocity(e, -BLOCK_VELOCITY, 0);
 	entity_set_rectangle(e, w, h);
@@ -188,7 +188,7 @@ void system_stars(Game* game) {
 		float mul = (rand()/(float)RAND_MAX);
 		float size = STAR_MIN_SIZE + ((STAR_MAX_SIZE - STAR_MIN_SIZE) * mul);
 		int velocity = (int)(STAR_MIN_VEL + ((STAR_MAX_VEL - STAR_MIN_VEL) * (1.0-mul)));
-		Entity* e = entity_create(game);
+		Entity* e = entity_create(game, LAYER_STAR);
 		entity_set_position(e,
 				al_get_display_width(game->display),
 				(int)rand()%(int)(al_get_display_height(game->display)-size));

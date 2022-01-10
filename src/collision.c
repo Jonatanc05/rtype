@@ -7,16 +7,19 @@ void on_collide_die(Game* game, Entity* self, Entity* other) {
 	if (!any_player_left(game))
 		game->over = 1;
 }
+
 void on_collide_die_score(Game* game, Entity* self, Entity* other) {
 	on_collide_die(game, self, other);
-	if (other->component_mask & SPRITE_COMP_MASK)
+	if (other->layer == LAYER_ENEMY)
 		game->score += 10 * (int)other->sprite_component.scale;
 }
 
-void on_collide_nop(Game* game, Entity* self, Entity* other) {}
+void on_collide_nop(Game* game, Entity* self, Entity* other)
+{}
+
 void on_collide_nop_score(Game* game, Entity* self, Entity* other) {
 	on_collide_nop(game, self, other);
-	if (other->component_mask & SPRITE_COMP_MASK)
+	if (other->layer == LAYER_ENEMY)
 		game->score += 10 * (int)other->sprite_component.scale;
 }
 

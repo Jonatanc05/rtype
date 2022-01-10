@@ -26,7 +26,7 @@ typedef enum LAYER {
 	LAYER_STAR,
 	LAYER_ENEMY,
 	LAYER_BLOCK,
-	LAYER_PROJECTILE,
+	LAYER_BEAM,
 	LAYER_PLAYER,
 	LAYER_UI
 } LAYER;
@@ -48,7 +48,7 @@ typedef struct Entity {
 	RectangleComponent rectangle_component;
 } Entity;
 
-Entity* entity_create(Game* game);
+Entity* entity_create(Game* game, LAYER layer);
 
 void entity_kill(Entity* e);
 
