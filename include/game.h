@@ -11,6 +11,8 @@
 #define SCREEN_H 540
 
 #define AIRMINE_SPRITE_P  "rsc\\sprite\\airmine.png"
+#define AIRMINE_SPAWN_TEST_INTERVAL 25  // in ticks
+#define AIRMINE_SPAWN_TEST_CHANCE 30.0 // percentage
 #define AIRMINE_MAX_XVEL 4.0
 #define AIRMINE_MAX_YVEL 3.0
 #define AIRMINE_SPAWN_SIEGE 80

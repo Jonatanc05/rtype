@@ -106,7 +106,9 @@ int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
 }
 
 void system_airmine_spawner(Game* game) {
-	if (game->tick%(int)(FPS/AIRMINES_P_SECOND) != 0)
+	if (game->tick % AIRMINE_SPAWN_TEST_INTERVAL)
+		return;
+	if ((rand()/(float)RAND_MAX)*100 > AIRMINE_SPAWN_TEST_CHANCE)
 		return;
 
 	MySprite* spr = game->airmine_spr;
