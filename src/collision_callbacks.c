@@ -16,7 +16,6 @@ void on_collide_block(Game* game, Entity* self, Entity* other)
 
 void on_collide_beam(Game* game, Entity* self, Entity* other) {
 	switch (other->layer) {
-		case LAYER_PLAYER:
 		case LAYER_BEAM:
 			break;
 		case LAYER_ENEMY:
@@ -53,7 +52,10 @@ void on_collide_start_game(Game* game, Entity* self, Entity* other) {
 }
 
 void on_collide_add_player(Game* game, Entity* self, Entity* other) {
-
+	create_player(game, 200, 70, 40, ALLEGRO_KEY_UP, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_ENTER);
+	entity_kill(self->uielement_component.rect);
+	entity_kill(self->uielement_component.text);
+	entity_kill(self);
 }
 
 void on_collide_reset_record(Game* game, Entity* self, Entity* other) {

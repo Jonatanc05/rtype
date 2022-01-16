@@ -2,20 +2,6 @@
 #include <math.h>
 #include <stdio.h>
 
-void create_player(Game* game, int r, int g, int b) {
-	Entity* bcb = entity_create(game, LAYER_UI);
-	entity_set_position(bcb, 0, 0);
-	entity_set_rectangle(bcb, 0, 5);
-	entity_set_color(bcb, r, g, b, 255);
-
-	Entity* p = entity_create(game, LAYER_PLAYER);
-	MySprite* ship_spr = game->p_idle_spr;
-	entity_set_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
-	entity_set_player(p, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE, bcb);
-	entity_set_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
-	entity_set_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_player);
-}
-
 void create_ui_element(Game* game, char* text, int y, COLLISION_CALLBACK on_collide) {
 	int margin = 10;
 	int element_w = al_get_text_width(game->regular_font, text)+2*margin,
@@ -58,7 +44,7 @@ void on_game_init(Game* game) {
 	game->ch_beam_spr = load_sprite(CHARGED_BEAM_SPRITE_P);
 
 	// Criar jogador 1
-	create_player(game, 31, 93, 197);
+	create_player(game, 31, 93, 197, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE);
 
 	// Criar elementos do menu
 	create_ui_element(game, "iniciar jogo", 150, on_collide_start_game);

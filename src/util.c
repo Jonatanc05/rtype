@@ -1,4 +1,5 @@
 #include "util.h"
+#include "game.h"
 #include <math.h>
 #include <stdlib.h>
 
@@ -40,4 +41,18 @@ void unload_sprite(MySprite* s) {
 	if (!s) return;
 	al_destroy_bitmap(s->bm);
 	free(s);
+}
+
+void create_player(Game* game, int r, int g, int b, ALLEGRO_KEY up, ALLEGRO_KEY le, ALLEGRO_KEY dw, ALLEGRO_KEY ri, ALLEGRO_KEY sh) {
+	Entity* bcb = entity_create(game, LAYER_UI);
+	entity_set_position(bcb, 0, 0);
+	entity_set_rectangle(bcb, 0, 5);
+	entity_set_color(bcb, r, g, b, 255);
+
+	Entity* p = entity_create(game, LAYER_PLAYER);
+	MySprite* ship_spr = game->p_idle_spr;
+	entity_set_position(p, 10, SCREEN_H/2 - (ship_spr->h*SHIP_SCALE)/2);
+	entity_set_player(p, up, le, dw, ri, sh, bcb);
+	entity_set_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
+	entity_set_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_player);
 }
