@@ -32,13 +32,13 @@ void on_collide_charged_beam(Game* game, Entity* self, Entity* other) {
 			game->score += 10 * (int)other->sprite_component.scale;
 			break;
 		case LAYER_BLOCK:
+		case LAYER_UI:
 			entity_kill(self);
 			break;
 	}
 }
 
 void on_collide_start_game(Game* game, Entity* self, Entity* other) {
-	printf("start_game\n");
 	if (other->layer == LAYER_BEAM) {
 		game->started = 1;
 		for (int i = 0; i < game->numEntities; i++) {
