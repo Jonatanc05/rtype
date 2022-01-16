@@ -37,3 +37,25 @@ void on_collide_charged_beam(Game* game, Entity* self, Entity* other) {
 	}
 }
 
+void on_collide_start_game(Game* game, Entity* self, Entity* other) {
+	printf("start_game\n");
+	if (other->layer == LAYER_BEAM) {
+		game->started = 1;
+		for (int i = 0; i < game->numEntities; i++) {
+			Entity* e = &game->entities[i];
+			if (e->component_mask & UIELEMENT_COMP_MASK) {
+				entity_kill(e->uielement_component.rect);
+				entity_kill(e->uielement_component.text);
+				entity_kill(e);
+			}
+		}
+	}
+}
+
+void on_collide_add_player(Game* game, Entity* self, Entity* other) {
+
+}
+
+void on_collide_reset_record(Game* game, Entity* self, Entity* other) {
+
+}

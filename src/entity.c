@@ -118,3 +118,9 @@ void entity_set_color(Entity* e, int r, int g, int b, int a) {
 	e->color_component.b = b;
 	e->color_component.a = a;
 }
+
+void entity_set_uielement(Entity* e, Entity* r, Entity* t) {
+	e->component_mask |= UIELEMENT_COMP_MASK;
+	e->uielement_component.rect = r;
+	e->uielement_component.text = t;
+}

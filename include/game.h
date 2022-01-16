@@ -45,7 +45,7 @@ typedef struct Game {
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_FONT *regular_font;
 
-	int score, over;
+	int score, started, over;
 	long unsigned tick;
 	char* score_str;
 	KEY_STATE keyboard[ALLEGRO_KEY_MAX];

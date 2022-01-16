@@ -11,5 +11,8 @@ void on_collide_player(Game* game, Entity* self, Entity* other);
 void on_collide_block(Game* game, Entity* self, Entity* other);
 void on_collide_beam(Game* game, Entity* self, Entity* other);
 void on_collide_charged_beam(Game* game, Entity* self, Entity* other);
+void on_collide_start_game(Game* game, Entity* self, Entity* other);
+void on_collide_add_player(Game* game, Entity* self, Entity* other);
+void on_collide_reset_record(Game* game, Entity* self, Entity* other);
 
 #endif

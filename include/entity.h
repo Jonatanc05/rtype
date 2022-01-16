@@ -11,6 +11,7 @@
 #include "components/rectangle_component.h"
 #include "components/box_collider_component.h"
 #include "components/color_component.h"
+#include "components/uielement_component.h"
 #include "collision_callbacks.h"
 
 #define POSITION_COMP_MASK	0b0000000000000001
@@ -22,6 +23,7 @@
 #define RECTANGLE_COMP_MASK	0b0000000001000000
 #define BOX_COMP_MASK		0b0000000010000000
 #define COLOR_COMP_MASK 	0b0000000100000000
+#define UIELEMENT_COMP_MASK 0b0000001000000000
 
 typedef enum LAYER {
 	LAYER_NULL = 0,
@@ -49,6 +51,7 @@ typedef struct Entity {
 	BoxCollComponent box_coll_component;
 	RectangleComponent rectangle_component;
 	ColorComponent color_component;
+	UiElementComponent uielement_component;
 } Entity;
 
 Entity* entity_create(Game* game, LAYER layer);
@@ -74,5 +77,7 @@ void entity_set_rectangle(Entity* e, float w, float h);
 void entity_set_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide);
 
 void entity_set_color(Entity* e, int r, int g, int b, int a);
+
+void entity_set_uielement(Entity* e, Entity* r, Entity* t);
 
 #endif
