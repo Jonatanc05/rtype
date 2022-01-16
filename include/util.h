@@ -10,6 +10,7 @@ typedef struct {
 } MySprite;
 
 int record(int score);
+void reset_record();
 
 MySprite* load_sprite(const char* path);
 void unload_sprite(MySprite* s);

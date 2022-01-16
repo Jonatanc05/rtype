@@ -2,8 +2,10 @@
 #include <math.h>
 #include <stdlib.h>
 
+const char* const _record_filename = "record.txt";
+
 int record(int score) {
-	FILE* f = fopen("record.txt", "r+");
+	FILE* f = fopen(_record_filename, "w+");
 	if (!f) printf("Erro ao abrir arquivo\n");
 	char str[512] = "0";
 	int record = 0;
@@ -15,6 +17,11 @@ int record(int score) {
 	}
 	fclose(f);
 	return score > record;
+}
+
+void reset_record() {
+	if (remove(_record_filename))
+		printf("Erro ao resetar recorde\n");
 }
 
 MySprite* load_sprite(const char* path) {

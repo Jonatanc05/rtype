@@ -57,5 +57,8 @@ void on_collide_add_player(Game* game, Entity* self, Entity* other) {
 }
 
 void on_collide_reset_record(Game* game, Entity* self, Entity* other) {
-
+	reset_record();
+	entity_kill(self->uielement_component.rect);
+	entity_kill(self->uielement_component.text);
+	entity_kill(self);
 }
