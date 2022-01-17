@@ -5,6 +5,7 @@ void on_collide_die(Game* game, Entity* self, Entity* other) {
 }
 
 void on_collide_player(Game* game, Entity* self, Entity* other) {
+	if (!game->started) return;
 	entity_kill(self->player_component.charge_bar);
 	entity_kill(self);
 	if (!any_player_left(game))
