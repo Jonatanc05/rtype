@@ -18,6 +18,11 @@ Turn yourself (se vira)
 ## Feature
 
 - Musica dinâmica
+	[X] reproduzir som
+	[X] criar entidades com som
+	[X] pedir entidade pra tocar som
+	[ ] pedir entidade pra parar som
+	[ ] decidir como tocar diferentes partes da musica tema
 - Efeitos sonoros
 - inimigos senoides
 - inimigos que atiram
