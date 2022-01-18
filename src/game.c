@@ -2,28 +2,6 @@
 #include <math.h>
 #include <stdio.h>
 
-void create_ui_element(Game* game, char* text, int y, COLLISION_CALLBACK on_collide) {
-	int margin = 10;
-	int element_w = al_get_text_width(game->regular_font, text)+2*margin,
-		element_h = al_get_font_line_height(game->regular_font)+2*margin;
-	int x = SCREEN_W - SCREEN_W/4 - element_w/2;
-	Entity *e_rect, *e_text, *e_element;
-
-	e_text = entity_create(game, LAYER_UI);
-	entity_set_position(e_text, x, y);
-	entity_set_text(e_text, margin, margin, text, REGULAR_FONTSIZE);
-
-	e_rect = entity_create(game, LAYER_UI);
-	entity_set_position(e_rect, x, y);
-	entity_set_rectangle(e_rect, element_w, element_h);
-	entity_set_color(e_rect, 50, 20, 200, 255);
-
-	e_element = entity_create(game, LAYER_UI);
-	entity_set_position(e_element, x, y);
-	entity_set_uielement(e_element, e_rect, e_text);
-	entity_set_box_coll(e_element, element_w, element_h, on_collide);
-}
-
 void on_game_init(Game* game) {
 	srand(time(NULL));
 
@@ -43,13 +21,20 @@ void on_game_init(Game* game) {
 	game->beam_spr =    load_sprite(BEAM_SPRITE_P);
 	game->ch_beam_spr = load_sprite(CHARGED_BEAM_SPRITE_P);
 
-	// Criar jogador 1
+	// Inicializa samples
+	game->theme_sam = al_load_sample(THEME_SAMPLE_P);
+
+	// Criar jogador 1 com função de util.h
 	create_player(game, 31, 93, 197, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE);
 
-	// Criar elementos do menu
+	// Criar elementos do menu com função de util.h
 	create_ui_element(game, "iniciar jogo", 150, on_collide_start_game);
 	create_ui_element(game, "adicionar jogador", 250, on_collide_add_player);
 	create_ui_element(game, "resetar recorde", 350, on_collide_reset_record);
+
+	/// Criar trilha sonora
+	Entity* st = entity_create(game, LAYER_INVISIBLE);
+	entity_set_sound(st, game->theme_sam, 1.0, ALLEGRO_PLAYMODE_LOOP, 1);
 
 	// Criar pontuação
 	Entity* t = entity_create(game, LAYER_UI);
@@ -85,6 +70,7 @@ void on_update(Game* game) {
 
 	system_play(game);
 	system_move(game);
+	system_sound(game);
 	system_detect_collision(game);
 	system_clean_dead_entities(game);
 

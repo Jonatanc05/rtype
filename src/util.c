@@ -56,3 +56,25 @@ void create_player(Game* game, int r, int g, int b, ALLEGRO_KEY up, ALLEGRO_KEY 
 	entity_set_sprite(p, ship_spr, 0, 0, SHIP_SCALE);
 	entity_set_box_coll(p, p->sprite_component.w, p->sprite_component.h, on_collide_player);
 }
+
+void create_ui_element(Game* game, char* text, int y, COLLISION_CALLBACK on_collide) {
+	int margin = 10;
+	int element_w = al_get_text_width(game->regular_font, text)+2*margin,
+		element_h = al_get_font_line_height(game->regular_font)+2*margin;
+	int x = SCREEN_W - SCREEN_W/4 - element_w/2;
+	Entity *e_rect, *e_text, *e_element;
+
+	e_text = entity_create(game, LAYER_UI);
+	entity_set_position(e_text, x, y);
+	entity_set_text(e_text, margin, margin, text, REGULAR_FONTSIZE);
+
+	e_rect = entity_create(game, LAYER_UI);
+	entity_set_position(e_rect, x, y);
+	entity_set_rectangle(e_rect, element_w, element_h);
+	entity_set_color(e_rect, 50, 20, 200, 255);
+
+	e_element = entity_create(game, LAYER_UI);
+	entity_set_position(e_element, x, y);
+	entity_set_uielement(e_element, e_rect, e_text);
+	entity_set_box_coll(e_element, element_w, element_h, on_collide);
+}

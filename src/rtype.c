@@ -4,6 +4,8 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "game.h"
 
 int main(int argc, char **argv){
@@ -72,6 +74,12 @@ int main(int argc, char **argv){
 	if(!game->event_queue) {
 		fprintf(stderr, "failed to create event_queue!\n");
 		al_destroy_display(game->display);
+		return -1;
+	}
+
+	//inicializa audio
+	if (!al_install_audio() || !al_reserve_samples(8) || !al_init_acodec_addon()) {
+		fprintf(stderr, "failed to install audio subsystem\n");
 		return -1;
 	}
 

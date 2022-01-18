@@ -124,3 +124,12 @@ void entity_set_uielement(Entity* e, Entity* r, Entity* t) {
 	e->uielement_component.rect = r;
 	e->uielement_component.text = t;
 }
+
+void entity_set_sound(Entity* e, ALLEGRO_SAMPLE* s, float g, int pm, int start) {
+	e->component_mask |= SOUND_COMP_MASK;
+	e->sound_component.sample = s;
+	e->sound_component.gain = g;
+	e->sound_component.start = start;
+	e->sound_component.stop = 0;
+	e->sound_component.playmode = pm;
+}

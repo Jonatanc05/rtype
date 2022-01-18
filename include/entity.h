@@ -12,18 +12,20 @@
 #include "components/box_collider_component.h"
 #include "components/color_component.h"
 #include "components/uielement_component.h"
+#include "components/sound_component.h"
 #include "collision_callbacks.h"
 
-#define POSITION_COMP_MASK	0b0000000000000001
-#define TEXT_COMP_MASK		0b0000000000000010
-#define VELOCITY_COMP_MASK	0b0000000000000100
-#define PLAYER_COMP_MASK	0b0000000000001000
-#define SPRITE_COMP_MASK	0b0000000000010000
-#define CIRCLE_COMP_MASK	0b0000000000100000
-#define RECTANGLE_COMP_MASK	0b0000000001000000
-#define BOX_COMP_MASK		0b0000000010000000
-#define COLOR_COMP_MASK 	0b0000000100000000
+#define POSITION_COMP_MASK  0b0000000000000001
+#define TEXT_COMP_MASK      0b0000000000000010
+#define VELOCITY_COMP_MASK  0b0000000000000100
+#define PLAYER_COMP_MASK    0b0000000000001000
+#define SPRITE_COMP_MASK    0b0000000000010000
+#define CIRCLE_COMP_MASK    0b0000000000100000
+#define RECTANGLE_COMP_MASK 0b0000000001000000
+#define BOX_COMP_MASK       0b0000000010000000
+#define COLOR_COMP_MASK     0b0000000100000000
 #define UIELEMENT_COMP_MASK 0b0000001000000000
+#define SOUND_COMP_MASK     0b0000010000000000
 
 typedef enum LAYER {
 	LAYER_NULL = 0,
@@ -32,7 +34,8 @@ typedef enum LAYER {
 	LAYER_BLOCK,
 	LAYER_BEAM,
 	LAYER_PLAYER,
-	LAYER_UI
+	LAYER_UI,
+	LAYER_INVISIBLE
 } LAYER;
 
 #define MAX_ENTITIES 100
@@ -52,6 +55,7 @@ typedef struct Entity {
 	RectangleComponent rectangle_component;
 	ColorComponent color_component;
 	UiElementComponent uielement_component;
+	SoundComponent sound_component;
 } Entity;
 
 Entity* entity_create(Game* game, LAYER layer);
@@ -79,5 +83,7 @@ void entity_set_box_coll(Entity* e, int w, int h, COLLISION_CALLBACK on_collide)
 void entity_set_color(Entity* e, int r, int g, int b, int a);
 
 void entity_set_uielement(Entity* e, Entity* r, Entity* t);
+
+void entity_set_sound(Entity* e, ALLEGRO_SAMPLE* s, float g, int pm, int start);
 
 #endif

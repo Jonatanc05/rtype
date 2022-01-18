@@ -10,6 +10,8 @@
 #define SCREEN_W 1160
 #define SCREEN_H 540
 
+#define THEME_SAMPLE_P  "rsc\\sound\\ressurections.ogg"
+
 #define AIRMINE_SPRITE_P  "rsc\\sprite\\airmine.png"
 #define AIRMINE_SPAWN_TEST_INTERVAL 25  // in ticks
 #define AIRMINE_SPAWN_TEST_CHANCE 30.0 // percentage
@@ -44,6 +46,7 @@ typedef struct Game {
 	ALLEGRO_EVENT_QUEUE *event_queue;
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_FONT *regular_font;
+	ALLEGRO_SAMPLE *theme_sam;
 
 	int score, started, over;
 	long unsigned tick;

@@ -14,7 +14,8 @@ gcc -o rtype.exe ^
 	src\components\velocity_component.c ^
 	src\components\player_component.c ^
 	src\components\sprite_component.c ^
-	src\components\rectangle_component.c
+	src\components\rectangle_component.c ^
+	src\components\sound_component.c
 pause
 
 copy lib\allegro-5.0.10-monolith-mt.dll

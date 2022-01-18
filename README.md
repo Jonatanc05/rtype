@@ -10,13 +10,15 @@ Turn yourself (se vira)
 
 ## Refatoração/Bugs
 
+- fica criando jogador ??????
 - criar struct Color e passar no element_ui
 - usar mais float (principal: posição)
 - entender se há porque iterar 123098 vezes nas entidades por frame
 
 ## Feature
 
-- [**MUSICA**](https://www.youtube.com/watch?v=1rwAvUvvQzQ)
+- Musica dinâmica
+- Efeitos sonoros
 - inimigos senoides
 - inimigos que atiram
 
