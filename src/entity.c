@@ -24,6 +24,8 @@ Entity* entity_create(Game *game, LAYER layer) {
 
 void entity_kill(Entity* e) {
 	e->dead = 1;
+	if (e->component_mask & SOUND_COMP_MASK)
+		al_set_sample(e->sound_component.sample, NULL);
 	e->component_mask = 0;
 }
 
@@ -125,11 +127,15 @@ void entity_set_uielement(Entity* e, Entity* r, Entity* t) {
 	e->uielement_component.text = t;
 }
 
-void entity_set_sound(Entity* e, ALLEGRO_SAMPLE* s, float g, int pm, int start) {
+void entity_set_sound(Entity* e, ALLEGRO_SAMPLE* s, float g, int pm, int start, int f_in) {
 	e->component_mask |= SOUND_COMP_MASK;
-	e->sound_component.sample = s;
+	e->sound_component.sample = al_create_sample_instance(s);
+	al_attach_sample_instance_to_mixer(e->sound_component.sample, al_get_default_mixer());
 	e->sound_component.gain = g;
 	e->sound_component.start = start;
-	e->sound_component.stop = 0;
+	e->sound_component.fade_in = f_in;
 	e->sound_component.playmode = pm;
+	e->sound_component.stop = 0;
+	e->sound_component.fade_out = 0;
 }
+

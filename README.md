@@ -21,7 +21,9 @@ Turn yourself (se vira)
 	[X] reproduzir som
 	[X] criar entidades com som
 	[X] pedir entidade pra tocar som
-	[ ] pedir entidade pra parar som
+	[X] pedir entidade pra parar som
+	[X] REFAZER TUDO COM INSTANCE
+	[ ] fade out do som
 	[ ] decidir como tocar diferentes partes da musica tema
 - Efeitos sonoros
 - inimigos senoides

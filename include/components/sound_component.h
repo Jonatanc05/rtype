@@ -4,13 +4,14 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 
+#define FADE_RATE 0.03
+
 typedef struct Game Game;
 
 typedef struct {
-	ALLEGRO_SAMPLE* sample;
-	ALLEGRO_SAMPLE_ID id;
-	float gain, pan;
-	int start, stop, playmode;
+	ALLEGRO_SAMPLE_INSTANCE* sample;
+	float gain;
+	int start, stop, playmode, fade_in, fade_out;
 } SoundComponent;
 
 void system_sound(Game* game);

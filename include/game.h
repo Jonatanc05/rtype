@@ -46,7 +46,6 @@ typedef struct Game {
 	ALLEGRO_EVENT_QUEUE *event_queue;
 	ALLEGRO_TIMER *timer;
 	ALLEGRO_FONT *regular_font;
-	ALLEGRO_SAMPLE *theme_sam;
 
 	int score, started, over;
 	long unsigned tick;
@@ -58,6 +57,8 @@ typedef struct Game {
 	MySprite *p_idle_spr, *p_up_spr, *p_down_spr,
 			 *airmine_spr,
 			 *beam_spr, *ch_beam_spr;
+
+	ALLEGRO_SAMPLE *theme_sam;
 } Game;
 
 void on_game_init(Game* game);

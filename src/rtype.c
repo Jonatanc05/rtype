@@ -78,8 +78,22 @@ int main(int argc, char **argv){
 	}
 
 	//inicializa audio
-	if (!al_install_audio() || !al_reserve_samples(8) || !al_init_acodec_addon()) {
+	if (!al_install_audio() || !al_init_acodec_addon()) {
 		fprintf(stderr, "failed to install audio subsystem\n");
+		return -1;
+	}
+	ALLEGRO_VOICE* voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
+	if (!voice) {
+		fprintf(stderr, "Could not create ALLEGRO_VOICE.\n");
+		return -1;
+	}
+	ALLEGRO_MIXER* mixer = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
+	if (!mixer) {
+		fprintf(stderr, "al_create_mixer failed.\n");
+		return -1;
+	}
+	if (!al_attach_mixer_to_voice(mixer, voice) || !al_set_default_mixer(mixer)) {
+		fprintf(stderr, "al_attach_mixer_to_voice or al_set_default_mixer failed.\n");
 		return -1;
 	}
 
