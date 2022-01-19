@@ -6,12 +6,14 @@ void system_detect_collision(Game* game) {
 	unsigned mask = BOX_COMP_MASK | CIRCLE_COMP_MASK;
 	for (int i = 0; i < game->numEntities; i++) {
 		Entity* e1 = &game->entities[i];
-		if (!(e1->component_mask & mask))
+		if (!(e1->component_mask & mask) || e1->dead)
 			continue;
 
 		for (int j = i+1; j < game->numEntities; j++) {
 			Entity* e2 = &game->entities[j];
-			if (!(e2->component_mask & mask) || !(e1->component_mask & mask))
+			if (!(e1->component_mask & mask) || e1->dead)
+				break;
+			if (!(e2->component_mask & mask) || e2->dead)
 				continue;
 
 			if ((e1->component_mask & CIRCLE_COMP_MASK & e2->component_mask)
@@ -26,20 +28,17 @@ void system_detect_collision(Game* game) {
 				e1->box_coll_component.on_collide(game, e1, e2);
 				e2->box_coll_component.on_collide(game, e2, e1);
 
-			} else if ((e1->component_mask & BOX_COMP_MASK)
+			} else if ((e1->component_mask & BOX_COMP_MASK) && (e2->component_mask & CIRCLE_COMP_MASK)
 			 && check_coll_circle_rect(&e2->position_component, &e2->circle_coll_component, &e1->position_component, &e1->box_coll_component)) {
 			// e1 is box
 				e1->box_coll_component.on_collide(game, e1, e2);
 				e2->circle_coll_component.on_collide(game, e2, e1);
 
-			} else if (check_coll_circle_rect(&e1->position_component, &e1->circle_coll_component, &e2->position_component, &e2->box_coll_component)) {
+			} else if ((e1->component_mask & CIRCLE_COMP_MASK) && (e2->component_mask & BOX_COMP_MASK)
+			 && check_coll_circle_rect(&e1->position_component, &e1->circle_coll_component, &e2->position_component, &e2->box_coll_component)) {
 			// e2 is box
-				if (e2->box_coll_component.on_collide == NULL) {
-					if (e2->circle_coll_component.on_collide)
-						e2->circle_coll_component.on_collide(game, e2, e1);
-				} else
-					e2->box_coll_component.on_collide(game, e2, e1);
 				e1->circle_coll_component.on_collide(game, e1, e2);
+				e2->box_coll_component.on_collide(game, e2, e1);
 			}
 
 		}

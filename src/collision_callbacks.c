@@ -59,6 +59,8 @@ void on_collide_start_game(Game* game, Entity* self, Entity* other) {
 }
 
 void on_collide_add_player(Game* game, Entity* self, Entity* other) {
+	if (other->layer != LAYER_BEAM)
+		return;
 	create_player(game, 200, 70, 40, ALLEGRO_KEY_UP, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_ENTER);
 	entity_kill(self->uielement_component.rect);
 	entity_kill(self->uielement_component.text);
@@ -66,6 +68,8 @@ void on_collide_add_player(Game* game, Entity* self, Entity* other) {
 }
 
 void on_collide_reset_record(Game* game, Entity* self, Entity* other) {
+	if (other->layer != LAYER_BEAM)
+		return;
 	reset_record();
 	entity_kill(self->uielement_component.rect);
 	entity_kill(self->uielement_component.text);
