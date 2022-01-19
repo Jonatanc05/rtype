@@ -84,6 +84,6 @@ void entity_set_color(Entity* e, int r, int g, int b, int a);
 
 void entity_set_uielement(Entity* e, Entity* r, Entity* t);
 
-void entity_set_sound(Entity* e, ALLEGRO_SAMPLE* s, float g, int pm, int start, int f_in);
+void entity_set_sound(Entity* e, ALLEGRO_SAMPLE* s, float g, int pm, int start, int f_in, unsigned p);
 
 #endif

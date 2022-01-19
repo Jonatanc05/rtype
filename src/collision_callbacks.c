@@ -8,8 +8,10 @@ void on_collide_player(Game* game, Entity* self, Entity* other) {
 	if (!game->started) return;
 	entity_kill(self->player_component.charge_bar);
 	entity_kill(self);
-	if (!any_player_left(game))
+	if (!any_player_left(game)) {
 		game->over = 1;
+		game->soundtrack->sound_component.fade_out = 1;
+	}
 }
 
 void on_collide_block(Game* game, Entity* self, Entity* other)
@@ -39,17 +41,21 @@ void on_collide_charged_beam(Game* game, Entity* self, Entity* other) {
 }
 
 void on_collide_start_game(Game* game, Entity* self, Entity* other) {
-	if (other->layer == LAYER_BEAM) {
-		game->started = 1;
-		for (int i = 0; i < game->numEntities; i++) {
-			Entity* e = &game->entities[i];
-			if (e->component_mask & UIELEMENT_COMP_MASK) {
-				entity_kill(e->uielement_component.rect);
-				entity_kill(e->uielement_component.text);
-				entity_kill(e);
-			}
+	if (other->layer != LAYER_BEAM)
+		return;
+	game->started = 1;
+	for (int i = 0; i < game->numEntities; i++) {
+		Entity* e = &game->entities[i];
+		if (e->component_mask & UIELEMENT_COMP_MASK) {
+			entity_kill(e->uielement_component.rect);
+			entity_kill(e->uielement_component.text);
+			entity_kill(e);
 		}
 	}
+	SoundComponent* s = &game->soundtrack->sound_component;
+	s->stop = 1;
+	s->start_position = 20249645;
+	s->start = 1;
 }
 
 void on_collide_add_player(Game* game, Entity* self, Entity* other) {

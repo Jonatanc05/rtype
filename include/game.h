@@ -52,7 +52,8 @@ typedef struct Game {
 	char* score_str;
 	KEY_STATE keyboard[ALLEGRO_KEY_MAX];
 	unsigned numEntities;
-	Entity* entities;
+	Entity* entities,   // All entities in game
+		   *soundtrack; // Responsible for background music
 
 	MySprite *p_idle_spr, *p_up_spr, *p_down_spr,
 			 *airmine_spr,

@@ -1,7 +1,6 @@
 #include "game.h"
 #include <math.h>
 #include <stdio.h>
-Entity* _test = NULL;
 
 void on_game_init(Game* game) {
 	srand(time(NULL));
@@ -34,9 +33,8 @@ void on_game_init(Game* game) {
 	create_ui_element(game, "resetar recorde", 350, on_collide_reset_record);
 
 	/// Criar trilha sonora
-	Entity* st = entity_create(game, LAYER_INVISIBLE);
-	entity_set_sound(st, game->theme_sam, 1.0, ALLEGRO_PLAYMODE_LOOP, 1, 0);
-	_test = st;
+	game->soundtrack = entity_create(game, LAYER_INVISIBLE);
+	entity_set_sound(game->soundtrack, game->theme_sam, 1.0, ALLEGRO_PLAYMODE_LOOP, 1, 0, 0);
 
 	// Criar pontuação
 	Entity* t = entity_create(game, LAYER_UI);
@@ -70,8 +68,6 @@ void on_update(Game* game) {
 	else if (game->started && !game->over)
 		system_score(game);
 
-	if (game->keyboard[ALLEGRO_KEY_P] == KEY_STATE_DOWN)
-		_test->sound_component.stop = 1;
 	system_play(game);
 	system_move(game);
 	system_sound(game);
@@ -102,6 +98,7 @@ void on_game_exit(Game* game) {
 	unload_sprite(game->p_down_spr);
 	unload_sprite(game->beam_spr);
 	unload_sprite(game->ch_beam_spr);
+	al_destroy_sample(game->theme_sam);
 }
 
 int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
