@@ -22,11 +22,11 @@
 #define AIRMINE_MAX_SCALE 2.0
 #define AIRMINES_P_SECOND 1
 
-#define STAR_SPAWN_CHANCE 20
-#define STAR_MIN_SIZE 0.6
+#define STAR_SPAWN_CHANCE 75
+#define STAR_MIN_SIZE 0.9
 #define STAR_MAX_SIZE 2.4
-#define STAR_MIN_VEL 4
-#define STAR_MAX_VEL 8
+#define STAR_MIN_VEL 8
+#define STAR_MAX_VEL 16
 
 #define BLOCK_SPAWN_TEST_INTERVAL 2  // in seconds
 #define BLOCK_SPAWN_TEST_CHANCE 20.0 // percentage

@@ -38,7 +38,7 @@ typedef enum LAYER {
 	LAYER_INVISIBLE
 } LAYER;
 
-#define MAX_ENTITIES 100
+#define MAX_ENTITIES 200
 
 typedef struct Entity {
 	short dead;
