@@ -5,6 +5,11 @@
 void on_game_init(Game* game) {
 	srand(time(NULL));
 
+	// Loading screen
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_text(game->regular_font , al_map_rgb(190, 190, 240), 10, 10, 0, "Carregando...");
+	al_flip_display();
+
 	game->started = 0;
 	game->end = 0;
 	game->ended = 0;
@@ -14,7 +19,7 @@ void on_game_init(Game* game) {
 	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
 
-	// Inicializa sprites
+	// Initialize sprites
 	game->airmine_spr = load_sprite(AIRMINE_SPRITE_P);
 	game->p_idle_spr =  load_sprite(SHIP_IDLE_SPRITE_P);
 	game->p_up_spr =    load_sprite(SHIP_UP_SPRITE_P);
@@ -22,22 +27,22 @@ void on_game_init(Game* game) {
 	game->beam_spr =    load_sprite(BEAM_SPRITE_P);
 	game->ch_beam_spr = load_sprite(CHARGED_BEAM_SPRITE_P);
 
-	// Inicializa samples
+	// Initialize samples
 	game->theme_sam = al_load_sample(THEME_SAMPLE_P);
 
-	// Criar jogador 1 com função de util.h
+	// Create first player
 	create_player(game, 31, 93, 197, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE);
 
-	// Criar elementos do menu com função de util.h
+	// Create UI Elements for menu
 	create_ui_element(game, "iniciar jogo", 150, on_collide_start_game);
 	create_ui_element(game, "adicionar jogador", 250, on_collide_add_player);
 	create_ui_element(game, "resetar recorde", 350, on_collide_reset_record);
 
-	/// Criar trilha sonora
+	/// Create soundtrack manager
 	game->soundtrack = entity_create(game, LAYER_INVISIBLE);
 	entity_set_sound(game->soundtrack, game->theme_sam, 1.0, ALLEGRO_PLAYMODE_LOOP, 1, 0, 0);
 
-	// Criar pontuação
+	// Create score
 	Entity* t = entity_create(game, LAYER_UI);
 	game->score = 0;
 	game->score_str = (char*)malloc(sizeof(char)*10);
