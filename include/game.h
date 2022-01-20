@@ -42,24 +42,39 @@ typedef enum KEY_STATE {
 } KEY_STATE;
 
 typedef struct Game {
+
+
+//---------    Game data    ----------
+
 	ALLEGRO_DISPLAY *display;
 	ALLEGRO_EVENT_QUEUE *event_queue;
 	ALLEGRO_TIMER *timer;
-	ALLEGRO_FONT *regular_font;
-
-	int score, started, over;
-	long unsigned tick;
-	char* score_str;
-	KEY_STATE keyboard[ALLEGRO_KEY_MAX];
+	int score; char* score_str;
 	unsigned numEntities;
-	Entity* entities,   // All entities in game
+	Entity *entities,   // All entities in game
 		   *soundtrack; // Responsible for background music
+
+
+//---------- Game resources ----------
+
+	ALLEGRO_FONT *regular_font;
 
 	MySprite *p_idle_spr, *p_up_spr, *p_down_spr,
 			 *airmine_spr,
 			 *beam_spr, *ch_beam_spr;
 
 	ALLEGRO_SAMPLE *theme_sam;
+
+
+//----------   Game state   ----------
+
+	int started,
+		end,   // should I end?
+		ended; // have I ended?
+	double time, delta_time;
+	long unsigned tick;
+	KEY_STATE keyboard[ALLEGRO_KEY_MAX];
+
 } Game;
 
 void on_game_init(Game* game);

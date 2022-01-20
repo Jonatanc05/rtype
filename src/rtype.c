@@ -120,7 +120,12 @@ int main(int argc, char **argv){
 
 		if(ev.type == ALLEGRO_EVENT_TIMER) {
 
-			on_update(game);
+			game->delta_time = al_get_time() - game->time;
+			game->time += game->delta_time;
+			if (game->delta_time > .15) game->delta_time = .15;
+///////////////////////////////////////////////////////////////////////////////////////////////
+			on_update(game); //   GAME UPDATE   ///////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 			for (int i = 0; i < ALLEGRO_KEY_MAX; i++) {
 				if (game->keyboard[i] == KEY_STATE_DOWN)
 					game->keyboard[i] = KEY_STATE_HOLD;
@@ -129,8 +134,6 @@ int main(int argc, char **argv){
 			}
 
 			al_flip_display();
-			if(game->tick%(int)FPS == 0)
-				printf("\n%d segundos se passaram...", game->tick/FPS);
 		}
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			playing = 0;

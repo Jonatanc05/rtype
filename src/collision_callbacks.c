@@ -9,7 +9,7 @@ void on_collide_player(Game* game, Entity* self, Entity* other) {
 	entity_kill(self->player_component.charge_bar);
 	entity_kill(self);
 	if (!any_player_left(game)) {
-		game->over = 1;
+		game->end = 1;
 		game->soundtrack->sound_component.fade_out = 1;
 	}
 }

@@ -6,7 +6,8 @@ void on_game_init(Game* game) {
 	srand(time(NULL));
 
 	game->started = 0;
-	game->over = 0;
+	game->end = 0;
+	game->ended = 0;
 	for (int i = 0; i <= ALLEGRO_KEY_MAX; i++)
 		game->keyboard[i] = 0;
 	game->numEntities = 0;
@@ -44,35 +45,25 @@ void on_game_init(Game* game) {
 	entity_set_text(t, 0, 0, game->score_str, REGULAR_FONTSIZE);
 }
 
-int _game_finished = 0;
+void end_game(Game* game);
+
 void on_update(Game* game) {
 	game->tick = al_get_timer_count(game->timer);
-	if (game->over && !_game_finished) {
-		_game_finished = 1;
 
-		Entity* go = entity_create(game, LAYER_UI);
-		entity_set_position(go, SCREEN_W/2 - 140, SCREEN_H/2 - 50);
-		entity_set_text(go, 0, 0, "Game Over", REGULAR_FONTSIZE);
-
-		Entity* sc = entity_create(game, LAYER_UI);
-		entity_set_position(sc, SCREEN_W/2 - 220, SCREEN_H/2 + 10);
-		char* str = (char*) malloc(sizeof(char)*30); *str = '\0'; sprintf(str, "Your score: %d", game->score);
-		entity_set_text(sc, 0, 0, str, REGULAR_FONTSIZE);
-
-		if (record(game->score)) {
-			Entity* nr = entity_create(game, LAYER_UI);
-			entity_set_position(nr, SCREEN_W/2 - 160, SCREEN_H/2 + 70);
-			entity_set_text(nr, 0, 0, "New record!", REGULAR_FONTSIZE);
-		}
-	}
-	else if (game->started && !game->over)
-		system_score(game);
-
-	system_play(game);
 	system_move(game);
 	system_sound(game);
 	system_detect_collision(game);
 	system_clean_dead_entities(game);
+
+	if (!game->ended)
+		system_play(game);
+
+	if (!game->ended && game->started )
+		system_score(game);
+
+	if (game->end && !game->ended) {
+		end_game(game);
+	}
 
 	if (game->started) {
 		system_stars(game);
@@ -101,13 +92,22 @@ void on_game_exit(Game* game) {
 	al_destroy_sample(game->theme_sam);
 }
 
-int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
-	double c_vel = ((dc - sc)/max_dist)*max_vel;
-	if (round(c_vel) == 0.0)
-		c_vel = (c_vel > 0) ? ceil(c_vel) : floor(c_vel);
-	else
-		c_vel = round(c_vel);
-	return (int)c_vel;
+void end_game(Game* game) {
+	Entity* go = entity_create(game, LAYER_UI);
+	entity_set_position(go, SCREEN_W/2 - 140, SCREEN_H/2 - 50);
+	entity_set_text(go, 0, 0, "Game Over", REGULAR_FONTSIZE);
+
+	Entity* sc = entity_create(game, LAYER_UI);
+	entity_set_position(sc, SCREEN_W/2 - 220, SCREEN_H/2 + 10);
+	char* str = (char*) malloc(sizeof(char)*30); *str = '\0'; sprintf(str, "Your score: %d", game->score);
+	entity_set_text(sc, 0, 0, str, REGULAR_FONTSIZE);
+
+	if (record(game->score)) {
+		Entity* nr = entity_create(game, LAYER_UI);
+		entity_set_position(nr, SCREEN_W/2 - 160, SCREEN_H/2 + 70);
+		entity_set_text(nr, 0, 0, "New record!", REGULAR_FONTSIZE);
+	}
+	game->ended = 1;
 }
 
 void system_airmine_spawner(Game* game) {
