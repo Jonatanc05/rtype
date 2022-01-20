@@ -7,7 +7,7 @@ typedef struct Game Game;
 
 typedef struct {
 	MySprite* sprite;
-	int x, y;
+	float x, y;
 	float scale, w, h;
 } SpriteComponent;
 

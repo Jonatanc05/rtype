@@ -13,26 +13,25 @@
 #define THEME_SAMPLE_P  "rsc\\sound\\ressurections.ogg"
 
 #define AIRMINE_SPRITE_P  "rsc\\sprite\\airmine.png"
-#define AIRMINE_SPAWN_TEST_INTERVAL 25  // in ticks
-#define AIRMINE_SPAWN_TEST_CHANCE 30.0 // percentage
-#define AIRMINE_MAX_XVEL 4.0
-#define AIRMINE_MAX_YVEL 3.0
+#define AIRMINE_SPAWN_TEST_INTERVAL 0.2  // in seconds
+#define AIRMINE_SPAWN_TEST_CHANCE 50.0   // percentage
+#define AIRMINE_MAX_XVEL 100.0
+#define AIRMINE_MAX_YVEL 100.0
 #define AIRMINE_SPAWN_SIEGE 80
-#define AIRMINE_MIN_SCALE 5.0
-#define AIRMINE_MAX_SCALE 2.0
-#define AIRMINES_P_SECOND 1
+#define AIRMINE_MAX_SCALE 4.0
+#define AIRMINE_MIN_SCALE 2.0
 
 #define STAR_SPAWN_CHANCE 75
 #define STAR_MIN_SIZE 0.9
 #define STAR_MAX_SIZE 2.4
-#define STAR_MIN_VEL 8
-#define STAR_MAX_VEL 16
+#define STAR_MIN_VEL 480.0
+#define STAR_MAX_VEL 960.0
 
-#define BLOCK_SPAWN_TEST_INTERVAL 2  // in seconds
-#define BLOCK_SPAWN_TEST_CHANCE 20.0 // percentage
+#define BLOCK_SPAWN_TEST_INTERVAL 8  // in seconds
+#define BLOCK_SPAWN_TEST_CHANCE 60.0 // percentage
 //#define BLOCK_MIN_WIDTH // will be screen width
 #define BLOCK_MAX_WIDTH 2 // measured in "screens"
-#define BLOCK_VELOCITY 2
+#define BLOCK_VELOCITY 600
 
 typedef enum KEY_STATE {
 	KEY_STATE_NULL = 0,
@@ -74,6 +73,9 @@ typedef struct Game {
 	double time, delta_time;
 	long unsigned tick;
 	KEY_STATE keyboard[ALLEGRO_KEY_MAX];
+	// spawners
+	int there_is_block;
+	double last_block_spawn_test, last_airmine_spawn_test;
 
 } Game;
 

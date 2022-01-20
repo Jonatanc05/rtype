@@ -51,16 +51,19 @@ void system_play(Game* game) {
 			v_comp->x -= VELOCITY;
 
 		// Shoot
-		char isCharged = p_comp->beamCharge == MAX_BEAM_CHARGE;
-		if (kb[p_comp->shoot] == KEY_STATE_HOLD && !isCharged)
-			p_comp->beamCharge++;
+		char is_charged = p_comp->beam_charge == MAX_BEAM_CHARGE;
+		if (kb[p_comp->shoot] == KEY_STATE_HOLD && !is_charged) {
+			p_comp->beam_charge += game->delta_time;
+			if (p_comp->beam_charge >= MAX_BEAM_CHARGE)
+				p_comp->beam_charge  = MAX_BEAM_CHARGE;
+		}
 		if (kb[p_comp->shoot] == KEY_STATE_UP) {
-			shoot(game, e, isCharged);
-			p_comp->beamCharge = 0;
+			shoot(game, e, is_charged);
+			p_comp->beam_charge = 0.0;
 		}
 		p_comp->charge_bar->position_component.x = e->position_component.x;
 		p_comp->charge_bar->position_component.y = e->position_component.y - 15;
-		p_comp->charge_bar->rectangle_component.w = ((p_comp->beamCharge/(float)MAX_BEAM_CHARGE)*s_comp->w);
+		p_comp->charge_bar->rectangle_component.w = ((p_comp->beam_charge/MAX_BEAM_CHARGE)*s_comp->w);
 
 		// Animation
 		MySprite *correct_spr = NULL;
@@ -71,8 +74,7 @@ void system_play(Game* game) {
 		else
 			correct_spr = game->p_idle_spr;
 
-		if (s_comp->sprite != correct_spr)
-			s_comp->sprite = correct_spr;
+		s_comp->sprite = correct_spr;
 	}
 }
 

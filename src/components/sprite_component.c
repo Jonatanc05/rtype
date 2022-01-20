@@ -11,12 +11,12 @@ void system_draw_sprites(Game* game) {
 		SpriteComponent* s_comp = &e->sprite_component;
 		al_draw_scaled_bitmap(s_comp->sprite->bm,
 				.0, .0, // source x y
-				s_comp->sprite->w, // source width
-				s_comp->sprite->h, // source height
-				p_comp->x + s_comp->x, // final x
-				p_comp->y + s_comp->y, // final y
-				s_comp->w, // final width
-				s_comp->h, // final height
+				(int)(s_comp->sprite->w), // source width
+				(int)(s_comp->sprite->h), // source height
+				(int)(p_comp->x + s_comp->x), // final x
+				(int)(p_comp->y + s_comp->y), // final y
+				(int)(s_comp->w), // final width
+				(int)(s_comp->h), // final height
 				0 // flags
 		);
 	}

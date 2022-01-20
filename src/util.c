@@ -79,11 +79,6 @@ void create_ui_element(Game* game, char* text, int y, COLLISION_CALLBACK on_coll
 	entity_set_box_coll(e_element, element_w, element_h, on_collide);
 }
 
-int velocity_towards(int dc, int sc, double max_dist, double max_vel) {
-	double c_vel = ((dc - sc)/max_dist)*max_vel;
-	if (round(c_vel) == 0.0)
-		c_vel = (c_vel > 0) ? ceil(c_vel) : floor(c_vel);
-	else
-		c_vel = round(c_vel);
-	return (int)c_vel;
+float velocity_towards(int dc, int sc, double max_dist, double max_vel) {
+	return ((dc - sc)/max_dist)*max_vel;
 }

@@ -14,7 +14,7 @@ typedef enum FONT_SIZE {
 typedef struct TextComponent {
 	char* text;
 	FONT_SIZE fontSize;
-	int x, y;
+	float x, y;
 } TextComponent;
 
 void system_draw_text(Game* game);

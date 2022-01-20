@@ -23,6 +23,6 @@ void create_player(Game* game, int r, int g, int b, ALLEGRO_KEY up, ALLEGRO_KEY 
 
 void create_ui_element(Game* game, char* text, int y, COLLISION_CALLBACK on_collide);
 
-int velocity_towards(int dc, int sc, double max_dist, double max_vel);
+float velocity_towards(int dc, int sc, double max_dist, double max_vel);
 
 #endif

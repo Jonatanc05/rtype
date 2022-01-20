@@ -64,15 +64,15 @@ void entity_kill(Entity* e);
 
 void zerar_entity(Entity* e);
 
-void entity_set_position(Entity* e, int x, int y);
+void entity_set_position(Entity* e, float x, float y);
 
-void entity_set_text(Entity* e, int x, int y, char* t, FONT_SIZE fs);
+void entity_set_text(Entity* e, float x, float y, char* t, FONT_SIZE fs);
 
-void entity_set_velocity(Entity* e, int x, int y);
+void entity_set_velocity(Entity* e, float x, float y);
 
 void entity_set_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, ALLEGRO_KEY r, ALLEGRO_KEY s, Entity* cb);
 
-void entity_set_sprite(Entity* e, MySprite* s, int x, int y, float scale);
+void entity_set_sprite(Entity* e, MySprite* s, float x, float y, float scale);
 
 void entity_set_circle_coll(Entity* e, int x, int y, float r, COLLISION_CALLBACK on_collide);
 

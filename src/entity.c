@@ -35,13 +35,13 @@ void zerar_entity(Entity* e) {
 	e->layer = LAYER_NULL;
 }
 
-void entity_set_position(Entity* e, int x, int y) {
+void entity_set_position(Entity* e, float x, float y) {
 	e->component_mask |= POSITION_COMP_MASK;
 	e->position_component.x = x;
 	e->position_component.y = y;
 }
 
-void entity_set_text(Entity* e, int x, int y, char* t, FONT_SIZE fs) {
+void entity_set_text(Entity* e, float x, float y, char* t, FONT_SIZE fs) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
 		entity_set_position(e, 0, 0);
 	e->component_mask |= TEXT_COMP_MASK;
@@ -51,7 +51,7 @@ void entity_set_text(Entity* e, int x, int y, char* t, FONT_SIZE fs) {
 	e->text_component.fontSize = fs;
 }
 
-void entity_set_velocity(Entity* e, int x, int y) {
+void entity_set_velocity(Entity* e, float x, float y) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
 		entity_set_position(e, 0, 0);
 	e->component_mask |= VELOCITY_COMP_MASK;
@@ -70,11 +70,11 @@ void entity_set_player(Entity* e, ALLEGRO_KEY u, ALLEGRO_KEY l, ALLEGRO_KEY d, A
 	e->player_component.down = d;
 	e->player_component.right = r;
 	e->player_component.shoot = s;
-	e->player_component.beamCharge = 0;
+	e->player_component.beam_charge = 0.0;
 	e->player_component.charge_bar = cb;
 }
 
-void entity_set_sprite(Entity* e, MySprite* s, int x, int y, float scale) {
+void entity_set_sprite(Entity* e, MySprite* s, float x, float y, float scale) {
 	if (!(e->component_mask & POSITION_COMP_MASK))
 		entity_set_position(e, 0, 0);
 	e->component_mask |= SPRITE_COMP_MASK;

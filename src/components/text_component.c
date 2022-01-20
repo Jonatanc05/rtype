@@ -23,8 +23,8 @@ void system_draw_text(Game* game) {
 		}
 
 		al_draw_text(font, al_map_rgba(r, g, b, a),
-				p_comp->x + t_comp->x,
-				p_comp->y + t_comp->y,
+				(int)(p_comp->x + t_comp->x),
+				(int)(p_comp->y + t_comp->y),
 				0, t_comp->text);
 	}
 }

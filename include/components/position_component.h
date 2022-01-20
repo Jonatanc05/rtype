@@ -2,7 +2,7 @@
 #define _included_position_component_h
 
 typedef struct PositionComponent {
-	int x, y;
+	float x, y;
 } PositionComponent;
 
 #endif

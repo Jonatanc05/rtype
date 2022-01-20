@@ -10,15 +10,6 @@ void on_game_init(Game* game) {
 	al_draw_text(game->regular_font , al_map_rgb(190, 190, 240), 10, 10, 0, "Carregando...");
 	al_flip_display();
 
-	game->started = 0;
-	game->end = 0;
-	game->ended = 0;
-	for (int i = 0; i <= ALLEGRO_KEY_MAX; i++)
-		game->keyboard[i] = 0;
-	game->numEntities = 0;
-	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
-	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
-
 	// Initialize sprites
 	game->airmine_spr = load_sprite(AIRMINE_SPRITE_P);
 	game->p_idle_spr =  load_sprite(SHIP_IDLE_SPRITE_P);
@@ -29,6 +20,19 @@ void on_game_init(Game* game) {
 
 	// Initialize samples
 	game->theme_sam = al_load_sample(THEME_SAMPLE_P);
+
+	// Initialize game data and state
+	game->started = 0;
+	game->end = 0;
+	game->ended = 0;
+	game->there_is_block = 0;
+	for (int i = 0; i <= ALLEGRO_KEY_MAX; i++)
+		game->keyboard[i] = 0;
+	game->numEntities = 0;
+	game->entities = (Entity*) calloc(MAX_ENTITIES, sizeof(Entity));
+	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
+	game->last_block_spawn_test = 0;
+	game->last_airmine_spawn_test = 0;
 
 	// Create first player
 	create_player(game, 31, 93, 197, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE);
@@ -116,43 +120,41 @@ void end_game(Game* game) {
 }
 
 void system_airmine_spawner(Game* game) {
-	if (game->tick % AIRMINE_SPAWN_TEST_INTERVAL)
+	if ((game->time - game->last_airmine_spawn_test) < AIRMINE_SPAWN_TEST_INTERVAL)
 		return;
+	game->last_airmine_spawn_test = game->time;
 	if ((rand()/(float)RAND_MAX)*100 > AIRMINE_SPAWN_TEST_CHANCE)
 		return;
 
 	MySprite* spr = game->airmine_spr;
 	float spr_scale = AIRMINE_MIN_SCALE + (rand()/(float)RAND_MAX)*(AIRMINE_MAX_SCALE-AIRMINE_MIN_SCALE);
 	float radius = spr->w*spr_scale/2.0;
-	int w = spr->w*spr_scale, h = spr->h*spr_scale;
+	float w = spr->w*spr_scale, h = spr->h*spr_scale;
 
 	int screen_w = al_get_display_width(game->display);
-	int x = rand()%(screen_w + w) - w;
+	float x = -w + rand()%(int)(screen_w + w);
 
 	int screen_h = al_get_display_height(game->display);
-	int y = rand()%2 ? -h : screen_h;
+	float y = rand()%2 ? -h : screen_h;
 
 	Entity* e = entity_create(game, LAYER_ENEMY);
 	entity_set_position(e, x, y);
 
 	// Set airmine velocity towards a random point in screen within a margin
-	int x_margin = screen_w / 5;
-	int x_vel = velocity_towards(x_margin + rand()%(screen_w - 2*x_margin), x, screen_w, AIRMINE_MAX_XVEL);
-	int y_vel = velocity_towards(rand()%screen_h, y, screen_h, AIRMINE_MAX_YVEL);
+	float x_margin = screen_w / 5.0;
+	float x_vel = velocity_towards(x_margin + rand()%(int)(screen_w - 2*x_margin), x, screen_w, AIRMINE_MAX_XVEL);
+	float y_vel = velocity_towards(rand()%screen_h, y, screen_h, AIRMINE_MAX_YVEL);
 	entity_set_velocity(e, x_vel, y_vel);
 
 	entity_set_sprite(e, spr, 0, 0, spr_scale);
 	entity_set_circle_coll(e, w/2, h/2, radius, on_collide_die);
 }
 
-double _timestamp_of_last_block_death = 0.0; // in seconds
-int _there_is_block = 0;
 void system_block_spawner(Game* game) {
-	if (_there_is_block) return;
-	double last = _timestamp_of_last_block_death,
-		   current = game->tick/(double)FPS;
-	if (current - last < BLOCK_SPAWN_TEST_INTERVAL)
+	if (game->there_is_block) return;
+	if (game->time - game->last_block_spawn_test < BLOCK_SPAWN_TEST_INTERVAL)
 		return;
+	game->last_block_spawn_test = game->time;
 	if ((rand()/(float)RAND_MAX)*100 > BLOCK_SPAWN_TEST_CHANCE)
 		return;
 
@@ -171,7 +173,7 @@ void system_block_spawner(Game* game) {
 	entity_set_rectangle(e, w, h);
 	entity_set_box_coll(e, w, h, on_collide_block);
 	e->layer = LAYER_BLOCK;
-	_there_is_block = 1;
+	game->there_is_block = 1;
 }
 
 void system_clean_dead_entities(Game* game) {
@@ -190,8 +192,7 @@ void system_clean_dead_entities(Game* game) {
 			entity_kill(e);
 		} else if (e->layer == LAYER_BLOCK
 				&& e->position_component.x + e->box_coll_component.w < 0) {
-			_there_is_block = 0;
-			_timestamp_of_last_block_death = game->tick/(float)FPS;
+			game->there_is_block = 0;
 			entity_kill(e);
 		}
 		if (e->dead)
