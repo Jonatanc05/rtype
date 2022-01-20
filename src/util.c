@@ -6,17 +6,21 @@
 const char* const _record_filename = "record.txt";
 
 int record(int score) {
-	FILE* f = fopen(_record_filename, "w+");
-	if (!f) printf("Erro ao abrir arquivo\n");
-	char str[512] = "0";
 	int record = 0;
-	if (!fgets(str, 512, f)) printf("Arquivo de recorde nao existe, criando um...\n");
-	if (!sscanf(str, "%d", &record)) printf("Erro no parse do arquivo\n");
+	FILE* r = fopen(_record_filename, "r");
+	if (r) {
+		char str[512] = "0";
+		if (!fgets(str, 512, r)) printf("Erro na leitura do arquivo\n");
+		if (!sscanf(str, "%d", &record))
+			record = printf("Erro no parse do arquivo\n") && 0;
+		fclose(r);
+	} else printf("Arquivo de recorde nao existe, criando um...\n");
+
 	if (score > record) {
-		fseek(f, 0, 0);
-		fprintf(f, "%d", score);
+		FILE* w = fopen(_record_filename, "w");
+		fprintf(w, "%d", score);
+		fclose(w);
 	}
-	fclose(f);
 	return score > record;
 }
 
