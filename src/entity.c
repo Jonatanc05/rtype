@@ -143,3 +143,10 @@ void entity_set_sound(Entity* e, ALLEGRO_SAMPLE* s, float g, float sp, int pm, i
 	e->sound_component.fade_out = 0;
 }
 
+void entity_set_senoid(Entity* e, float y, float a, float p, float s) {
+	e->component_mask |= SENOID_COMP_MASK;
+	e->senoid_component.base_y = y;
+	e->senoid_component.amp = a;
+	e->senoid_component.period = p;
+	e->senoid_component.shift = s;
+}

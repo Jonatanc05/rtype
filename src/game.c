@@ -17,6 +17,8 @@ void on_game_init(Game* game) {
 	game->p_down_spr =  load_sprite(SHIP_DOWN_SPRITE_P);
 	game->beam_spr =    load_sprite(BEAM_SPRITE_P);
 	game->ch_beam_spr = load_sprite(CHARGED_BEAM_SPRITE_P);
+	game->fly_spr =     load_sprite(FLY_SPRITE_P);
+	if (!game->fly_spr) printf("ERRO");
 
 	// Initialize samples
 	game->theme_sam = al_load_sample(THEME_SAMPLE_P);
@@ -36,6 +38,7 @@ void on_game_init(Game* game) {
 	if (game->entities == NULL) printf("Erro ao alocar memoria para entidades\n");
 	game->last_block_spawn_test = 0;
 	game->last_airmine_spawn_test = 0;
+	game->last_fly_spawn_test = 0;
 
 	// Create first player
 	create_player(game, 31, 93, 197, ALLEGRO_KEY_W, ALLEGRO_KEY_A, ALLEGRO_KEY_S, ALLEGRO_KEY_D, ALLEGRO_KEY_SPACE);
@@ -64,6 +67,7 @@ void on_update(Game* game) {
 
 	system_move(game);
 	system_sound(game);
+	system_senoid(game);
 	system_detect_collision(game);
 	system_clean_dead_entities(game);
 
@@ -80,6 +84,7 @@ void on_update(Game* game) {
 	if (game->started) {
 		system_stars(game);
 		system_airmine_spawner(game);
+		system_fly_spawner(game);
 		system_block_spawner(game);
 	}
 
@@ -154,6 +159,23 @@ void system_airmine_spawner(Game* game) {
 
 	entity_set_sprite(e, spr, 0, 0, spr_scale);
 	entity_set_circle_coll(e, w/2, h/2, radius, on_collide_die);
+}
+
+void system_fly_spawner(Game* game) {
+	if ((game->time - game->last_fly_spawn_test) < FLY_SPAWN_TEST_INTERVAL)
+		return;
+	game->last_fly_spawn_test = game->time;
+	if ((rand()/(float)RAND_MAX)*100 > FLY_SPAWN_TEST_CHANCE)
+		return;
+
+	MySprite* spr = game->fly_spr;
+
+	Entity* e = entity_create(game, LAYER_ENEMY);
+	entity_set_position(e, SCREEN_W, 0);
+	entity_set_velocity(e, -FLY_VELOCITY, 0);
+	entity_set_senoid(e, rand()%SCREEN_H, 50, .04, 0);
+	entity_set_sprite(e, spr, 0, 0, FLY_SCALE);
+	entity_set_box_coll(e, spr->w*FLY_SCALE, spr->h*FLY_SCALE, on_collide_die);
 }
 
 void system_block_spawner(Game* game) {

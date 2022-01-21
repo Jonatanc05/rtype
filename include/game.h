@@ -15,6 +15,12 @@
 #define BEAM_SAMPLE_P      "rsc\\sound\\beam.ogg"
 #define CH_BEAM_SAMPLE_P   "rsc\\sound\\ch-beam.ogg"
 
+#define FLY_SPRITE_P  "rsc\\sprite\\fly.gif"
+#define FLY_SPAWN_TEST_INTERVAL 0.2  // in seconds
+#define FLY_SPAWN_TEST_CHANCE 50.0   // percentage
+#define FLY_VELOCITY 200             // in pixel/s
+#define FLY_SCALE 0.5
+
 #define AIRMINE_SPRITE_P  "rsc\\sprite\\airmine.png"
 #define AIRMINE_SPAWN_TEST_INTERVAL 0.2  // in seconds
 #define AIRMINE_SPAWN_TEST_CHANCE 50.0   // percentage
@@ -62,7 +68,7 @@ typedef struct Game {
 	ALLEGRO_FONT *regular_font;
 
 	MySprite *p_idle_spr, *p_up_spr, *p_down_spr,
-			 *airmine_spr,
+			 *airmine_spr, *fly_spr,
 			 *beam_spr, *ch_beam_spr;
 
 	ALLEGRO_SAMPLE *theme_sam, *charging_sam,
@@ -79,7 +85,7 @@ typedef struct Game {
 	KEY_STATE keyboard[ALLEGRO_KEY_MAX];
 	// spawners
 	int there_is_block;
-	double last_block_spawn_test, last_airmine_spawn_test;
+	double last_block_spawn_test, last_airmine_spawn_test, last_fly_spawn_test;
 
 } Game;
 
@@ -88,6 +94,8 @@ void on_update(Game* game);
 void on_game_exit(Game* game);
 
 void system_airmine_spawner(Game* game);
+
+void system_fly_spawner(Game* game);
 
 void system_block_spawner(Game* game);
 

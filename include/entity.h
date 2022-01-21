@@ -13,6 +13,7 @@
 #include "components/color_component.h"
 #include "components/uielement_component.h"
 #include "components/sound_component.h"
+#include "components/senoid_component.h"
 #include "collision_callbacks.h"
 
 #define POSITION_COMP_MASK  0b0000000000000001
@@ -26,6 +27,7 @@
 #define COLOR_COMP_MASK     0b0000000100000000
 #define UIELEMENT_COMP_MASK 0b0000001000000000
 #define SOUND_COMP_MASK     0b0000010000000000
+#define SENOID_COMP_MASK    0b0000100000000000
 
 typedef enum LAYER {
 	LAYER_NULL = 0,
@@ -56,6 +58,7 @@ typedef struct Entity {
 	ColorComponent color_component;
 	UiElementComponent uielement_component;
 	SoundComponent sound_component;
+	SenoidComponent senoid_component;
 } Entity;
 
 Entity* entity_create(Game* game, LAYER layer);
@@ -85,5 +88,7 @@ void entity_set_color(Entity* e, int r, int g, int b, int a);
 void entity_set_uielement(Entity* e, Entity* r, Entity* t);
 
 void entity_set_sound(Entity* e, ALLEGRO_SAMPLE* s, float g, float sp, int pm, int start);
+
+void entity_set_senoid(Entity* e, float y, float a, float p, float s);
 
 #endif
