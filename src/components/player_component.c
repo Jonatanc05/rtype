@@ -19,9 +19,11 @@ void shoot(Game* game, Entity* player, char isCharged) {
 			r, // radius
 			isCharged ? on_collide_charged_beam : on_collide_beam); // on_collide callback
 	if (isCharged)
-		entity_set_sound(beam, game->ch_beam_sam, 0.75, 1.5, ALLEGRO_PLAYMODE_ONCE, 1);
+		al_play_sample(game->ch_beam_sam, .75, .0, 1.5, ALLEGRO_PLAYMODE_ONCE, NULL);
+	//	entity_set_sound(beam, game->ch_beam_sam, 0.75, 1.5, ALLEGRO_PLAYMODE_ONCE, 1);
 	else
-		entity_set_sound(beam, game->beam_sam, 1, 1.4, ALLEGRO_PLAYMODE_ONCE, 1);
+		al_play_sample(game->beam_sam, 1, .0, 1.4, ALLEGRO_PLAYMODE_ONCE, NULL);
+	//	entity_set_sound(beam, game->beam_sam, 1, 1.4, ALLEGRO_PLAYMODE_ONCE, 1);
 }
 
 void system_play(Game* game) {

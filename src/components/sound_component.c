@@ -16,12 +16,12 @@ void system_sound(Game* game) {
 		// Start/stop
 		if (s_comp->stop) {
 			s_comp->stop = 0;
-			al_set_sample_instance_playing(s_comp->sample, 0);//al_stop_sample_instance(s_comp->sample);
+			al_set_sample_instance_playing(s_comp->sample, 0);
 		}
 		if (s_comp->start && !s_comp->fade_out) {
 			s_comp->start = 0;
 			al_set_sample_instance_position(s_comp->sample, s_comp->start_position);
-			al_set_sample_instance_playing(s_comp->sample, 1);//al_play_sample_instance(s_comp->sample);
+			al_set_sample_instance_playing(s_comp->sample, 1);
 		}
 
 		// Fade in/out

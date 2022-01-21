@@ -24,8 +24,10 @@ Entity* entity_create(Game *game, LAYER layer) {
 
 void entity_kill(Entity* e) {
 	e->dead = 1;
-	if (e->component_mask & SOUND_COMP_MASK)
+	if (e->component_mask & SOUND_COMP_MASK) {
 		al_set_sample(e->sound_component.sample, NULL);
+		al_destroy_sample_instance(e->sound_component.sample);
+	}
 	e->component_mask = 0;
 }
 

@@ -16,7 +16,6 @@ Turn yourself (se vira)
 
 ## Feature
 
-- Efeitos sonoros
 - inimigos senoides
 - inimigos que atiram
 

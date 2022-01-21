@@ -149,6 +149,8 @@ int main(int argc, char **argv){
 
 	on_game_exit(game);
 
+	al_destroy_mixer(mixer);
+	al_destroy_voice(voice);
 	al_destroy_timer(game->timer);
 	al_destroy_display(game->display);
 	al_destroy_event_queue(game->event_queue);

@@ -12,8 +12,8 @@
 
 #define THEME_SAMPLE_P     "rsc\\sound\\ressurections.ogg"
 #define CHARGING_SAMPLE_P  "rsc\\sound\\charging.ogg"
-#define BEAM_SAMPLE_P  "rsc\\sound\\beam.ogg"
-#define CH_BEAM_SAMPLE_P  "rsc\\sound\\ch-beam.ogg"
+#define BEAM_SAMPLE_P      "rsc\\sound\\beam.ogg"
+#define CH_BEAM_SAMPLE_P   "rsc\\sound\\ch-beam.ogg"
 
 #define AIRMINE_SPRITE_P  "rsc\\sprite\\airmine.png"
 #define AIRMINE_SPAWN_TEST_INTERVAL 0.2  // in seconds
