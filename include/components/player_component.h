@@ -18,6 +18,7 @@
 typedef struct Game Game;
 typedef struct Entity Entity;
 typedef unsigned ALLEGRO_KEY;
+typedef struct ALLEGRO_SAMPLE_ID ALLEGRO_SAMPLE_ID;
 
 typedef struct {
 	float beam_charge;

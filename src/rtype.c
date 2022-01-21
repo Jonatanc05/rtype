@@ -92,7 +92,7 @@ int main(int argc, char **argv){
 		fprintf(stderr, "al_create_mixer failed.\n");
 		return -1;
 	}
-	if (!al_attach_mixer_to_voice(mixer, voice) || !al_set_default_mixer(mixer)) {
+	if (!al_attach_mixer_to_voice(mixer, voice) || !al_set_default_mixer(mixer) || !al_reserve_samples(30)) {
 		fprintf(stderr, "al_attach_mixer_to_voice or al_set_default_mixer failed.\n");
 		return -1;
 	}

@@ -10,7 +10,7 @@ typedef struct Game Game;
 
 typedef struct {
 	ALLEGRO_SAMPLE_INSTANCE* sample;
-	float gain;
+	float gain, speed;
 	int start, stop, playmode, fade_in, fade_out;
 	unsigned start_position;
 } SoundComponent;

@@ -11,6 +11,7 @@ void system_sound(Game* game) {
 
 		al_set_sample_instance_playmode(s_comp->sample, s_comp->playmode);
 		al_set_sample_instance_gain(s_comp->sample, s_comp->gain);
+		al_set_sample_instance_speed(s_comp->sample, s_comp->speed);
 
 		// Start/stop
 		if (s_comp->stop) {

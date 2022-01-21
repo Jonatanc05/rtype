@@ -50,6 +50,9 @@ void system_play(Game* game) {
 		if (kb[p_comp->right] == KEY_STATE_UP)
 			v_comp->x -= VELOCITY;
 
+		if (kb[p_comp->shoot] == KEY_STATE_DOWN) {
+			p_comp->charge_bar->sound_component.start = 1;
+		}
 		// Shoot
 		char is_charged = p_comp->beam_charge == MAX_BEAM_CHARGE;
 		if (kb[p_comp->shoot] == KEY_STATE_HOLD && !is_charged) {
@@ -58,6 +61,7 @@ void system_play(Game* game) {
 				p_comp->beam_charge  = MAX_BEAM_CHARGE;
 		}
 		if (kb[p_comp->shoot] == KEY_STATE_UP) {
+			p_comp->charge_bar->sound_component.stop = 1;
 			shoot(game, e, is_charged);
 			p_comp->beam_charge = 0.0;
 		}

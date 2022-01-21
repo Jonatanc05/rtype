@@ -20,6 +20,7 @@ void on_game_init(Game* game) {
 
 	// Initialize samples
 	game->theme_sam = al_load_sample(THEME_SAMPLE_P);
+	game->charging_sam = al_load_sample(CHARGING_SAMPLE_P);
 
 	// Initialize game data and state
 	game->started = 0;
@@ -44,7 +45,7 @@ void on_game_init(Game* game) {
 
 	/// Create soundtrack manager
 	game->soundtrack = entity_create(game, LAYER_INVISIBLE);
-	entity_set_sound(game->soundtrack, game->theme_sam, 1.0, ALLEGRO_PLAYMODE_LOOP, 1, 0, 0);
+	entity_set_sound(game->soundtrack, game->theme_sam, 1.0, 1.0, ALLEGRO_PLAYMODE_LOOP, 1);
 
 	// Create score
 	Entity* t = entity_create(game, LAYER_UI);
@@ -99,6 +100,7 @@ void on_game_exit(Game* game) {
 	unload_sprite(game->beam_spr);
 	unload_sprite(game->ch_beam_spr);
 	al_destroy_sample(game->theme_sam);
+	al_destroy_sample(game->charging_sam);
 }
 
 void end_game(Game* game) {

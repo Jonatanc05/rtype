@@ -52,6 +52,7 @@ void create_player(Game* game, int r, int g, int b, ALLEGRO_KEY up, ALLEGRO_KEY 
 	entity_set_position(bcb, 0, 0);
 	entity_set_rectangle(bcb, 0, 5);
 	entity_set_color(bcb, r, g, b, 255);
+	entity_set_sound(bcb, game->charging_sam, 1, 2.0, ALLEGRO_PLAYMODE_ONCE, 0);
 
 	Entity* p = entity_create(game, LAYER_PLAYER);
 	MySprite* ship_spr = game->p_idle_spr;
