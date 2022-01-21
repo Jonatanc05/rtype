@@ -21,6 +21,8 @@ void on_game_init(Game* game) {
 	// Initialize samples
 	game->theme_sam = al_load_sample(THEME_SAMPLE_P);
 	game->charging_sam = al_load_sample(CHARGING_SAMPLE_P);
+	game->beam_sam = al_load_sample(BEAM_SAMPLE_P);
+	game->ch_beam_sam = al_load_sample(CH_BEAM_SAMPLE_P);
 
 	// Initialize game data and state
 	game->started = 0;
@@ -101,6 +103,8 @@ void on_game_exit(Game* game) {
 	unload_sprite(game->ch_beam_spr);
 	al_destroy_sample(game->theme_sam);
 	al_destroy_sample(game->charging_sam);
+	al_destroy_sample(game->beam_sam);
+	al_destroy_sample(game->ch_beam_sam);
 }
 
 void end_game(Game* game) {
