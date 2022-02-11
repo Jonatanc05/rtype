@@ -1,8 +1,12 @@
 # Visão geral
 
-Minha abordagem principal ao desenvolver o jogo foi aprender um padrão de projeto muito utilizado em game development: Entity-Component-System (ECS). Esse padrão não é necessário para se desenvolver um jogo simples como nossa versão do R-Type. Mas sempre tive curiosidade de ver como ele funciona na prática, então resolvi implementar uma adaptação* dele nesse trabalho.
+Minha abordagem principal ao desenvolver o jogo foi aprender um padrão de projeto muito utilizado em game development: Entity-Component-System (ECS).
+Esse padrão não é necessário para se desenvolver um jogo simples como nossa versão do R-Type.
+Mas sempre tive curiosidade de ver como ele funciona na prática, então resolvi implementar uma adaptação* dele nesse trabalho.
 
-Em aspectos de *design*, o jogo é ainda pouco aproveitado, já que não existe um senso de progresso durante o jogo, a não ser pela pontuação que cresce com (1) o decorrer de tempo e (2) a destruição de inimigos em uma horda constante e sem fim de *airmines* (inimigos circulares) e *flies* (moscas gigantes).
+Em aspectos de *design*, o jogo é ainda pouco aproveitado, já que não existe um senso de progresso durante o jogo, a não ser pela pontuação que cresce com (1) o decorrer de tempo e (2) a destruição de inimigos.
+Os inimigos vêm em uma horda constante e sem fim de *airmines* (inimigos circulares) e *flies* (moscas gigantes).
+Além dos blocos que diminuem o espaço disponível da tela para o player.
 
 O menu inicial do jogo possui três opções:
 
@@ -17,7 +21,6 @@ O menu inicial do jogo possui três opções:
 O código fonte se encontra nas pastas `src` e `include`. E na subpasta `components` de cada um deles.
 
 O arquivo que contém a função main é o `src/rtype.c`.
-
 Ele é responsável pelos aspectos de "baixo nível" como alocar memória para funcionamento do jogo (linha 13), inicializar allegro, atribuir `delta_time` (linhas 123-125) e gerenciar os estados das teclas (linhas 129-134).
 Este arquivo inicializa e atribui campos do struct `Game` que está declarado em `include/game.h`.
 
