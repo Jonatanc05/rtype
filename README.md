@@ -34,11 +34,17 @@ Os arquivos *entity* (`src/entity.c` e `include/entity.h`) são uma parte essenc
 Uma *entity* ou entidade é a representação de um objeto qualquer dentro do jogo, ela contém informações que dizem se a entidade está morta, a que camada ela pertence e quais componentes ela tem (através de um bitmask).
 Entidades inutilizadas devem ser marcadas como mortas para a memória que ela ocupa ser reutilizada, inicializando uma nova entidade que a sobrescreva (isso é feito em `src/entity.c:5-10`).
 Entidades são como bolhas vazias que devem ser preenchidas com componentes (*components*) que dão comportamento a uma entidade.
-Por exemplo, todas as entidades que aparecem na tela têm uma posição, então possem um *PositionComponent*, todas que se movem possuem um *VelocityComponent*.
+Por exemplo, todas as entidades que aparecem na tela têm uma posição, então possuem um *PositionComponent*, todas que se movem possuem um *VelocityComponent*.
 
 Os *components* são nada mais do que structs que seguram dados e apenas isso: não contém em si mesmos instrução alguma.
 Os *systems* é que são responsáveis por comportamento, mas eles agem em uma entidade baseado em seus componentes.
-Por exemplo, os componentes *BoxColliderComponent* e *CircleColliderComponent* não sabem o que é uma colisão, apenas demarcam o perímetro dentro do qual a entidade deve colidir, apenas o *system_detect_collision* sabe atuar nesses dados para verificar colisões.
+Por exemplo, os componentes *BoxColliderComponent* e *CircleColliderComponent* não sabem o que é uma colisão, apenas demarcam o perímetro dentro do qual a entidade deve colidir (ver imagem abaixo), apenas o *system_detect_collision* sabe atuar nesses dados para verificar colisões.
+
+![Código dos componentes de colisão](rsc/img/collision_components.png)
+
+Além do perímetro de colisão, esses componentes têm um ponteiro para função chamado `COLLISION_CALLBACK`. Essa função é chamada sempre que o *system* detecta que ele colidiu, a definição do tipo e as implementações são feitas nos arquivos `collision_callbacks.h/.c`:
+
+![Código das callbacks de colisão](rsc/img/collision_callbacks.png)
 
 # Build
 
