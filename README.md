@@ -49,6 +49,14 @@ Além do perímetro de colisão, esses componentes têm um ponteiro para funçã
 
 ![Código das callbacks de colisão](rsc/img/collision_callbacks.png)
 
+O fluxo de execução do jogo consiste basicamente na chamada da função `on_game_init`, que aloca memória e abre os recursos necessários para a execução do jogo, seguida por chamadas frame por frame da função `on_update`, que tem a seguinte estrutura:
+
+![Código da função on_update](rsc/img/on_update.png)
+
+Como pode-se ver, o funcionamento do jogo é definido pelos *systems*, eles que contém as intruções, o código relacionado às mecânicas do jogo. Há até mesmo um *system* de debug, que é compilado sempre que a flag `_DEBUG` está definida.
+Para ver o efeito que esse *system* causa, é só compilar o código com a flag de debug definida (argumento do gcc: `-D_DEBUG`). Na pasta do drive disponibilizada há um arquivo *rtype_debug.exe* que foi compilado dessa forma. A única diferença é o desenho dos perímetros de colisão de toda entidade que colide.
+Essa funcionalidade foi de extrema ajuda para encontrar erros no funcionamento da colisão.
+
 # Build
 
 Execute `run.bat` para compilar o código
